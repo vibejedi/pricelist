@@ -778,6 +778,10 @@
   </div>
 </div>
 
+<!-- Live laptop data (edited via the #admin Price Editor → re-uploaded to /data/laptops.js).
+     If this file is missing the page falls back to the built-in list below. -->
+<script src="data/laptops.js"></script>
+
 <script>
 /* ================================================================
    ░░  DEVELOPER — EDIT EVERYTHING IN THIS BLOCK  ░░
@@ -925,10 +929,29 @@ const PHOTO_DIRS = {
   'Razer|Blade 14 2025 5070':['razer-blade-14-5070',2],
   'Razer|Blade 16 2025 5080':['razer-blade-16-5080',4]
 };
-laptops.forEach(l=>{
-  const m = PHOTO_DIRS[l.brand+'|'+l.model];
-  if(m){ l.dir='images/laptops/'+m[0]; l.photos=m[1]; } else { l.dir=null; }
-});
+
+/* ── LIVE DATA OVERRIDE ──────────────────────────────────────────────
+   data/laptops.js (loaded above) sets window.JLS_DATA when present. If it
+   is, its laptops + photo folders REPLACE the built-in defaults above, so
+   the Price Editor's exported file drives the whole site. No file → the
+   built-in list is used (page still works standalone / offline). */
+if (window.JLS_DATA) {
+  if (Array.isArray(JLS_DATA.laptops) && JLS_DATA.laptops.length)
+    laptops.splice(0, laptops.length, ...JLS_DATA.laptops);
+  if (JLS_DATA.PHOTO_DIRS && typeof JLS_DATA.PHOTO_DIRS === 'object') {
+    Object.keys(PHOTO_DIRS).forEach(k => delete PHOTO_DIRS[k]);
+    Object.assign(PHOTO_DIRS, JLS_DATA.PHOTO_DIRS);
+  }
+}
+
+/* Derive each laptop's photo folder + count from PHOTO_DIRS. */
+function applyPhotoDirs(){
+  laptops.forEach(l=>{
+    const m = PHOTO_DIRS[l.brand+'|'+l.model];
+    if(m){ l.dir='images/laptops/'+m[0]; l.photos=m[1]; } else { l.dir=null; }
+  });
+}
+applyPhotoDirs();
 
 /* ================================================================
    BRAND CATALOG — the model line-up shown when a brand is tapped.
@@ -1021,7 +1044,8 @@ const SERIES_MAP = {
   'Razer|Blade 14 2025 5070':'Blade 14',
   'Razer|Blade 16 2025 5080':'Blade 16'
 };
-laptops.forEach(l=>{ l.series = SERIES_MAP[l.brand+'|'+l.model] || null; });
+function applySeries(){ laptops.forEach(l=>{ l.series = SERIES_MAP[l.brand+'|'+l.model] || null; }); }
+applySeries();
 
 /* ================================================================
    CATEGORIES — the parent filter shown BEFORE "shop by brand".
@@ -1037,7 +1061,12 @@ function budgetTier(l){
 /* Productivity = ultrabooks / creator lines; everything else = gaming. */
 const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern)/i;
 function seriesUse(name){ return PRODUCTIVITY_RE.test(name||'') ? 'productivity' : 'gaming'; }
-laptops.forEach(l=>{ l.use = seriesUse(l.series || l.model); });
+function applyUse(){ laptops.forEach(l=>{ l.use = seriesUse(l.series || l.model); }); }
+applyUse();
+
+/* Re-run every per-laptop derivation after the list is replaced at runtime
+   (used by the Price Editor's live preview). */
+function JLS_recomputeDerived(){ applyPhotoDirs(); applySeries(); applyUse(); }
 
 const CATEGORIES = [
   { group:'What will you use it for?', items:[
@@ -1565,6 +1594,305 @@ applyAccent(state.accent);
 window.addEventListener('hashchange',()=>{ readHash(); render(); window.scrollTo(0,0); });
 readHash();
 render();
+
+/* ====================================================================
+   PRICE EDITOR  (hidden admin panel)
+   --------------------------------------------------------------------
+   Open the site with #admin at the end of the URL, e.g.
+     https://vibejedi.github.io/pricelist/#admin
+   Lets you export the current list to Excel, edit it, then import the
+   edited Excel — which downloads a fresh data/laptops.js to re-upload
+   to GitHub. SheetJS is loaded only when the panel is opened.
+   ==================================================================== */
+(function(){
+  const GITHUB_UPLOAD = 'https://github.com/vibejedi/pricelist/upload/main/data';
+  // Excel column header  ->  internal field
+  const COLS = [
+    ['Brand','brand'], ['Model','model'], ['Year','year'],
+    ['CPU','cpu'], ['GPU','gpu'], ['RAM','ram'], ['Storage','storage'],
+    ['Display','display'], ['Color','color'],
+    ['Price (PHP)','price'], ['SRP (PHP)','srp'], ['Promo','promo'],
+    ['Stock','stock'], ['Photo Folder','photoFolder'], ['Photo Count','photoCount']
+  ];
+  const WIDTHS = [12,30,7,22,30,28,26,34,18,12,12,20,13,22,12];
+  // accept loose header spellings on import
+  const FIELD_KEYS = {
+    brand:['brand'], model:['model','name'], year:['year'],
+    cpu:['cpu','processor'], gpu:['gpu','graphics','videocard'],
+    ram:['ram','memory'], storage:['storage','ssd','disk','drive'],
+    display:['display','screen'], color:['color','colour'],
+    price:['pricephp','price','jlsprice'],
+    srp:['srpphp','srp','originalprice','listprice','was'],
+    promo:['promo','promotag','tag','badge','label'],
+    stock:['stock','availability','available','status'],
+    photoFolder:['photofolder','folder','photodir','imagefolder','images'],
+    photoCount:['photocount','photos','numphotos','imagecount','npics']
+  };
+  const STOCK_LABEL = { in:'In stock', ask:'Pre-order', out:'Out of stock' };
+
+  const norm  = s => String(s==null?'':s).toLowerCase().replace(/[^a-z0-9]/g,'');
+  const num   = v => { const n=parseInt(String(v==null?'':v).replace(/[^0-9]/g,''),10); return isNaN(n)?0:n; };
+  function normStock(v){
+    const t=String(v==null?'':v).toLowerCase();
+    if(/out|sold|none/.test(t)) return 'out';
+    if(/ask|pre|order|po\b/.test(t)) return 'ask';
+    return 'in';
+  }
+
+  /* ---- styles ---- */
+  const css = document.createElement('style');
+  css.textContent = `
+  #jls-admin{position:fixed;inset:0;z-index:9999;display:none;align-items:flex-start;justify-content:center;
+    background:rgba(20,18,30,.55);backdrop-filter:blur(3px);padding:28px 16px;overflow:auto;
+    font-family:'Nunito',system-ui,sans-serif;}
+  #jls-admin.show{display:flex;}
+  #jls-admin .box{background:#fff;max-width:620px;width:100%;border-radius:20px;
+    box-shadow:0 24px 70px rgba(0,0,0,.35);padding:26px 26px 22px;color:#262233;}
+  #jls-admin h2{font-family:'Gaegu',cursive;font-weight:700;font-size:30px;margin:0 0 2px;}
+  #jls-admin .sub{color:#6c6680;font-size:14px;margin:0 0 18px;}
+  #jls-admin .step{border:1.5px solid #ece8f4;border-radius:14px;padding:14px 16px;margin:12px 0;}
+  #jls-admin .step h3{margin:0 0 8px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;}
+  #jls-admin .step h3 .n{background:#7c5cff;color:#fff;width:24px;height:24px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none;}
+  #jls-admin .step p{margin:0 0 10px;font-size:13.5px;color:#544f66;line-height:1.45;}
+  #jls-admin button.act,#jls-admin label.act{display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+    border:none;border-radius:11px;padding:11px 16px;font-size:14px;font-weight:800;font-family:inherit;}
+  #jls-admin .primary{background:#7c5cff;color:#fff;}
+  #jls-admin .primary:hover{background:#6a47ff;}
+  #jls-admin .ghost{background:#f2eefc;color:#5536d8;}
+  #jls-admin .ghost:hover{background:#e8e1fb;}
+  #jls-admin a.gh{display:inline-flex;align-items:center;gap:8px;background:#1f2328;color:#fff;
+    text-decoration:none;border-radius:11px;padding:11px 16px;font-size:14px;font-weight:800;}
+  #jls-admin a.gh:hover{background:#33383f;}
+  #jls-admin .log{font-size:13px;margin-top:10px;border-radius:10px;padding:10px 12px;display:none;line-height:1.5;}
+  #jls-admin .log.ok{display:block;background:#eafaf0;color:#1c7a44;border:1px solid #bdeccf;}
+  #jls-admin .log.warn{display:block;background:#fff6e6;color:#8a5a00;border:1px solid #ffe1a6;}
+  #jls-admin .log.err{display:block;background:#fdecec;color:#b3261e;border:1px solid #f6c5c2;}
+  #jls-admin .closebar{display:flex;justify-content:space-between;align-items:center;margin-top:16px;}
+  #jls-admin .closebar small{color:#8b86a0;font-size:12px;}
+  #jls-admin .x{background:#efecf7;border:none;border-radius:10px;padding:9px 14px;font-weight:800;
+    cursor:pointer;font-family:inherit;color:#4a4560;}
+  #jls-admin .x:hover{background:#e4dff5;}
+  #jls-admin input[type=file]{display:none;}`;
+  document.head.appendChild(css);
+
+  /* ---- markup ---- */
+  const root = document.createElement('div');
+  root.id = 'jls-admin';
+  root.innerHTML = `
+    <div class="box" role="dialog" aria-label="JLS Price Editor">
+      <h2>🔧 JLS Price Editor</h2>
+      <p class="sub">Edit prices &amp; models in Excel, then publish back to the website.</p>
+
+      <div class="step">
+        <h3><span class="n">1</span> Download the current list</h3>
+        <p>Opens an Excel file with every laptop, its specs, price, SRP, promo &amp; stock.</p>
+        <button class="act primary" id="jls-export">⬇ Download Excel</button>
+      </div>
+
+      <div class="step">
+        <h3><span class="n">2</span> Edit in Excel / Google Sheets</h3>
+        <p>Change any <b>Price (PHP)</b>, <b>SRP</b>, <b>Stock</b> (In stock / Pre-order / Out of stock),
+           specs or <b>Promo</b> tag. Add a row for a new model, or delete a row to remove one. Keep the
+           header row as-is.</p>
+      </div>
+
+      <div class="step">
+        <h3><span class="n">3</span> Import your edited Excel</h3>
+        <p>Loads your changes into a live preview behind this window and downloads an updated
+           <b>laptops.js</b> data file.</p>
+        <label class="act ghost" for="jls-import">⬆ Import edited Excel</label>
+        <input type="file" id="jls-import" accept=".xlsx,.xls,.csv" />
+        <div class="log" id="jls-log"></div>
+      </div>
+
+      <div class="step">
+        <h3><span class="n">4</span> Publish to the website</h3>
+        <p>Drag the downloaded <b>laptops.js</b> onto the GitHub page below (into the <b>data</b> folder),
+           then click <i>Commit changes</i>. The website updates within ~1 minute.</p>
+        <a class="gh" href="${GITHUB_UPLOAD}" target="_blank" rel="noopener">🐙 Open GitHub upload page</a>
+      </div>
+
+      <div class="closebar">
+        <small>Tip: bookmark this page with <b>#admin</b> to reopen the editor.</small>
+        <button class="x" id="jls-close">Close ✕</button>
+      </div>
+    </div>`;
+  document.body.appendChild(root);
+
+  const logEl = root.querySelector('#jls-log');
+  function log(kind, html){ logEl.className = 'log ' + kind; logEl.innerHTML = html; }
+
+  /* ---- visibility tied to #admin in the hash ---- */
+  const isAdmin = () => /(^|[#&/])admin\b/i.test(location.hash || '');
+  function sync(){ root.classList.toggle('show', isAdmin()); }
+  window.addEventListener('hashchange', sync);
+  sync();
+  root.querySelector('#jls-close').onclick = () => {
+    root.classList.remove('show');
+    // strip #admin but keep any other hash state
+    const cleaned = (location.hash||'').replace(/(^#)admin&?|&?admin\b/gi,'$1').replace(/[#&]$/,'');
+    history.replaceState(null,'', location.pathname + location.search + (cleaned && cleaned!=='#' ? cleaned : ''));
+  };
+  root.addEventListener('click', e => { if(e.target===root) root.querySelector('#jls-close').click(); });
+
+  /* ---- SheetJS loader (only when needed) ---- */
+  function loadXLSX(){
+    return new Promise((res,rej)=>{
+      if(window.XLSX) return res();
+      const urls=['https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js',
+                  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'];
+      let i=0;
+      (function next(){
+        if(i>=urls.length) return rej(new Error('Could not load the Excel engine — check your internet connection and try again.'));
+        const s=document.createElement('script'); s.src=urls[i++];
+        s.onload=()=>res(); s.onerror=next; document.head.appendChild(s);
+      })();
+    });
+  }
+
+  function downloadText(text, filename){
+    const blob = new Blob([text], {type:'application/javascript'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 1500);
+  }
+
+  /* ---- EXPORT ---- */
+  root.querySelector('#jls-export').onclick = async () => {
+    try{
+      log('warn','Preparing Excel…');
+      await loadXLSX();
+      const rows = laptops.map(l=>{
+        const pd = PHOTO_DIRS[l.brand+'|'+l.model];
+        const o = {};
+        COLS.forEach(([h,f])=>{
+          if(f==='stock')            o[h] = STOCK_LABEL[l.stock] || l.stock || 'In stock';
+          else if(f==='srp')         o[h] = l.srp ? l.srp : '';
+          else if(f==='photoFolder') o[h] = pd ? pd[0] : '';
+          else if(f==='photoCount')  o[h] = pd ? pd[1] : '';
+          else                       o[h] = (l[f]==null?'':l[f]);
+        });
+        return o;
+      });
+      const ws = XLSX.utils.json_to_sheet(rows, {header: COLS.map(c=>c[0])});
+      ws['!cols'] = WIDTHS.map(w=>({wch:w}));
+      const help = XLSX.utils.aoa_to_sheet([
+        ['JLS Price List — how to use this file'],
+        [''],
+        ['1. Edit the values on the "Laptops" tab. The most common edits:'],
+        ['     • Price (PHP)  — the selling price, numbers only (e.g. 89900)'],
+        ['     • SRP (PHP)    — original/strike-through price; leave blank for none'],
+        ['     • Stock        — In stock  /  Pre-order  /  Out of stock'],
+        ['     • Promo        — small tag shown on the card (e.g. 2026 UPDATED PRICE)'],
+        [''],
+        ['2. Add a NEW laptop: add a new row and fill at least Brand + Model + Price.'],
+        ['   Remove a laptop: delete its whole row.'],
+        [''],
+        ['3. Photo Folder / Photo Count link a model to its images in'],
+        ['   images/laptops/<folder>/1.png, 2.png …  Leave blank for no photos.'],
+        [''],
+        ['4. Keep the header row exactly as-is. Save, then go back to the website\'s'],
+        ['   Price Editor (#admin) and use "Import edited Excel".'],
+        [''],
+        ['Note: a brand-new model only appears on the site if its brand+series is'],
+        ['already in the catalog. Message your developer to add a new SERIES.']
+      ]);
+      help['!cols'] = [{wch:78}];
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Laptops');
+      XLSX.utils.book_append_sheet(wb, help, 'How to use');
+      XLSX.writeFile(wb, 'JLS-price-list.xlsx');
+      log('ok','✓ Downloaded <b>JLS-price-list.xlsx</b> — open it in Excel or Google Sheets.');
+    }catch(err){ log('err','✕ '+err.message); }
+  };
+
+  /* ---- IMPORT ---- */
+  root.querySelector('#jls-import').onchange = async (ev) => {
+    const file = ev.target.files && ev.target.files[0];
+    ev.target.value = '';            // allow re-importing the same filename
+    if(!file) return;
+    try{
+      log('warn','Reading '+file.name+'…');
+      await loadXLSX();
+      const buf = new Uint8Array(await file.arrayBuffer());
+      const wb  = XLSX.read(buf, {type:'array'});
+      const ws  = wb.Sheets['Laptops'] || wb.Sheets[wb.SheetNames[0]];
+      if(!ws) throw new Error('No sheet found in that file.');
+      const raw = XLSX.utils.sheet_to_json(ws, {defval:''});
+      if(!raw.length) throw new Error('That sheet has no data rows.');
+
+      const newLaptops = [];
+      const newPD = {};
+      const warnings = [];
+      raw.forEach((r, idx)=>{
+        // build a normalized key->value map for this row
+        const map = {};
+        Object.keys(r).forEach(k => { map[norm(k)] = r[k]; });
+        const get = field => {
+          for(const cand of FIELD_KEYS[field]){ if(map[cand]!=='' && map[cand]!=null) return map[cand]; }
+          return '';
+        };
+        const brand = String(get('brand')).trim();
+        const model = String(get('model')).trim();
+        if(!brand && !model) return;                 // skip blank rows silently
+        if(!brand || !model){ warnings.push('Row '+(idx+2)+' skipped (missing brand or model).'); return; }
+        const l = {
+          brand, model,
+          year:    String(get('year')).trim(),
+          cpu:     String(get('cpu')).trim(),
+          gpu:     String(get('gpu')).trim(),
+          ram:     String(get('ram')).trim(),
+          storage: String(get('storage')).trim(),
+          display: String(get('display')).trim(),
+          color:   String(get('color')).trim(),
+          price:   num(get('price')),
+          srp:     num(get('srp')),
+          promo:   String(get('promo')).trim(),
+          stock:   normStock(get('stock')),
+          photos:  1
+        };
+        if(!l.price) warnings.push(l.brand+' '+l.model+': price is 0 / blank.');
+        newLaptops.push(l);
+        const folder = String(get('photoFolder')).trim();
+        if(folder) newPD[brand+'|'+model] = [folder, num(get('photoCount'))||1];
+      });
+
+      if(!newLaptops.length) throw new Error('No valid laptop rows found. Did you keep the header row?');
+
+      // apply to the live page (preview)
+      laptops.splice(0, laptops.length, ...newLaptops);
+      Object.keys(PHOTO_DIRS).forEach(k=>delete PHOTO_DIRS[k]);
+      Object.assign(PHOTO_DIRS, newPD);
+      JLS_recomputeDerived();
+      readHash(); render();
+
+      // build the file to re-upload
+      const banner =
+`/* =====================================================================
+   JLS Price List — EDITABLE DATA FILE  (data/laptops.js)
+   Generated by the #admin Price Editor. Upload this file to GitHub at
+   /data/laptops.js to publish your changes to the live website.
+   ===================================================================== */
+`;
+      const out = banner + 'window.JLS_DATA = ' +
+        JSON.stringify({ laptops:newLaptops, PHOTO_DIRS:newPD }, null, 2) + ';\n';
+      downloadText(out, 'laptops.js');
+
+      let msg = '✓ Imported <b>'+newLaptops.length+'</b> laptops and updated the preview behind this window.'+
+                '<br>⬇ Downloaded <b>laptops.js</b> — now do <b>Step 4</b> to publish.';
+      if(warnings.length){
+        msg += '<br><br><b>Heads up ('+warnings.length+'):</b><br>'+
+               warnings.slice(0,6).map(w=>'• '+w).join('<br>')+
+               (warnings.length>6 ? '<br>…and '+(warnings.length-6)+' more.' : '');
+        log('warn', msg);
+      } else {
+        log('ok', msg);
+      }
+    }catch(err){ log('err','✕ '+err.message); }
+  };
+})();
 </script>
 <style id="__om-edit-overrides">
 #stage > .sec-rev .sec-eyebrow { line-height: 2 !important; }
