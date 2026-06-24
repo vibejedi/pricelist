@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JLS Price List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Gaegu:wght@400;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     WIREFRAME STYLES  (low-fi, hand-drawn, b&w + 1 accent)
+     ============================================================ */
+  :root{
+    --paper:#fbfaf6;
+    --ink:#2b2b2b;
+    --ink-soft:#6b6862;
+    --fill:#ecebe4;
+    --fill-2:#dedcd2;
+    --line:#2b2b2b;
+    --acc:#e8543f;          /* accent highlighter (tweakable) */
+    --acc-soft:rgba(232,84,63,.22);
+    --feat-tint:#fff7ea;    /* warm cream  — Featured */
+    --cat-tint:#edf4ff;     /* soft sky    — Shop by category (the standout) */
+    --rev-tint:#ecfaf1;     /* soft mint   — Reviews */
+    --pay-tint:#f6f0ff;     /* soft lilac  — Payments */
+    --r:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    font-size:18px;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* faint paper grid */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(43,43,43,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(43,43,43,.035) 1px,transparent 1px);
+    background-size:26px 26px;
+  }
+  h1,h2,h3,h4{font-family:'Gaegu',cursive;font-weight:700;margin:0;line-height:1.1;}
+
+  /* ---------- sketchy primitives ---------- */
+  .sk{
+    border:2.5px solid var(--line);
+    border-radius:var(--r);
+    background:#fff;
+    box-shadow:3px 3px 0 rgba(43,43,43,.12);
+  }
+  .sk-fill{background:var(--fill);}
+  .tilt{transform:rotate(-.35deg);}
+  .tilt-r{transform:rotate(.4deg);}
+  .hl{ /* highlighter behind text */
+    background:linear-gradient(transparent 55%,var(--acc-soft) 55%);
+    padding:0 .12em;
+  }
+
+  /* ============================================================
+     SECTION SYSTEM  (numbered headers + rhythm + the standout)
+     ============================================================ */
+  .sec{position:relative;z-index:1;margin:0 0 52px;}
+  .sec:last-child{margin-bottom:0;}
+  .section-head{display:flex;align-items:center;gap:16px;margin:0 0 20px;}
+  .section-head .sec-no{
+    font-family:'Gaegu';font-weight:700;font-size:24px;width:52px;height:52px;flex:none;
+    border:2.5px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:#fff;box-shadow:3px 3px 0 rgba(43,43,43,.14);transform:rotate(-5deg);
+  }
+  .section-head .sec-txt{display:flex;flex-direction:column;}
+  .section-head .sec-eyebrow{font-family:'Caveat';font-weight:700;font-size:22px;line-height:1;
+    color:var(--acc);transform:rotate(-1.5deg);margin-bottom:1px;}
+  .section-head .sec-tt{font-family:'Gaegu';font-weight:700;font-size:36px;line-height:1;}
+  .section-head .sec-rule{flex:1;height:0;border-top:2.5px dashed var(--line);align-self:center;margin-top:8px;}
+  .section-head .sec-action{flex:none;}
+  @media(max-width:560px){
+    .section-head{gap:12px;}
+    .section-head .sec-tt{font-size:27px;}
+    .section-head .sec-rule{display:none;}
+  }
+
+  /* per-section colour identity */
+  .sec-feat .section-head .sec-no{background:var(--feat-tint);}
+  .sec-rev{margin-top:30px;}
+  .sec-rev  .section-head .sec-no{background:var(--rev-tint);}
+  .sec-pay  .section-head .sec-no{background:var(--pay-tint);}
+
+  /* THE STANDOUT — Shop by category sits in its own framed panel */
+  .sec-cat{
+    background:var(--cat-tint);
+    border:3px solid var(--line);border-radius:22px;
+    box-shadow:9px 9px 0 rgba(43,43,43,.16);
+    padding:26px 28px 32px;
+  }
+  .sec-cat .section-head{margin-bottom:6px;}
+  .sec-cat .section-head .sec-no{background:var(--acc);color:#fff;transform:rotate(-7deg) scale(1.06);}
+  .sec-cat .section-head .sec-tt{font-size:42px;}
+  .sec-cat .section-head .sec-rule{border-top-color:rgba(43,43,43,.4);}
+  .sec-cat .subhead{margin:0 0 18px;}
+  @media(max-width:560px){
+    .sec-cat{padding:20px 16px 24px;}
+    .sec-cat .section-head .sec-tt{font-size:30px;}
+  }
+
+  /* ============================================================
+     BACKGROUND MOTION GRAPHICS  (slow-drifting hand-drawn doodles)
+     ============================================================ */
+  .bg-doodles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .bg-doodles .dd{position:absolute;color:var(--acc);opacity:.26;will-change:transform;}
+  .bg-doodles .dd.ink{color:var(--ink);opacity:.12;}
+  .bg-doodles .dd svg{display:block;width:100%;height:100%;}
+  .bg-doodles .fa{animation:ddFloat 9s ease-in-out infinite;}
+  .bg-doodles .fb{animation:ddDrift 14s ease-in-out infinite;}
+  .bg-doodles .fc{animation:ddSpin 30s linear infinite;}
+  .bg-doodles .fd{animation:ddFloat 12s ease-in-out infinite reverse;}
+  @keyframes ddFloat{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-28px) rotate(7deg);}}
+  @keyframes ddDrift{0%,100%{transform:translate(0,0) rotate(0);}33%{transform:translate(24px,-18px) rotate(9deg);}66%{transform:translate(-16px,14px) rotate(-9deg);}}
+  @keyframes ddSpin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  @media(prefers-reduced-motion:reduce){.bg-doodles .dd{animation:none!important;}}
+  .dash{border-style:dashed!important;}
+  .muted{color:var(--ink-soft);}
+  .tiny{font-size:13px;}
+
+  /* image / photo placeholder */
+  .ph{
+    position:relative;background:var(--fill);
+    border:2.5px solid var(--line);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .ph svg{width:46px;height:46px;opacity:.5;}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block;background:#fff;}
+  .ph .ph-tag{
+    position:absolute;left:8px;bottom:6px;font-size:12px;color:var(--ink-soft);
+    background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:0 8px;
+  }
+
+  /* ============================================================
+     TOP TOOLBAR (the wireframe tooling — not part of the design)
+     ============================================================ */
+  .toolbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:10px 16px;background:#2b2b2b;color:#fbfaf6;
+    border-bottom:3px solid #000;
+  }
+  .toolbar .brand{font-family:'Gaegu',cursive;font-weight:700;font-size:20px;letter-spacing:.3px;}
+  .toolbar .brand small{font-family:'Nunito';font-weight:400;opacity:.65;font-size:13px;display:block;margin-top:-4px;}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;}
+  .tab{
+    font-family:'Gaegu',cursive;font-weight:700;font-size:16px;cursor:pointer;white-space:nowrap;
+    background:transparent;color:#fbfaf6;border:2px solid #fbfaf6;border-radius:10px;
+    padding:5px 12px;transition:.12s;
+  }
+  .tab:hover{background:rgba(255,255,255,.12);}
+  .tab.active{background:var(--acc);border-color:var(--acc);color:#fff;}
+  .spacer{flex:1;}
+  .ctl{display:flex;align-items:center;gap:7px;font-family:'Nunito';font-size:14px;}
+  .ctl label{opacity:.8;}
+  .ctl input[type=number]{
+    width:78px;font-family:'Nunito';font-size:15px;padding:4px 8px;
+    border:2px solid #fbfaf6;border-radius:8px;background:#3a3a3a;color:#fff;
+  }
+  .swatches{display:flex;gap:6px;}
+  .sw{width:22px;height:22px;border-radius:50%;border:2px solid #fbfaf6;cursor:pointer;}
+  .sw.active{outline:2px solid #fff;outline-offset:2px;}
+
+  /* ============================================================
+     STAGE / PAGE
+     ============================================================ */
+  #stage{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:30px 22px 90px;}
+
+  /* shared page header (part of each design) */
+  .banner{overflow:hidden;padding:0;margin-bottom:14px;}
+  .banner img{display:block;width:100%;height:auto;}
+  .headbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+  .headbar .spacer{flex:1;}
+  .pghead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:8px;}
+  .logo{
+    display:flex;align-items:center;gap:12px;flex:none;
+  }
+  .logo .mark{
+    width:54px;height:54px;border-radius:12px;border:2.5px solid var(--line);
+    background:var(--fill);display:flex;align-items:center;justify-content:center;
+    font-family:'Gaegu';font-weight:700;font-size:24px;box-shadow:3px 3px 0 rgba(43,43,43,.12);
+  }
+  .logo .name{font-family:'Gaegu';font-weight:700;font-size:30px;line-height:1.05;white-space:nowrap;}
+  .logo .name small{display:block;font-family:'Nunito';font-weight:400;font-size:14px;color:var(--ink-soft);margin-top:-4px;}
+
+  .socials{display:flex;gap:8px;align-items:center;}
+  .ic{
+    width:38px;height:38px;border-radius:10px;border:2.5px solid var(--line);background:#fff;
+    display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--ink);
+    box-shadow:2px 2px 0 rgba(43,43,43,.12);transition:.12s;
+  }
+  .ic:hover{transform:translateY(-2px);}
+  .ic svg{width:20px;height:20px;}
+  .ic.ic-msgr{background:#0a7cff;border-color:var(--line);color:#fff;}
+  .ic.ic-msgr:hover{background:#0b6fe0;}
+
+  /* rate banner */
+  .ratebar{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding:10px 16px;margin:14px 0 22px;border-radius:12px;
+    border:2.5px dashed var(--line);background:var(--fill);
+  }
+  .ratebar .dot{width:10px;height:10px;border-radius:50%;background:var(--acc);
+    box-shadow:0 0 0 4px var(--acc-soft);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .ratebar b{font-family:'Gaegu';}
+
+  /* link buttons (order / warranty) */
+  .linkbtn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);
+    font-family:'Gaegu';font-weight:700;font-size:16px;
+    border:2.5px solid var(--line);border-radius:10px;padding:7px 14px;background:#fff;
+    box-shadow:3px 3px 0 rgba(43,43,43,.12);transition:.12s;
+  }
+  .linkbtn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(43,43,43,.18);}
+  .linkbtn.cta{background:var(--acc);border-color:var(--acc);color:#fff;}
+  .linkbtn svg{width:16px;height:16px;}
+  .linkbtn.chat-btn{background:#e9f2ff;}
+  .linkbtn.chat-btn:hover{background:#d6e8ff;}
+
+  /* ---- floating Messenger CTA ---- */
+  .chat-fab{position:fixed;right:22px;bottom:22px;z-index:90;display:flex;align-items:center;gap:12px;
+    padding:12px 18px 12px 14px;background:#0a7cff;color:#fff;cursor:pointer;text-decoration:none;
+    border:3px solid var(--line);border-radius:46px;box-shadow:5px 6px 0 rgba(43,43,43,.22);
+    font-family:'Gaegu';animation:fabPop .4s ease both,fabPulse 2.6s ease-in-out 1.2s infinite;}
+  .chat-fab:hover{transform:translateY(-2px);box-shadow:6px 8px 0 rgba(43,43,43,.26);background:#0b6fe0;animation-play-state:paused;}
+  .chat-fab .cf-ic{flex:none;width:34px;height:34px;border-radius:50%;background:#fff;
+    display:flex;align-items:center;justify-content:center;}
+  .chat-fab .cf-ic svg{width:22px;height:22px;color:#0a7cff;}
+  .chat-fab .cf-label{display:flex;flex-direction:column;line-height:1.05;padding-right:6px;}
+  .chat-fab .cf-label b{font-weight:700;font-size:19px;}
+  .chat-fab .cf-label small{font-family:'Nunito';font-size:12px;opacity:.92;}
+  .chat-fab .cf-close{flex:none;font-family:'Gaegu';font-weight:700;font-size:18px;line-height:1;
+    width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.22);margin-left:2px;opacity:.85;}
+  .chat-fab .cf-close:hover{background:rgba(255,255,255,.4);opacity:1;}
+  .chat-fab.collapsed .cf-label,.chat-fab.collapsed .cf-close{display:none;}
+  .chat-fab.collapsed{padding:13px;border-radius:50%;animation:fabPop .4s ease both,fabPulse 2.6s ease-in-out 1.2s infinite;}
+  @keyframes fabPop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+  @keyframes fabPulse{0%,100%{box-shadow:5px 6px 0 rgba(43,43,43,.22),0 0 0 0 rgba(10,124,255,.5);}
+    50%{box-shadow:5px 6px 0 rgba(43,43,43,.22),0 0 0 12px rgba(10,124,255,0);}}
+  @media(prefers-reduced-motion:reduce){.chat-fab{animation:none!important;}}
+  @media(max-width:560px){
+    .chat-fab{right:14px;bottom:14px;padding:11px;border-radius:50%;}
+    .chat-fab .cf-label,.chat-fab .cf-close{display:none;}
+  }
+
+  /* price */
+  .peso{font-family:'Gaegu';font-weight:700;color:var(--ink);}
+  .usd{font-size:13px;color:var(--ink-soft);}
+  .srp{font-family:'Nunito';font-size:13px;color:var(--ink-soft);text-decoration:line-through;line-height:1;}
+  .save{font-family:'Gaegu';font-weight:700;font-size:12px;color:var(--acc);}
+
+  /* stock badges */
+  .badge{font-family:'Gaegu';font-weight:700;font-size:13px;border:2px solid var(--line);
+    border-radius:20px;padding:1px 10px;white-space:nowrap;}
+  .badge.in{background:#e7f3ea;}
+  .badge.low{background:#fdf3e0;}
+  .badge.out{background:#f1eeec;color:var(--ink-soft);text-decoration:line-through;}
+
+  /* spec chips */
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{font-family:'Nunito';font-size:15px;font-weight:600;border:2px solid var(--line);border-radius:8px;padding:2px 11px;background:#fff;line-height:1.45;}
+  .chip b{font-family:'Nunito';font-weight:800;color:var(--ink);}
+  .spec-list{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:16px;align-items:baseline;}
+  .spec-list .k{font-family:'Gaegu';font-weight:700;color:var(--ink-soft);white-space:nowrap;}
+  .spec-list .v{text-wrap:pretty;}
+
+  /* ---------- carousel ---------- */
+  .car{position:relative;}
+  .car .frame{position:relative;width:100%;height:100%;}
+  .car .ph{width:100%;height:100%;}
+  .car .nav{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;
+    border:2.5px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-family:'Gaegu';font-weight:700;box-shadow:2px 2px 0 rgba(43,43,43,.15);}
+  .car .nav:hover{background:var(--fill);}
+  .car .prev{left:8px;} .car .next{right:8px;}
+  .car .dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px;}
+  .car .dots i{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--line);background:#fff;cursor:pointer;}
+  .car .dots i.on{background:var(--acc);border-color:var(--acc);}
+
+  /* ============================================================
+     LAYOUT A — TABLE
+     ============================================================ */
+  .tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:6px;}
+  .tbl thead th{
+    font-family:'Gaegu';font-weight:700;font-size:15px;text-align:left;
+    padding:10px 12px;border-bottom:3px solid var(--line);background:var(--fill);
+    position:relative;
+  }
+  .tbl tbody td{padding:12px;border-bottom:2px dashed var(--fill-2);vertical-align:middle;}
+  .tbl tbody tr:hover{background:#fff;}
+  .tbl .model{display:flex;align-items:center;gap:12px;}
+  .tbl .model .ph{width:64px;height:46px;flex:none;}
+  .tbl .model .nm{font-family:'Gaegu';font-weight:700;font-size:17px;line-height:1;}
+  .tbl .model .nm small{display:block;font-family:'Nunito';font-weight:400;font-size:13px;color:var(--ink-soft);}
+  .tbl td.pr{text-align:right;}
+  .tbl .peso{font-size:22px;}
+
+  /* ============================================================
+     LAYOUT B — CARDS GRID
+     ============================================================ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;margin-top:8px;}
+  .card{display:flex;flex-direction:column;overflow:hidden;}
+  .card .car{aspect-ratio:1/1;height:auto;border-bottom:2.5px solid var(--line);background:#fff;}
+  .card .car .ph,.featcard .car .ph{background:#fff;}
+  .card .car .ph img,.featcard .car .ph img{object-fit:contain;padding:10px;}
+  .card .body{padding:14px 15px 16px;display:flex;flex-direction:column;gap:10px;flex:1;}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .card .nm{font-family:'Gaegu';font-weight:700;font-size:20px;line-height:1.05;}
+  .card .nm small{display:block;font-family:'Nunito';font-weight:400;font-size:13px;color:var(--ink-soft);}
+  .card .pricerow{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto;}
+  .card .peso{font-size:26px;}
+
+  /* ============================================================
+     LAYOUT C — MINIMAL LIST + EXPAND
+     ============================================================ */
+  .list{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+  .row{cursor:pointer;}
+  .row .head{display:flex;align-items:center;gap:14px;padding:14px 16px;}
+  .row .head .ph{width:58px;height:42px;flex:none;}
+  .row .head .nm{font-family:'Gaegu';font-weight:700;font-size:19px;line-height:1;}
+  .row .head .nm small{display:block;font-family:'Nunito';font-weight:400;font-size:13px;color:var(--ink-soft);}
+  .row .head .right{margin-left:auto;display:flex;align-items:center;gap:14px;}
+  .row .head .peso{font-size:22px;}
+  .row .head .caret{font-family:'Gaegu';font-weight:700;transition:.2s;}
+  .row.open .head .caret{transform:rotate(180deg);}
+  .row .detail{display:none;border-top:2px dashed var(--fill-2);padding:16px;gap:18px;}
+  .row.open .detail{display:flex;flex-wrap:wrap;}
+  .row .detail .car{width:240px;height:150px;flex:none;}
+  .row .detail .specs{flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px;}
+
+  /* ============================================================
+     LAYOUT D — FEATURED + COMPACT LIST
+     ============================================================ */
+  .feat{display:grid;grid-template-columns:1.15fr 1fr;gap:0;overflow:hidden;margin-top:8px;}
+  .feat .car{min-height:330px;border-right:2.5px solid var(--line);}
+  .feat .info{padding:22px 24px;display:flex;flex-direction:column;gap:14px;}
+  .feat .tagline{font-family:'Gaegu';font-weight:700;font-size:13px;color:var(--acc);text-transform:uppercase;letter-spacing:1px;}
+  .feat .nm{font-family:'Gaegu';font-weight:700;font-size:34px;line-height:1;}
+  .feat .nm small{display:block;font-family:'Nunito';font-weight:400;font-size:15px;color:var(--ink-soft);margin-top:2px;}
+  .feat .peso{font-size:40px;}
+  .compact{display:flex;flex-direction:column;margin-top:22px;}
+  .compact .ch{font-family:'Gaegu';font-weight:700;font-size:18px;margin-bottom:6px;}
+  .crow{display:flex;align-items:center;gap:14px;padding:12px 14px;border-bottom:2px dashed var(--fill-2);}
+  .crow .ph{width:54px;height:38px;flex:none;}
+  .crow .nm{font-family:'Gaegu';font-weight:700;font-size:16px;line-height:1;}
+  .crow .nm small{display:block;font-family:'Nunito';font-weight:400;font-size:12px;color:var(--ink-soft);}
+  .crow .sp{color:var(--ink-soft);font-size:14px;flex:1;}
+  .crow .peso{font-size:19px;}
+
+  .pgfoot{margin-top:34px;padding-top:18px;border-top:2px dashed var(--fill-2);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--ink-soft);font-size:14px;}
+
+  /* ---------- reviews ---------- */
+  .reviews-sec{margin-top:38px;padding-top:24px;border-top:2.5px dashed var(--line);}
+  .reviews-sec h2{line-height:1.15;}
+  .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;}
+  .rev{padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px;}
+  .rev .rtext{margin:0;font-size:16px;line-height:1.5;text-wrap:pretty;}
+  .rev .rmeta{display:flex;align-items:center;gap:8px;margin-top:auto;font-family:'Gaegu';flex-wrap:wrap;}
+  .rev .rmeta b{white-space:nowrap;}
+  .rev .ravatar{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--fill);
+    display:flex;align-items:center;justify-content:center;font-family:'Gaegu';font-weight:700;font-size:15px;flex:none;}
+  .stars{display:flex;gap:2px;}
+  .stars .st{width:17px;height:17px;color:var(--fill-2);display:flex;}
+  .stars .st.on{color:var(--acc);}
+  .stars .st svg{width:17px;height:17px;}
+
+  /* ---------- payment options ---------- */
+  .pay-sec{margin-top:34px;padding-top:24px;border-top:2.5px dashed var(--line);}
+  .pay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;}
+  .pay-card{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;}
+  .pay-h{font-family:'Gaegu';font-weight:700;font-size:21px;line-height:1;}
+  .pay-sub{font-family:'Nunito';font-size:14px;color:var(--ink-soft);}
+  .pay-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+  .pay-chips span{font-family:'Gaegu';font-weight:700;font-size:15px;border:2px solid var(--line);
+    border-radius:20px;padding:3px 13px;background:var(--fill);line-height:1.5;}
+  .pay-note{font-family:'Gaegu';font-weight:700;font-size:15px;color:var(--acc);
+    border:2px dashed var(--acc);border-radius:20px;padding:3px 13px;align-self:flex-start;margin-top:4px;}
+
+  /* ---------- featured picks band (Browse laptops) ---------- */
+  .featband-title{font-family:'Gaegu';font-weight:700;font-size:20px;margin:2px 0 12px;display:flex;align-items:center;gap:8px;}
+  .featband-title::after{content:"";flex:1;height:0;border-top:2.5px dashed var(--line);}
+  .featband{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:26px;}
+  .featcard{position:relative;border-width:3px;box-shadow:5px 5px 0 var(--acc-soft);}
+  .featcard .car{aspect-ratio:1/1;min-height:0;}
+  .feat-ribbon{position:absolute;top:0;left:0;z-index:3;background:var(--acc);color:#fff;font-family:'Gaegu';font-weight:700;
+    font-size:14px;padding:4px 16px 5px;border-radius:0 0 12px 0;border-right:2.5px solid var(--line);border-bottom:2.5px solid var(--line);}
+  @media(max-width:720px){ .featband{grid-template-columns:1fr;} }
+
+  /* ---------- filter bar (Browse laptops) ---------- */
+  .filters{
+    border:2.5px solid var(--line);border-radius:14px;background:#fff;
+    box-shadow:3px 3px 0 rgba(43,43,43,.12);padding:6px 16px 12px;margin:4px 0 20px;
+  }
+  .filtrow{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:2px dashed var(--fill-2);}
+  .filtrow:last-of-type{border-bottom:none;}
+  .filtrow .flabel{font-family:'Gaegu';font-weight:700;font-size:15px;width:62px;flex:none;padding-top:5px;color:var(--ink-soft);}
+  .fchips{display:flex;flex-wrap:wrap;gap:8px;flex:1;}
+  .fchip{font-family:'Gaegu';font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--line);
+    border-radius:20px;padding:3px 13px;background:#fff;transition:.12s;line-height:1.5;}
+  .fchip:hover{background:var(--fill);}
+  .fchip.on{background:var(--acc);border-color:var(--acc);color:#fff;}
+  .filterfoot{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap;}
+  .fcount{font-family:'Gaegu';font-weight:700;font-size:16px;}
+  .fclear{font-family:'Gaegu';font-weight:700;font-size:14px;cursor:pointer;background:transparent;
+    border:2px dashed var(--line);border-radius:20px;padding:3px 13px;color:var(--ink-soft);}
+  .fclear:hover{background:var(--fill);color:var(--ink);}
+  .nores{grid-column:1/-1;padding:36px;text-align:center;font-family:'Gaegu';font-weight:700;font-size:18px;color:var(--ink-soft);
+    border:2.5px dashed var(--line);border-radius:14px;background:var(--fill);}
+  .nores .fchip{margin-left:8px;display:inline-block;}
+
+  /* ---------- freebie drop-down ---------- */
+  .linkbtn.freebie-btn{background:#fdf3e0;}
+  .linkbtn.freebie-btn.cta{background:var(--acc);color:#fff;}
+  .freebie-panel{max-height:0;overflow:hidden;transition:max-height .32s ease;}
+  .freebie-panel.open{max-height:1400px;margin:0 0 20px;}
+  .fb-inner{padding:16px 18px;}
+  .fb-head{font-family:'Gaegu';font-size:19px;margin-bottom:4px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;}
+  .fb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin-top:14px;}
+  .fb-card{display:flex;flex-direction:column;gap:6px;}
+  .fb-img{position:relative;border:2.5px solid var(--line);border-radius:10px;background:#fff;aspect-ratio:1/1;overflow:hidden;}
+  .fb-img img{width:100%;height:100%;object-fit:cover;display:block;}
+  .fb-ph{display:none;}
+  .fb-img.noimg{border-style:dashed;background:var(--fill);}
+  .fb-img.noimg img{display:none;}
+  .fb-img.noimg .fb-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    position:absolute;inset:0;padding:12px;color:var(--ink-soft);font-family:'Gaegu';font-weight:700;font-size:13px;gap:4px;}
+  .fb-ph code{font-size:11px;word-break:break-all;line-height:1.3;}
+  .fb-brand{font-family:'Gaegu';font-weight:700;font-size:16px;text-align:center;}
+
+  @media(max-width:720px){
+    .feat{grid-template-columns:1fr;}
+    .feat .car{border-right:none;border-bottom:2.5px solid var(--line);}
+    .tbl thead{display:none;}
+  }
+
+  /* ============================================================
+     BRAND-FIRST NAVIGATION  (index → brand → model → configs)
+     ============================================================ */
+  .subhead{font-family:'Nunito';color:var(--ink-soft);font-size:16px;margin:-2px 0 18px;}
+
+  /* category index (level 1) */
+  .catgroup{margin-bottom:6px;}
+  .catgroup-h{font-family:'Gaegu';font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:1.5px;
+    color:var(--ink-soft);margin:20px 0 11px;display:flex;align-items:center;gap:10px;}
+  .catgroup-h::after{content:"";flex:1;height:0;border-top:2px dashed var(--fill-2);}
+  .catrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+  .cattile{font-family:inherit;text-align:left;color:var(--ink);cursor:pointer;
+    padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px;min-height:128px;}
+  .cattile:hover{transform:translate(-1px,-1px) rotate(-.3deg);box-shadow:5px 5px 0 rgba(43,43,43,.2);}
+  .cattile .ct-name{font-family:'Gaegu';font-weight:700;font-size:30px;line-height:1;}
+  .cattile .ct-desc{font-family:'Nunito';font-size:14px;color:var(--ink-soft);text-wrap:pretty;line-height:1.35;}
+  .cattile .ct-meta{font-family:'Gaegu';font-weight:700;font-size:14px;color:var(--acc);margin-top:auto;}
+
+  /* ---- hover + scroll highlight (category tiles, brand tiles, model rows) ---- */
+  .cattile,.brandtile,.scard,.cfg{transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease,border-color .18s ease;}
+  .cattile:hover,.brandtile:not(.soon):hover{border-color:var(--acc);background:var(--cat-tint);box-shadow:6px 6px 0 var(--acc-soft);}
+  .cattile:hover .ct-name,.brandtile:not(.soon):hover .bt-name{color:var(--acc);}
+  /* in-view: the card/row nearest the centre of the screen as you scroll */
+  .cattile.inview,.brandtile.inview{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft),5px 5px 0 rgba(43,43,43,.16);}
+  .cattile.inview .ct-meta,.brandtile.inview .bt-meta{color:var(--acc);}
+  .scard.inview,.cfg.inview{background:var(--cat-tint);}
+  .scard.inview{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft);}
+  .cfg.inview{box-shadow:inset 4px 0 0 var(--acc);}
+  @media(prefers-reduced-motion:reduce){.cattile,.brandtile,.scard,.cfg{transition:none;}}
+
+  /* brand index tiles */
+  .brandgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:20px;margin-top:8px;}
+  .brandtile{font-family:inherit;color:var(--ink);text-align:left;cursor:pointer;padding:0;overflow:hidden;
+    display:flex;flex-direction:column;}
+  .brandtile:not(.soon):hover{transform:translate(-1px,-1px) rotate(-.3deg);box-shadow:5px 5px 0 rgba(43,43,43,.2);}
+  .brandtile .bt-photo{aspect-ratio:4/3;border-bottom:2.5px solid var(--line);background:#fff;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .brandtile .bt-photo img{width:100%;height:100%;object-fit:contain;padding:14px;}
+  .brandtile .bt-photo svg{width:46px;height:46px;opacity:.4;}
+  .brandtile .bt-logo{padding:0;}
+  .brandtile .bt-logo img{padding:22px;}
+  .brandtile .bt-logo-text{display:none;font-family:'Gaegu';font-weight:700;font-size:30px;color:var(--ink);text-align:center;padding:0 12px;}
+  .brandtile .bt-logo.noimg img{display:none;}
+  .brandtile .bt-logo.noimg .bt-logo-text{display:block;}
+  .brandtile .bt-body{padding:12px 15px 15px;display:flex;flex-direction:column;gap:2px;}
+  .brandtile .bt-name{font-family:'Gaegu';font-weight:700;font-size:25px;line-height:1;}
+  .brandtile .bt-meta{font-family:'Nunito';font-size:14px;color:var(--ink-soft);}
+  .brandtile.soon{cursor:default;background:var(--fill);opacity:.72;}
+  .brandtile.soon .bt-meta{font-family:'Gaegu';font-weight:700;color:var(--acc);}
+
+  /* brand page */
+  .backbtn{font-family:'Gaegu';font-weight:700;font-size:16px;cursor:pointer;background:#fff;
+    border:2.5px solid var(--line);border-radius:10px;padding:6px 14px;box-shadow:3px 3px 0 rgba(43,43,43,.12);}
+  .backbtn:hover{transform:translate(-1px,-1px);background:var(--fill);}
+  .brandhead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:14px 0 16px;}
+  .brandhead h2{font-size:40px;}
+
+  /* model series cards (accordion) */
+  .serieslist{display:flex;flex-direction:column;gap:14px;}
+  .scard{overflow:hidden;}
+  .scard .shead{display:flex;align-items:center;gap:15px;padding:13px 16px;cursor:pointer;}
+  .scard.soon .shead{cursor:default;}
+  .scard .shead>.ph{width:78px;height:58px;flex:none;}
+  .scard .shead>.ph img{object-fit:contain;padding:4px;}
+  .scard .sinfo{flex:1;min-width:0;}
+  .scard .sname{font-family:'Gaegu';font-weight:700;font-size:23px;line-height:1.05;}
+  .scard .sname small{font-family:'Nunito';font-weight:400;font-size:14px;color:var(--ink-soft);}
+  .scard .smeta{font-family:'Nunito';font-size:14px;color:var(--ink-soft);}
+  .scard .caret{font-family:'Gaegu';font-weight:700;font-size:22px;transition:.2s;flex:none;}
+  .scard.open .caret{transform:rotate(180deg);}
+  .scard.soon{background:var(--fill);opacity:.66;}
+  .sconfigs{display:none;border-top:2px dashed var(--fill-2);}
+  .scard.open .sconfigs{display:block;}
+
+  /* a single configuration row */
+  .cfg{display:flex;gap:16px;padding:16px;border-bottom:2px dashed var(--fill-2);}
+  .cfg:last-child{border-bottom:none;}
+  .cfg .cfg-photo{width:158px;flex:none;}
+  .cfg .cfg-photo .car{aspect-ratio:1/1;border:2.5px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;}
+  .cfg .cfg-photo .ph{border:none;border-radius:0;}
+  .cfg .cfg-photo .ph img{object-fit:contain;padding:8px;}
+  .cfg .cfg-main{flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px;}
+  .cfg .cfg-label{font-family:'Nunito';font-weight:800;font-size:24px;line-height:1.15;letter-spacing:-.2px;}
+  .cfg .cfg-buy{flex:none;width:172px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;
+    gap:8px;text-align:right;}
+  .cfg .cfg-buy .peso{font-size:26px;}
+  @media(max-width:680px){
+    .cfg{flex-wrap:wrap;}
+    .cfg .cfg-photo{width:120px;}
+    .cfg .cfg-buy{width:100%;align-items:flex-start;text-align:left;}
+  }
+
+  /* ============================================================
+     WARRANTY & TERMS MODAL
+     ============================================================ */
+  .wmodal-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;
+    padding:40px 18px;background:rgba(28,28,28,.55);backdrop-filter:blur(2px);overflow-y:auto;}
+  .wmodal-overlay.open{display:flex;animation:wmFade .2s ease;}
+  @keyframes wmFade{from{opacity:0;}to{opacity:1;}}
+  .wmodal{position:relative;width:100%;max-width:760px;background:#fff;border:3px solid var(--line);
+    border-radius:18px;box-shadow:9px 10px 0 rgba(43,43,43,.28);margin:auto;
+    display:flex;flex-direction:column;max-height:calc(100vh - 80px);animation:wmPop .26s ease;}
+  @keyframes wmPop{from{transform:translateY(14px) scale(.98);opacity:0;}to{transform:none;opacity:1;}}
+  .wmodal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex:none;
+    padding:22px 24px 16px;border-bottom:2.5px dashed var(--fill-2);}
+  .wmodal-head .wmh-title{display:flex;align-items:center;gap:14px;}
+  .wmodal-head .wmh-badge{flex:none;width:50px;height:50px;border:2.5px solid var(--line);border-radius:14px;
+    background:var(--cat-tint);display:flex;align-items:center;justify-content:center;font-size:26px;
+    box-shadow:3px 3px 0 rgba(43,43,43,.14);transform:rotate(-5deg);}
+  .wmodal-head .wmh-eyebrow{font-family:'Caveat';font-weight:700;font-size:20px;color:var(--acc);line-height:1;transform:rotate(-1.5deg);}
+  .wmodal-head h2{font-family:'Gaegu';font-weight:700;font-size:34px;line-height:1.05;margin:2px 0 0;}
+  .wmodal-close{flex:none;width:42px;height:42px;border:2.5px solid var(--line);border-radius:11px;background:#fff;
+    font-family:'Gaegu';font-weight:700;font-size:26px;line-height:1;cursor:pointer;box-shadow:3px 3px 0 rgba(43,43,43,.14);}
+  .wmodal-close:hover{transform:translate(-1px,-1px);background:var(--fill);}
+  .wmodal-body{padding:20px 28px 8px;overflow-y:auto;}
+  .wmodal-body .wlead{font-family:'Nunito';font-size:16px;line-height:1.5;color:var(--ink);
+    background:var(--feat-tint);border:2px solid var(--line);border-radius:12px;padding:13px 16px;text-wrap:pretty;}
+  .wsec{margin:24px 0;}
+  .wsec h3{font-family:'Gaegu';font-weight:700;font-size:24px;display:flex;align-items:center;gap:11px;margin:0 0 10px;}
+  .wsec h3 .wnum{flex:none;font-size:15px;width:34px;height:34px;border:2.5px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;background:var(--rev-tint);transform:rotate(-4deg);}
+  .wsec p{font-family:'Nunito';font-size:15px;line-height:1.55;color:var(--ink);margin:0 0 10px;text-wrap:pretty;}
+  .wsec .wsublabel{font-family:'Gaegu';font-weight:700;font-size:15px;color:var(--ink-soft);margin:14px 0 6px;}
+  .wlist{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:7px;}
+  .wlist li{font-family:'Nunito';font-size:15px;line-height:1.45;padding-left:24px;position:relative;text-wrap:pretty;}
+  .wlist li::before{content:"✓";position:absolute;left:0;top:0;color:var(--acc);font-family:'Gaegu';font-weight:700;}
+  .wnote{font-family:'Nunito';font-size:14px;line-height:1.5;color:var(--ink);background:#fff7ea;
+    border:2px solid var(--line);border-left:6px solid var(--acc);border-radius:10px;padding:11px 14px;margin:11px 0;text-wrap:pretty;}
+  .wnote::before{content:"📌 ";}
+  .wdefs{margin:0;display:flex;flex-direction:column;gap:13px;}
+  .wdefs dt{font-family:'Gaegu';font-weight:700;font-size:18px;margin-bottom:2px;}
+  .wdefs dd{font-family:'Nunito';font-size:15px;line-height:1.5;color:var(--ink-soft);margin:0;text-wrap:pretty;}
+  .wshops{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  .wshop{padding:14px 16px;}
+  .wshop-name{font-family:'Gaegu';font-weight:700;font-size:18px;line-height:1.1;}
+  .wshop-loc{font-family:'Nunito';font-size:13px;color:var(--acc);font-weight:700;margin-bottom:7px;}
+  .wshop .wmeta{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;}
+  .wshop .wmeta li{font-family:'Nunito';font-size:13.5px;line-height:1.4;color:var(--ink-soft);text-wrap:pretty;}
+  .wshop .wmeta a{color:var(--acc);}
+  .wfine{font-size:13.5px !important;color:var(--ink-soft) !important;font-style:italic;}
+  .wmodal-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:16px 24px;border-top:2.5px dashed var(--fill-2);background:var(--paper,#fff);border-radius:0 0 15px 15px;}
+  @media(max-width:600px){
+    .wmodal-body{padding:18px 18px 6px;}
+    .wmodal-head{padding:18px 18px 14px;}
+    .wmodal-head h2{font-size:27px;}
+    .wshops{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= BACKGROUND MOTION GRAPHICS (drifting doodles) ======= -->
+<div class="bg-doodles" aria-hidden="true">
+  <div class="dd fa" style="top:13%;left:3%;width:74px;height:74px;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4c2 9 6 13 16 14-10 2-14 6-16 16-2-10-6-14-16-16 10-1 14-5 16-14z"/></svg>
+  </div>
+  <div class="dd fb ink" style="top:9%;right:5%;width:66px;height:66px;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 30c0-9 6-16 14-16 6 0 9 4 9 9s-4 8-8 8-6-3-6-6 3-5 6-4"/></svg>
+  </div>
+  <div class="dd fc" style="top:33%;left:5%;width:50px;height:50px;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6v36M6 24h36"/></svg>
+  </div>
+  <div class="dd fd" style="top:40%;right:4%;width:88px;height:64px;">
+    <svg viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="8" width="40" height="26" rx="3"/><path d="M6 42h52"/></svg>
+  </div>
+  <div class="dd fb" style="top:60%;left:4%;width:70px;height:40px;">
+    <svg viewBox="0 0 64 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c6-10 12 10 18 0s12-10 18 0 12 10 18 0"/></svg>
+  </div>
+  <div class="dd fa ink" style="top:66%;right:6%;width:56px;height:56px;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 30l8-10 8 8 12-16"/></svg>
+  </div>
+  <div class="dd fc ink" style="top:84%;left:7%;width:46px;height:46px;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="16"/></svg>
+  </div>
+  <div class="dd fd" style="top:88%;right:8%;width:64px;height:64px;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 5c2 9 6 13 16 14-10 2-14 6-16 16-2-10-6-14-16-16 10-1 14-5 16-14z"/></svg>
+  </div>
+</div>
+
+<!-- ======= WIREFRAME TOOLING TOOLBAR ======= -->
+<div class="toolbar">
+  <div class="brand">JLS Price List <small>2025 &amp; newer models</small></div>
+  <div class="spacer"></div>
+  <div class="ctl">
+    <label>accent</label>
+    <div class="swatches" id="swatches"></div>
+  </div>
+</div>
+
+<div id="stage"></div>
+
+<!-- ======= FLOATING MESSENGER CTA (always visible) ======= -->
+<a id="chatFab" class="chat-fab" target="_blank" aria-label="Message us on Messenger">
+  <span class="cf-ic"></span>
+  <span class="cf-label"><b>Chat with us</b><small>We reply fast on Messenger</small></span>
+  <span class="cf-close" role="button" aria-label="Hide" title="Hide">×</span>
+</a>
+
+<!-- ======= WARRANTY & TERMS MODAL ======= -->
+<div class="wmodal-overlay" id="warrantyModal" aria-hidden="true">
+  <div class="wmodal sk" role="dialog" aria-modal="true" aria-labelledby="wmTitle">
+    <div class="wmodal-head">
+      <div class="wmh-title">
+        <span class="wmh-badge">🛡️</span>
+        <div>
+          <div class="wmh-eyebrow">1-year local personal warranty</div>
+          <h2 id="wmTitle">Warranty &amp; Terms</h2>
+        </div>
+      </div>
+      <button class="wmodal-close" id="warrantyClose" aria-label="Close">×</button>
+    </div>
+    <div class="wmodal-body">
+      <p class="wlead">Thank you for choosing <b>Justin's Laptop Stop (JLS)</b>! Every unit is backed by a comprehensive <b>local personal warranty</b> covering parts and services for <b>one (1) year</b> from the purchase date.</p>
+
+      <span class="wtoc-jump" id="wTocAnchor"></span>
+
+      <section class="wsec">
+        <h3><span class="wnum">01</span> Returns &amp; Refunds</h3>
+        <p>Within the <b>first seven (7) days from delivery</b>, you may return the laptop for a full refund if the unit is proven defective by the JLS Team or partner repair centers. After this period, the laptop may only be subject to warranty.</p>
+        <p class="wsublabel">Acceptable cases for a return or refund:</p>
+        <ul class="wlist">
+          <li><b>Dead pixels</b> — pixels permanently off, resulting in a defective display.</li>
+          <li><b>Overheating</b> — frequent shutdowns from a defective cooling system or internal components.</li>
+          <li><b>Graphics card issues</b> — display artifacts, flickering, or performance problems in games / graphic-intensive apps.</li>
+          <li><b>Audio issues</b> — speakers or microphone producing distorted or low-quality sound, or not functioning.</li>
+          <li><b>Battery issues</b> — battery draining quickly or not holding a charge.</li>
+        </ul>
+        <div class="wnote">Light bleed (uneven backlight at the screen edges/corners — common in gaming laptops) is <b>not</b> considered a dead pixel and is not covered.</div>
+        <div class="wnote">A laptop that "runs hot" but does <b>not</b> shut down or artifact does not merit a return or refund — we can share cooling-management tips.</div>
+        <div class="wnote">Any damage from user error or mishandling is not covered. Evidence of tampering, misuse, or accidental damage voids the warranty.</div>
+      </section>
+
+      <section class="wsec">
+        <h3><span class="wnum">02</span> Warranty Period</h3>
+        <p>The warranty period is <b>one (1) year from the purchase date</b> — the date you settled full payment of your order is the starting reference.</p>
+        <p class="wsublabel">To verify legitimate JLS customers, we recognize any of:</p>
+        <ul class="wlist">
+          <li>Acknowledgment Receipts issued by JLS</li>
+          <li>Online conversation threads with recognized JLS staff via the official Facebook page</li>
+          <li>Proof of payment transfers</li>
+        </ul>
+        <p>Please keep a copy of your purchase records as proof of purchase — it verifies warranty status and expedites any repair or replacement. If you don't have one yet, just request it from our team.</p>
+      </section>
+
+      <section class="wsec">
+        <h3><span class="wnum">03</span> Warranty Coverage</h3>
+        <p>The 1-year local personal warranty covers issues caused by manufacturing defects, including the cost of <b>parts, labor, and shipping</b>.</p>
+        <p class="wsublabel">Issues covered include:</p>
+        <ul class="wlist">
+          <li>Defective hard drives or SSDs</li>
+          <li>Malfunctioning keyboards or trackpads</li>
+          <li>Failed or malfunctioning RAM</li>
+          <li>Non-functional ports such as USB or HDMI</li>
+          <li>Display issues such as dead pixels, backlight bleeding, or flickering</li>
+          <li>Overheating from a malfunctioning cooling system or internal components</li>
+        </ul>
+        <p class="wsublabel">Parts that degrade naturally are fixed or replaced free of charge:</p>
+        <ul class="wlist">
+          <li>Batteries that degrade over time and no longer hold a charge</li>
+          <li>Fans that wear out and no longer function properly</li>
+          <li>Cables that fray over time and cause connectivity issues</li>
+        </ul>
+        <div class="wnote">The warranty does not cover issues from user error, mishandling, accidental damage, or external factors beyond JLS's control. If an issue isn't covered, the customer is responsible for repair or replacement costs.</div>
+      </section>
+
+      <section class="wsec">
+        <h3><span class="wnum">04</span> Warranty Limitations</h3>
+        <dl class="wdefs">
+          <div><dt>Light Bleed</dt><dd>Uneven backlight bleeding at the edges/corners of the screen — common in gaming laptops. Not considered a dead pixel; not covered.</dd></div>
+          <div><dt>Tampering</dt><dd>Any signs of tampering void the warranty — including removing or altering components, stickers, or seals.</dd></div>
+          <div><dt>User Damage</dt><dd>Not covered: damage from user error or mishandling, including dropping, liquid spills, or exposure to extreme temperatures.</dd></div>
+          <div><dt>External Factors</dt><dd>Not covered: damage from power surges, natural disasters, or accidents during shipping.</dd></div>
+          <div><dt>Shipping Damage</dt><dd>If the laptop arrives visibly damaged from shipping, contact the carrier directly to file a claim. Photograph the damage and keep all original packaging for inspection. JLS is not responsible for courier mishandling — contact the carrier as soon as possible.</dd></div>
+          <div><dt>Upgrades</dt><dd>If you upgrade the laptop yourself, take photos before and after opening it / switching parts. Upgrading without JLS's knowledge voids the warranty, and JLS is not liable for damage caused by self-upgraded components.</dd></div>
+        </dl>
+      </section>
+
+      <section class="wsec">
+        <h3><span class="wnum">05</span> Partner Repair Centers</h3>
+        <p>For checking or repair of a warranty-covered JLS laptop, bring it to a partner repair center below and tell them it's a <b>"JLS unit."</b> JLS covers the costs if it's within the warranty period and terms.</p>
+        <div class="wshops">
+          <div class="wshop sk">
+            <div class="wshop-name">Team Spike Computer Repair Center</div>
+            <div class="wshop-loc">Quezon City</div>
+            <ul class="wmeta">
+              <li>FB: <a href="https://www.facebook.com/teamspikeph" target="_blank">facebook.com/teamspikeph</a></li>
+              <li>(+632) 8 518 7882 · (+63916) 269 7727 — Jack Carlos</li>
+              <li>#133 G. Roxas St., Brgy. Manresa, QC (Black Gate)</li>
+              <li>Mon–Sat, 8AM–5PM</li>
+            </ul>
+          </div>
+          <div class="wshop sk">
+            <div class="wshop-name">TechnoActive</div>
+            <div class="wshop-loc">Alabang</div>
+            <ul class="wmeta">
+              <li>Festival Mall Alabang, 2nd Floor, Main Mall</li>
+            </ul>
+          </div>
+        </div>
+        <p class="wsublabel">Estimated repair lead times:</p>
+        <ul class="wlist">
+          <li>Diagnosis / cleaning / testing: 3–5 business days</li>
+          <li>Part replacement: 2–3 weeks order lead time</li>
+          <li>Standard repair: + 3–5 business days</li>
+          <li>Complex repair: 1–2 months or longer (e.g. full motherboard replacement)</li>
+        </ul>
+        <div class="wnote">Back up your data before sending a laptop for repair — JLS and partner centers are not responsible for data loss during the repair process. Repair centers may charge fees for work not covered by the warranty (e.g. accidental damage or misuse).</div>
+      </section>
+
+      <section class="wsec">
+        <h3><span class="wnum">06</span> Transfer of Warranty</h3>
+        <p>If the laptop is sold or given to another party, the warranty is transferable and still based on the <b>original purchase date</b> from JLS.</p>
+        <p>The original owner must notify JLS within <b>14 days</b> of the sale/transfer with the new owner's name and contact details. The new owner must then provide either:</p>
+        <ul class="wlist">
+          <li>Acknowledgment Receipts issued by JLS</li>
+          <li>Letter of endorsement from the previous verified owner</li>
+        </ul>
+        <div class="wnote">If the new owner can't provide proof of ownership or a copy of the original receipt, the warranty is considered void.</div>
+        <p>Repairs or services under warranty are provided only to the original purchaser or the warranty transferee — not to any subsequent owner. The same limitations and exclusions apply.</p>
+      </section>
+
+      <section class="wsec">
+        <h3><span class="wnum">07</span> Manufacturer's Warranty</h3>
+        <p>JLS laptops are considered "grey units" by local customs, so the manufacturer's warranty is not applicable nor reinstated. Instead, JLS provides the 1-year local personal warranty for manufacturing defects as outlined above.</p>
+        <p class="wfine">These terms are subject to change without prior notice and apply only to verified JLS customer units serviced through our partner repair shops around Metro Manila. By purchasing from JLS, you acknowledge and agree to these warranty terms. Questions? Message us on our official Facebook page.</p>
+      </section>
+    </div>
+    <div class="wmodal-foot">
+      <span class="muted tiny">Brand-new sealed units · 1-year local personal warranty</span>
+      <a class="linkbtn cta" id="wmMsgr" target="_blank">${''}</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   ░░  DEVELOPER — EDIT EVERYTHING IN THIS BLOCK  ░░
+   ----------------------------------------------------------------
+   Prices are stored in PHP (pesos) — exactly as in your Notion list.
+   Edit a laptop's `price` (and optional `srp` original price) to
+   update it. The live USD↔PHP rate is shown for reference and adds a
+   "≈ $X" under each price (price ÷ RATE). Source: JLS 2026 list,
+   2025-and-newer models only.
+   ================================================================ */
+
+let RATE = 58.50;            // ← current USD → PHP rate (for the $ reference)
+
+/* Want it fully automatic? Uncomment & this will refresh on load.
+   (Falls back to the manual RATE above if the network/API fails.)
+async function fetchLiveRate(){
+  try{
+    const r = await fetch('https://open.er-api.com/v6/latest/USD');
+    const j = await r.json();
+    if(j && j.rates && j.rates.PHP){ RATE = j.rates.PHP; render(); }
+  }catch(e){ }   // keep manual RATE on failure
+}
+fetchLiveRate();
+*/
+
+/* Your links — paste real URLs here */
+const LINKS = {
+  orderForm:   "https://tally.so/r/nPKkVw",          // ← order form (Tally)
+  warranty:    "https://bit.ly/413XviV",             // ← warranty details
+  facebook:    "https://www.facebook.com/jlstop",    // ← Facebook page
+  messenger:   "https://m.me/jlstop",                // ← Messenger deep-link (m.me/<page username>)
+  reviewsPage: "https://www.facebook.com/jlstop/reviews", // ← all reviews on FB
+  instagram:   ""                                    // ← Instagram (leave "" to hide icon)
+};
+
+/* FREEBIES — every laptop ships with a free brand-matched backpack.
+   Drop each brand's backpack photo into images/freebies/ using the filename below
+   (e.g. images/freebies/lenovo.png). Any brand without a photo yet shows a
+   dashed "add your photo here" placeholder in the drop-down. */
+const FREEBIES = {
+  note:  "Every JLS laptop comes with a FREE backpack matched to its brand — while supplies last.",
+  byBrand: {                              // ← brand : backpack photo path
+    "Acer":      "images/freebies/acer.png",
+    "Alienware": "images/freebies/alienware.png",
+    "ASUS":      "images/freebies/asus.png",
+    "Gigabyte":  "images/freebies/gigabyte.png",
+    "HP":        "images/freebies/hp.png",
+    "Lenovo":    "images/freebies/lenovo.png",
+    "MSI":       "images/freebies/msi.png",
+    "Razer":     "images/freebies/razer.png"
+  }
+};
+
+/* FEATURED — the 2 laptops spotlighted at the top of "Browse laptops".
+   Match each by "Brand|Model" exactly as written in the laptops list below.
+   The featured band always shows these 2, regardless of the active filters. */
+const FEATURED = [
+  "ASUS|ROG Scar 16 2025 5080",
+  "Razer|Blade 16 2025 5080"
+];
+
+/* Customer reviews — paste your best quotes from facebook.com/jlstop/reviews.
+   (Facebook reviews can't be auto-pulled — they live behind FB's login. The
+    "Read all reviews on Facebook" button always links to your live page.) */
+const reviews = [
+  { name:"Mark R.",     stars:5, date:"Jan 2026", text:"Super legit seller! Sulit ang price and ang bilis mag-reply. Aftersales is top notch." },
+  { name:"Andrea L.",   stars:5, date:"Nov 2025", text:"Bought my ROG here — sealed, with warranty, and cheaper than the mall. Highly recommended!" },
+  { name:"Josh T.",     stars:5, date:"Jul 2025", text:"Ang dami kong tanong tapos pinagbigyan lahat. Solid kwentuhan about specs. Will buy again." },
+  { name:"Patricia M.", stars:5, date:"Mar 2025", text:"Smooth transaction from order form to delivery. Genuine units, trusted store!" },
+  { name:"Kevin D.",    stars:5, date:"Oct 2024", text:"Second unit ko na dito. Consistent ang service and laging updated sa latest models." },
+  { name:"Rhea S.",     stars:5, date:"Jun 2024", text:"Nag-alangan ako mag-online order pero ang bilis ng GCash transfer at dumating agad. Salamat JLS!" },
+  { name:"Carlo V.",    stars:5, date:"Feb 2024", text:"Paid via PayPal credit card, walang issue. Brand new sealed laptop with full warranty papers." },
+  { name:"Bianca G.",   stars:5, date:"Sep 2023", text:"Best price I found for my Legion. Honest seller, walang hidden charges. 10/10 would refer to friends." },
+  { name:"Miguel A.",   stars:5, date:"Apr 2023", text:"Reliable since day one. Tumawag pa ako to confirm and very accommodating sila. Trusted talaga." }
+];
+
+
+/* Your laptops — imported from the JLS 2026 list (2025+ models). Prices in PHP. */
+const laptops = [
+  { brand:'Acer', model:'Nitro V15 2025', year:'2025', cpu:'i5-13420H', gpu:'NVIDIA GeForce RTX 5050 8GB 100W TGP', ram:'16GB (2x8GB) 3200Mhz Dual Channel DDR4', storage:'512GB M.2 NVMe PCIe Gen 3 SSD', display:'15.6" FHD IPS 1920x1080p IPS 165hz Display', color:'Black', price:59900, srp:67000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Acer', model:'Nitro V16 2025', year:'2025', cpu:'Intel Core Ultra 7 240H', gpu:'NVIDIA GeForce RTX 5070 8GB 100W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GM.2 NVMe PCIe Gen 4 SSD', display:'16" WUXGA 1920x1200p IPS 180hz Display', color:'Black', price:94500, srp:109000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Acer', model:'Predator Helios Neo 16S 2025 5060', year:'2025', cpu:'Intel Core Ultra 9 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5060 8GB 115W TGP', ram:'16GB (2x8GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'Gray', price:89900, srp:103499, promo:'2026 UPDATED PRICE', stock:'ask', photos:1 },
+  { brand:'Acer', model:'Predator Helios Neo 16s 2025 5070ti', year:'2025', cpu:'Intel Core Ultra 9 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5070ti 12GB 140W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'Gray', price:129500, srp:154000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Alienware', model:'16 Aurora 2025 5050', year:'2025', cpu:'Intel Core 7 240H 10 Cores', gpu:'NVIDIA GeForce RTX 5050 8GB 100W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" QHD 2560x1440p IPS 120hz Display', color:'Gray', price:78000, srp:99500, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Alienware', model:'16 Aurora 2025 5060', year:'2025', cpu:'Intel Core 7 240H 10 Cores', gpu:'NVIDIA GeForce RTX 5060 8GB 100W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 165hz Display', color:'Gray', price:89900, srp:109500, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Alienware', model:'Area 51 2025 16 5070 ti', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" QHD 2560x1600p IPS 240hz Display 100% DCI-P3 500 Nits', color:'Dark Side of the Moon', price:199900, srp:230000, promo:'2025 OFFER', stock:'out', photos:1 },
+  { brand:'Alienware', model:'Area 51 2025 16 5080', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" QHD 2560x1600p IPS 240hz Display 100% DCI-P3 500 Nits', color:'Dark Side of the Moon', price:219000, srp:230000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Alienware', model:'Area 51 2025 18 5080', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'2TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" QHD 2560x1600p IPS 240hz Display 100% DCI-P3 500 Nits', color:'Dark Side of the Moon', price:209900, srp:245000, promo:'2025 OFFER', stock:'ask', photos:1 },
+  { brand:'Alienware', model:'X16 Aurora 2025 5070', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5070 8GB 100W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display', color:'Gray', price:124500, srp:164000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'ASUS', model:'ROG Scar 16 2025 5080', year:'2025', cpu:'Intel Core Ultra 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'2TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p Mini LED 240hz Display', color:'Gray', price:219000, srp:264000, promo:'2025 OFFER', stock:'ask', photos:1 },
+  { brand:'ASUS', model:'ROG Strix 16 2025 5070ti 9955hx', year:'2025', cpu:'AMD Ryzen 9955HX', gpu:'NVIDIA GeForce RTX 5070ti 12GB 140W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display', color:'Gray', price:145000, srp:204000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'ASUS', model:'ROG Strix 16 2025 5070ti 8940hx', year:'2025', cpu:'AMD Ryzen 8940HX', gpu:'NVIDIA GeForce RTX 5070ti 12GB 140W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WUXGA 1920x1200p IPS 165hz Display', color:'Gray', price:124500, srp:204000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'ASUS', model:'ROG Strix 16 2025 5070ti Ultra 9', year:'2025', cpu:'Intel Core Ultra 9 275HX', gpu:'NVIDIA GeForce RTX 5070ti 12GB 140W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'2TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display', color:'Gray', price:159500, srp:204000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'ASUS', model:'ROG Strix 16 2025 5080', year:'2025', cpu:'Intel Core Ultra 9 275HX', gpu:'NVIDIA GeForce RTX 5080ti 16GB 140W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display', color:'Gray', price:189900, srp:235000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'ASUS', model:'ROG Strix G18 2025 5070', year:'2025', cpu:'Ryzen 9 8940HX', gpu:'NVIDIA GeForce RTX 5070 8GB GDDR6', ram:'16GB DDR5 5600MHz', storage:'1TB PCIe Gen4 SSD', display:'18" 16:10 2560x1600 QHD+ 240Hz 3ms', color:'Eclipse Gray', price:129900, srp:0, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'ASUS', model:'TUF A16 5070', year:'2025', cpu:'AMD Ryzen AI 9 270 8 Cores', gpu:'NVIDIA GeForce RTX 5070 8GB 115W TGP', ram:'32GB (2x16GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" FHD IPS 1920x1200p 165hz Display', color:'Gray', price:99900, srp:129000, promo:'2025 OFFER', stock:'out', photos:1 },
+  { brand:'ASUS', model:'ROG Zephyrus G16 5070 2025', year:'2025', cpu:'Intel Core Ultra 9 285H 16 Cores 22 Threads', gpu:'NVIDIA GeForce RTX 5070 8GB 100W TGP', ram:'16GB LPDDR5 7467 RAM (SOLDERED)', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" OLED 2560x1600p 240hz Display', color:'Gray', price:135000, srp:159000, promo:'2025 OFFER', stock:'in', photos:1 },
+  { brand:'Gigabyte', model:'AORUS Master 16 2025 5080', year:'2025', cpu:'Intel Core Ultra 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'Gray', price:205000, srp:0, promo:'2025 OFFER', stock:'ask', photos:1 },
+  { brand:'HP', model:'Omen Max 16 5070ti', year:'2025', cpu:'Ryzen 7 350', gpu:'NVIDIA GeForce RTX 5070ti 12GB 150W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display 500 Nits 100% sRGB', color:'Black', price:109900, srp:156000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'HP', model:'Omen Max 16 5080', year:'2025', cpu:'Ryzen AI 9 HX 375 (up to 5.1 GHz max boost clock, 24 MB L3 cache, 12 cores, 24 threads)', gpu:'NVIDIA GeForce RTX 5080 16GB 150W TGP', ram:'32GB 2x16GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display 500 Nits 100% sRGB', color:'Black', price:164500, srp:215000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'HP', model:'Omen Transcend 14 5070', year:'2025', cpu:'Intel Core Ultra 9 285H', gpu:'NVIDIA GeForce RTX 5070 8GB 100W TGP', ram:'32GB (1x16GB) 7457mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'14.0" WQXGA 2880x1800p OLED 120hz Display', color:'Dark Gray', price:125000, srp:215000, promo:'2025 OFFER', stock:'in', photos:1 },
+  { brand:'HP', model:'Victus 15.6 2025 5060', year:'2025', cpu:'Intel Core i7-13620H 10 Cores', gpu:'NVIDIA GeForce RTX 5060 8GB 100W TGP', ram:'(16GB 2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GBM.2 NVMe PCIe Gen 4 SSD', display:'15.6" FHD IPS 1920x1080p 144hz IPS Display', color:'Gray', price:74500, srp:0, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 5i Pro Gen 10 5070', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5070 8GB 140W TGP', ram:'16GB (2x16GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 165hz Display', color:'Black', price:119000, srp:149000, promo:'2025 OFFER', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 7i (2025) White 5070', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5070 8GB 115W TGP', ram:'32GB (2x16GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'White', price:139000, srp:153500, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 5i Pro Gen 10 5070ti', year:'2025', cpu:'Intel Core Ultra 9 275HX 24 Cores', gpu:'NVIDIA GeForce RTX 5070ti 12GB 140W TGP', ram:'32GB (2x16GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 165hz Display', color:'Black', price:139900, srp:165000, promo:'2025 OFFER', stock:'out', photos:1 },
+  { brand:'Lenovo', model:'Legion 5 (Ryzen) Gen 10 5060', year:'2025', cpu:'Ryzen 7 260', gpu:'NVIDIA GeForce RTX 5060 8GB 115W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GB M.2 NVMe PCIe Gen 4 SSD', display:'15.1" WQXGA 2560x1600p OLED 165hz Display', color:'Eclipse Black', price:89900, srp:101000, promo:'2026 UPDATED PRICE', stock:'out', photos:1 },
+  { brand:'Lenovo', model:'Legion 5 Gen 10 5070', year:'2025', cpu:'Intel Core Ultra 9 275HX', gpu:'NVIDIA GeForce RTX 5070 8GB 115W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'15.1" WQXGA 2560x1600p OLED 165hz Display', color:'Gray', price:109900, srp:135000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 5i Gen 10 5060', year:'2025', cpu:'Intel Core i7-14700HX', gpu:'NVIDIA GeForce RTX 5060 8GB 115W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'15.1" WQXGA 2560x1600p OLED 165hz Display', color:'Eclipse Black', price:89900, srp:104500, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 5i Pro Gen 10 2025', year:'2025', cpu:'Intel Core Ultra 9 275HX', gpu:'NVIDIA GeForce RTX 5070ti 12GB 150W TGP', ram:'32GB (2x16GB) 5600Mhz Dual Channel DDR5', storage:'1TBB M.2 NVMe PCIe Gen 4 SSD', display:'16" WQXGA 2560x1600p OLED 165hz Display', color:'Gray', price:138000, srp:158000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 7i Pro Gen 10 5070ti', year:'2025', cpu:'Intel Core Ultra 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5070ti 12GB 150W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'Gray', price:158000, srp:169000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'Legion 7i Pro Gen 10 5080', year:'2025', cpu:'Intel Core Ultra 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'32GB (2x16GB) 6400Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'Gray', price:179900, srp:215000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'LOQ 2025 5060 15.6', year:'2025', cpu:'AMD Ryzen 7 250', gpu:'NVIDIA GeForce RTX 5060 8GB 100W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GM.2 NVMe PCIe Gen 4 SSD', display:'15.6" FHD IPS 144hz G-Sync 100% sRGB Display', color:'Light Gray', price:72500, srp:119000, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Lenovo', model:'LOQ 2025 5060 17', year:'2025', cpu:'Intel Core i7-13650HX 14 Cores', gpu:'NVIDIA GeForce RTX 5060 8GB 100W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GM.2 NVMe PCIe Gen 4 SSD', display:'17.3" FHD IPS 144hz G-Sync 100% sRGB Display', color:'Light Gray', price:77900, srp:119000, promo:'2026 UPDATED PRICE', stock:'ask', photos:1 },
+  { brand:'MSI', model:'Vector 16 HX 2025 5070ti', year:'2025', cpu:'Intel Core Ultra 255X 20 Cores', gpu:'NVIDIA GeForce RTX 5070ti 12GB 150W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'512GB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" FHD+ 1920x1200p IPS 240hz Display', color:'Gray', price:112500, srp:154500, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'MSI', model:'Vector 16 HX 2025 5080', year:'2025', cpu:'Intel Core Ultra 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display', color:'Gray', price:179000, srp:0, promo:'2025 OFFER', stock:'in', photos:1 },
+  { brand:'MSI', model:'Vector 16 HX 2025 5080', year:'2025', cpu:'Intel Core Ultra 275X 24 Cores', gpu:'NVIDIA GeForce RTX 5080 16GB 175W TGP', ram:'16GB (2x8GB) 5600Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p IPS 240hz Display', color:'Gray', price:139000, srp:0, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Razer', model:'Blade 14 2025 5070', year:'2025', cpu:'AMD Ryzen AI 9 365 10 Core', gpu:'NVIDIA GeForce RTX 5070 8GB TGP 115W', ram:'32GB (2x16GB) 8000Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'14.0" 3k 2880x1800p OLED 120hz Display', color:'Black', price:149900, srp:0, promo:'2026 UPDATED PRICE', stock:'in', photos:1 },
+  { brand:'Razer', model:'Blade 16 2025 5080', year:'2025', cpu:'AMD Ryzen AI 9 365 10 Core', gpu:'NVIDIA GeForce RTX 5080 16GB 150W TGP', ram:'32GB (2x16GB) 8000Mhz Dual Channel DDR5', storage:'1TB M.2 NVMe PCIe Gen 4 SSD', display:'16.0" WQXGA 2560x1600p OLED 240hz Display', color:'Gray', price:269000, srp:0, promo:'2025 OFFER', stock:'in', photos:1 }
+];
+
+/* Photo folders linked from the JLS image archive (brand|model → [folder, #photos]).
+   Models not listed here have no photos yet and fall back to a placeholder. */
+const PHOTO_DIRS = {
+  'Acer|Nitro V15 2025':['acer-nitro-v15-2025',2],
+  'Acer|Nitro V16 2025':['acer-nitro-v16-2025',2],
+  'Acer|Predator Helios Neo 16s 2025 5070ti':['acer-helios-neo-16s-5070ti',2],
+  'Alienware|Area 51 2025 16 5070 ti':['alienware-area51-16-5070ti',2],
+  'Alienware|Area 51 2025 18 5080':['alienware-area51-18-5080',2],
+  'Alienware|X16 Aurora 2025 5070':['alienware-x16-aurora-5070',2],
+  'ASUS|ROG Scar 16 2025 5080':['asus-scar-16-5080',2],
+  'ASUS|ROG Strix 16 2025 5070ti 9955hx':['asus-strix-16-5070ti-9955hx',2],
+  'ASUS|TUF A16 5070':['asus-tuf-a16-5070',2],
+  'ASUS|ROG Zephyrus G16 5070 2025':['asus-zephyrus-g16-5070-2025',2],
+  'Gigabyte|AORUS Master 16 2025 5080':['gigabyte-aorus-master-16-5080',2],
+  'HP|Omen Max 16 5080':['hp-omen-max-16-5080',2],
+  'HP|Omen Transcend 14 5070':['hp-omen-transcend-14-5070',2],
+  'HP|Victus 15.6 2025 5060':['hp-victus-156-5060',2],
+  'Lenovo|Legion 5i Pro Gen 10 5070':['legion-5i-pro-g10-5070',2],
+  'Lenovo|Legion 7i (2025) White 5070':['legion-7i-2025-white-5070',2],
+  'Lenovo|Legion 5i Gen 10 5060':['legion-5i-gen10-5060',2],
+  'Lenovo|Legion 5i Pro Gen 10 2025':['legion-5i-pro-g10-2025',2],
+  'Lenovo|Legion 7i Pro Gen 10 5080':['legion-7i-pro-g10-5080',2],
+  'Lenovo|LOQ 2025 5060 17':['loq-2025-5060-17',2],
+  'MSI|Vector 16 HX 2025 5080':['msi-vector-16hx-5080',2],
+  'Razer|Blade 14 2025 5070':['razer-blade-14-5070',2],
+  'Razer|Blade 16 2025 5080':['razer-blade-16-5080',4]
+};
+laptops.forEach(l=>{
+  const m = PHOTO_DIRS[l.brand+'|'+l.model];
+  if(m){ l.dir='images/laptops/'+m[0]; l.photos=m[1]; } else { l.dir=null; }
+});
+
+/* ================================================================
+   BRAND CATALOG — the model line-up shown when a brand is tapped.
+   Brands appear in this order. Each brand lists its model SERIES.
+   A series with no matching units below shows "Coming soon".
+   `note` is the small grey text after the model name.
+   ================================================================ */
+const CATALOG = [
+  { brand:'ASUS', series:[
+    {name:'ROG Strix G16 Series'}, {name:'ROG Strix G18 Series'},
+    {name:'ROG Zephyrus G14'}, {name:'ROG Zephyrus G16'},
+    {name:'ROG Scar 16'}, {name:'ROG Scar 18'},
+    {name:'Zenbook 14'}, {name:'Vivobook S14'}, {name:'Vivobook S16'},
+    {name:'TUF A14'}, {name:'TUF A16'},
+    {name:'ROG Flow Z13'}, {name:'ROG Flow X13'}
+  ]},
+  { brand:'Lenovo', series:[
+    {name:'Legion 5'}, {name:'Legion 5i'}, {name:'Legion 5 Pro'}, {name:'Legion 5i Pro'},
+    {name:'Legion 7i'}, {name:'Legion 7i Pro'}, {name:'Legion 9'},
+    {name:'LOQ'}, {name:'X Series'},
+    {name:'ThinkPad Series', note:'E14, E15, 16'}, {name:'ThinkBook Series', note:'14, 16'},
+    {name:'Yoga 7 Series', note:'14, 16'}, {name:'Yoga 9 Series', note:'14, 16'},
+    {name:'IdeaPad Series', note:'3 / 3i, 5, Pro'}
+  ]},
+  { brand:'Alienware', series:[
+    {name:'Aurora 16 Series', note:'16, 16X'}, {name:'Area 51 16'}, {name:'Area 51 18'}
+  ]},
+  { brand:'Razer', series:[
+    {name:'Blade 14'}, {name:'Blade 16'}, {name:'Blade 18'}
+  ]},
+  { brand:'Acer', series:[
+    {name:'Nitro 15'}, {name:'Nitro 16'}, {name:'Nitro 17'},
+    {name:'Predator Neo 14'}, {name:'Predator 16 Series', note:'16, 16s'}, {name:'Predator 18'},
+    {name:'Swift Series', note:'Swift, Swift X'}, {name:'Aspire'}, {name:'Swift Go'}
+  ]},
+  { brand:'HP', series:[
+    {name:'Omen Transcend 14'}, {name:'Omen Max 16'}, {name:'Omen 16'},
+    {name:'Victus 15'}, {name:'OmniBook', note:'3, 5, 7, X Flip'}
+  ]},
+  { brand:'MSI', series:[
+    {name:'Vector 16'}, {name:'Vector A18'}, {name:'Stealth 14'}, {name:'Stealth 16'},
+    {name:'Cyborg 15'}, {name:'Katana 15'}, {name:'Summit Series'}
+  ]},
+  { brand:'Gigabyte', series:[
+    {name:'AORUS Master 16'}
+  ]},
+  { brand:'Microsoft', series:[], soon:true },
+  { brand:'Dell',      series:[], soon:true },
+  { brand:'NAGA Philippines', series:[], soon:true }
+];
+
+/* Which model SERIES each unit belongs to (brand|model → series name above). */
+const SERIES_MAP = {
+  'Acer|Nitro V15 2025':'Nitro 15',
+  'Acer|Nitro V16 2025':'Nitro 16',
+  'Acer|Predator Helios Neo 16S 2025 5060':'Predator 16 Series',
+  'Acer|Predator Helios Neo 16s 2025 5070ti':'Predator 16 Series',
+  'Alienware|16 Aurora 2025 5050':'Aurora 16 Series',
+  'Alienware|16 Aurora 2025 5060':'Aurora 16 Series',
+  'Alienware|X16 Aurora 2025 5070':'Aurora 16 Series',
+  'Alienware|Area 51 2025 16 5070 ti':'Area 51 16',
+  'Alienware|Area 51 2025 16 5080':'Area 51 16',
+  'Alienware|Area 51 2025 18 5080':'Area 51 18',
+  'ASUS|ROG Scar 16 2025 5080':'ROG Scar 16',
+  'ASUS|ROG Strix 16 2025 5070ti 9955hx':'ROG Strix G16 Series',
+  'ASUS|ROG Strix 16 2025 5070ti 8940hx':'ROG Strix G16 Series',
+  'ASUS|ROG Strix 16 2025 5070ti Ultra 9':'ROG Strix G16 Series',
+  'ASUS|ROG Strix 16 2025 5080':'ROG Strix G16 Series',
+  'ASUS|ROG Strix G18 2025 5070':'ROG Strix G18 Series',
+  'ASUS|TUF A16 5070':'TUF A16',
+  'ASUS|ROG Zephyrus G16 5070 2025':'ROG Zephyrus G16',
+  'Gigabyte|AORUS Master 16 2025 5080':'AORUS Master 16',
+  'HP|Omen Max 16 5070ti':'Omen Max 16',
+  'HP|Omen Max 16 5080':'Omen Max 16',
+  'HP|Omen Transcend 14 5070':'Omen Transcend 14',
+  'HP|Victus 15.6 2025 5060':'Victus 15',
+  'Lenovo|Legion 5i Pro Gen 10 5070':'Legion 5i Pro',
+  'Lenovo|Legion 7i (2025) White 5070':'Legion 7i',
+  'Lenovo|Legion 5i Pro Gen 10 5070ti':'Legion 5i Pro',
+  'Lenovo|Legion 5 (Ryzen) Gen 10 5060':'Legion 5',
+  'Lenovo|Legion 5 Gen 10 5070':'Legion 5',
+  'Lenovo|Legion 5i Gen 10 5060':'Legion 5i',
+  'Lenovo|Legion 5i Pro Gen 10 2025':'Legion 5i Pro',
+  'Lenovo|Legion 7i Pro Gen 10 5070ti':'Legion 7i Pro',
+  'Lenovo|Legion 7i Pro Gen 10 5080':'Legion 7i Pro',
+  'Lenovo|LOQ 2025 5060 15.6':'LOQ',
+  'Lenovo|LOQ 2025 5060 17':'LOQ',
+  'MSI|Vector 16 HX 2025 5070ti':'Vector 16',
+  'MSI|Vector 16 HX 2025 5080':'Vector 16',
+  'Razer|Blade 14 2025 5070':'Blade 14',
+  'Razer|Blade 16 2025 5080':'Blade 16'
+};
+laptops.forEach(l=>{ l.series = SERIES_MAP[l.brand+'|'+l.model] || null; });
+
+/* ================================================================
+   CATEGORIES — the parent filter shown BEFORE "shop by brand".
+   Two axes: by use (Gaming / Productivity) and by budget.
+   Budget thresholds (PHP) — edit to taste:
+   ================================================================ */
+const BUDGET = { lowMax:90000, midMax:150000 };   // < low | low–mid | ≥ mid = high
+function budgetTier(l){
+  if(l.price < BUDGET.lowMax) return 'low';
+  if(l.price < BUDGET.midMax) return 'mid';
+  return 'high';
+}
+/* Productivity = ultrabooks / creator lines; everything else = gaming. */
+const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern)/i;
+function seriesUse(name){ return PRODUCTIVITY_RE.test(name||'') ? 'productivity' : 'gaming'; }
+laptops.forEach(l=>{ l.use = seriesUse(l.series || l.model); });
+
+const CATEGORIES = [
+  { group:'What will you use it for?', items:[
+    { id:'gaming',       name:'Gaming',       desc:'RTX gaming laptops — ROG, Legion, Nitro, Blade & more' },
+    { id:'productivity', name:'Productivity', desc:'Ultrabooks & creator laptops — Zenbook, ThinkPad, Yoga' }
+  ]},
+  { group:'What\u2019s your budget?', items:[
+    { id:'low',  name:'Low Budget', desc:'Under \u20b190,000' },
+    { id:'mid',  name:'Mid-Range',  desc:'\u20b190,000 \u2013 \u20b1150,000' },
+    { id:'high', name:'High End',   desc:'\u20b1150,000 & up' }
+  ]}
+];
+function catLabel(id){ for(const g of CATEGORIES) for(const it of g.items) if(it.id===id) return it.name; return ''; }
+function matchesCat(l,cat){
+  if(!cat) return true;
+  if(cat==='gaming'||cat==='productivity') return l.use===cat;
+  return budgetTier(l)===cat;
+}
+/* does a model SERIES belong in this category? (lets empty productivity series show as "coming soon") */
+function seriesInCat(brand,s,cat){
+  if(cat==='gaming'||cat==='productivity') return seriesUse(s.name)===cat;
+  return configsForSeries(brand,s.name).some(l=>matchesCat(l,cat));
+}
+
+/* ================================================================
+   ░░  END OF EDITABLE BLOCK — wireframe engine below  ░░
+   ================================================================ */
+
+const ACCENTS = [
+  {name:"coral",  hex:"#e8543f"},
+  {name:"blue",   hex:"#2f6df0"},
+  {name:"green",  hex:"#1f9d63"},
+  {name:"ink",    hex:"#2b2b2b"}
+];
+
+const state = {
+  accent: localStorage.getItem('jls.acc') || '#e8543f',
+  cat:    null,            // null = category index
+  brand:  null,            // null = brand index within the category
+};
+
+/* ---------- spec helpers (also used to label configurations) ---------- */
+function gpuTier(l){
+  const g=l.gpu||'';
+  if(/5070\s*ti/i.test(g)) return 'RTX 5070 Ti';
+  if(/5080/i.test(g))      return 'RTX 5080';
+  if(/5070/i.test(g))      return 'RTX 5070';
+  if(/5060/i.test(g))      return 'RTX 5060';
+  if(/5050/i.test(g))      return 'RTX 5050';
+  return 'GPU';
+}
+function ramTier(l){ const m=(l.ram||'').match(/(\d+)\s*GB/i); return m?m[1]+'GB':'—'; }
+function shortCpu(s){
+  s=(s||'').split('(')[0];
+  s=s.replace(/\b\d+\s*Cores?\b.*$/i,'');
+  s=s.replace(/\b\d+\s*Threads?\b.*$/i,'');
+  s=s.replace(/\bIntel\b|\bAMD\b/gi,'');
+  return s.replace(/\s+/g,' ').trim();
+}
+function configLabel(l){
+  const cpu=shortCpu(l.cpu);
+  return [gpuTier(l), cpu, ramTier(l)].filter(Boolean).join(' · ');
+}
+function configsForSeries(brand,name){ return laptops.filter(l=>l.brand===brand && l.series===name); }
+
+/* ---------- helpers ---------- */
+const pesoFmt = new Intl.NumberFormat('en-PH',{maximumFractionDigits:0});
+const usdFmt  = new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+function peso(n){ return '₱'+pesoFmt.format(Math.round(n)); }
+function usdRef(n){ return '≈ $'+usdFmt.format(Math.round(n/RATE)); }
+function stockBadge(s){
+  if(s==='in')  return '<span class="badge in">Pre Order Basis only</span>';
+  if(s==='ask') return '<span class="badge low">Ask to confirm</span>';
+  return '<span class="badge out">Not available</span>';
+}
+const phSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 16l-5-5L5 20"/></svg>';
+function thumb(l){
+  return l && l.dir
+    ? `<div class="ph"><img src="${l.dir}/1.png" alt="${l.brand} ${l.model}" loading="lazy" /></div>`
+    : `<div class="ph">${phSVG}</div>`;
+}
+function carousel(l, tag){
+  const hasImg = l && l.dir;
+  const n = hasImg ? (l.photos||1) : 1;
+  let frames='';
+  for(let i=0;i<n;i++){
+    const inner = hasImg
+      ? `<img src="${l.dir}/${i+1}.png" alt="${l.brand} ${l.model}" loading="lazy" />`
+      : `${phSVG}<span class="ph-tag">${tag||'Photo'} ${i+1}/${n}</span>`;
+    frames += `<div class="ph" data-i="${i}" style="${i?'display:none':''}">${inner}</div>`;
+  }
+  let dots='';
+  for(let i=0;i<n;i++) dots+=`<i data-i="${i}" class="${i?'':'on'}"></i>`;
+  return `<div class="car" data-n="${n}">
+    <div class="frame">${frames}</div>
+    ${n>1?`<button class="nav prev">‹</button><button class="nav next">›</button><div class="dots">${dots}</div>`:''}
+  </div>`;
+}
+function initCarousels(root){
+  root.querySelectorAll('.car').forEach(car=>{
+    let cur=0; const n=+car.dataset.n;
+    const frames=car.querySelectorAll('.frame .ph');
+    const dots=car.querySelectorAll('.dots i');
+    function go(i){ cur=(i+n)%n; frames.forEach((f,k)=>f.style.display=k===cur?'flex':'none');
+      dots.forEach((d,k)=>d.classList.toggle('on',k===cur)); }
+    const p=car.querySelector('.prev'), nx=car.querySelector('.next');
+    if(p) p.onclick=e=>{e.stopPropagation();go(cur-1);};
+    if(nx) nx.onclick=e=>{e.stopPropagation();go(cur+1);};
+    dots.forEach(d=>d.onclick=e=>{e.stopPropagation();go(+d.dataset.i);});
+  });
+}
+
+/* shared bits */
+function logoBlock(){
+  return `<div class="logo">
+    <div class="mark">JLS</div>
+    <div class="name">JLS Laptops<small>quality laptops · Philippines</small></div>
+  </div>`;
+}
+const fb='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.5l.5-3H14V9.5c0-.3.2-.5.5-.5z"/></svg>';
+const ig='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.1" fill="currentColor"/></svg>';
+const msgr='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.3 2 2 6.2 2 11.5c0 2.9 1.3 5.6 3.4 7.3V23l3.2-1.8c1 .3 2.1.4 3.4.4 5.7 0 10-4.2 10-9.6C22 6.2 17.7 2 12 2zm1 12.6l-2.6-2.7-4.9 2.7 5.4-5.7 2.6 2.7 4.9-2.7-5.4 5.7z"/></svg>';
+/* build an m.me link, optionally tagging which laptop the customer is asking about (ref reaches your page inbox) */
+function msgrLink(l){
+  if(!LINKS.messenger) return '';
+  const ref = l ? '?ref='+encodeURIComponent((l.brand+' '+l.model).replace(/[^a-z0-9]+/gi,'_')) : '';
+  return LINKS.messenger+ref;
+}
+function socialBlock(){
+  let out='';
+  if(LINKS.facebook)  out+=`<a class="ic" href="${LINKS.facebook}" title="Facebook" target="_blank">${fb}</a>`;
+  if(LINKS.messenger) out+=`<a class="ic ic-msgr" href="${LINKS.messenger}" title="Chat on Messenger" target="_blank">${msgr}</a>`;
+  if(LINKS.instagram) out+=`<a class="ic" href="${LINKS.instagram}" title="Instagram" target="_blank">${ig}</a>`;
+  return `<div class="socials">${out}</div>`;
+}
+function chatBtn(l){
+  if(!LINKS.messenger) return '';
+  return `<a class="linkbtn chat-btn" href="${msgrLink(l)}" target="_blank">${msgr}Ask on Messenger</a>`;
+}
+const cart='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2l2 11h11l2-8H6"/></svg>';
+const shield='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>';
+function orderBtn(big){ return `<a class="linkbtn cta" href="${LINKS.orderForm}" target="_blank">${cart}${big?'Order now':'Order'}</a>`; }
+function warrantyBtn(){ return `<button class="linkbtn" data-warranty>${shield}Warranty</button>`; }
+const gift='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8S10.5 4 8.5 4 6 6 7.5 7s4.5 1 4.5 1zM12 8s1.5-4 3.5-4S18 6 16.5 7 12 8 12 8z"/></svg>';
+function freebieBtn(){ return `<button class="linkbtn freebie-btn" id="freebieBtn">${gift}FREEBIE</button>`; }
+function freebiePanel(){
+  const brands=Object.keys(FREEBIES.byBrand||{});
+  const cards=brands.map(b=>{
+    const src=FREEBIES.byBrand[b];
+    return `<div class="fb-card">
+      <div class="fb-img">
+        <img src="${src}" alt="${b} backpack" loading="lazy" onerror="this.closest('.fb-img').classList.add('noimg')" />
+        <div class="fb-ph">Add<br><code>${src}</code></div>
+      </div>
+      <div class="fb-brand">${b}</div>
+    </div>`;
+  }).join('');
+  return `<div class="freebie-panel" id="freebiePanel"><div class="fb-inner sk">
+    <div class="fb-head">🎁 <b>Free backpack with every laptop</b></div>
+    <div class="muted tiny">${FREEBIES.note||''}</div>
+    <div class="fb-grid">${cards}</div>
+  </div></div>`;
+}
+const star='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
+
+function rateBar(){
+  return `<div class="ratebar">
+    <span class="dot"></span>
+    <b>Live rate</b> · 1 USD = ₱${RATE.toFixed(2)}
+    <span class="muted tiny">— prices are in ₱; the ≈ $ figure is today's USD equivalent</span>
+  </div>`;
+}
+function pageHead(){
+  return `<div class="headbar">
+    ${socialBlock()}
+    <div class="spacer"></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">${warrantyBtn()}${freebieBtn()}<a class="linkbtn" href="${LINKS.reviewsPage}" target="_blank">${star}Reviews</a></div>
+  </div>${freebiePanel()}`;
+}
+function reviewStars(n){
+  let s=''; for(let i=0;i<5;i++) s+=`<span class="st${i<n?' on':''}">${star}</span>`; return `<div class="stars">${s}</div>`;
+}
+/* reusable numbered section header */
+function sectionHead(no,eyebrow,title,action){
+  return `<div class="section-head">
+    <div class="sec-no">${no}</div>
+    <div class="sec-txt">
+      <span class="sec-eyebrow">${eyebrow}</span>
+      <span class="sec-tt">${title}</span>
+    </div>
+    <div class="sec-rule"></div>
+    ${action?`<div class="sec-action">${action}</div>`:''}
+  </div>`;
+}
+function reviewsSection(){
+  let cards='';
+  reviews.slice(0,8).forEach((r,i)=>{
+    cards+=`<div class="rev sk ${i%2?'tilt-r':'tilt'}">
+      ${reviewStars(r.stars)}
+      <p class="rtext">“${r.text}”</p>
+      <div class="rmeta"><span class="ravatar">${r.name.charAt(0)}</span><b>${r.name}</b><span class="muted tiny">${r.date}</span></div>
+    </div>`;
+  });
+  return `<section class="sec sec-rev">
+    ${sectionHead('03','real talk','What customers say',`<a class="linkbtn cta" href="${LINKS.reviewsPage}" target="_blank">${fb}Read all reviews on Facebook</a>`)}
+    <div class="reviews-grid">${cards}</div>
+  </section>`;
+}
+function paymentsSection(){
+  return `<section class="sec sec-pay">
+    ${sectionHead('04','easy &amp; flexible','Payment options','')}
+    <div class="pay-grid">
+      <div class="pay-card sk tilt">
+        <div class="pay-h">🏦 Bank &amp; e-wallet</div>
+        <div class="pay-sub">Bank to bank transfer</div>
+        <div class="pay-chips">
+          <span>BDO</span><span>Security Bank</span><span>Unionbank</span><span>GCash / Maya</span>
+        </div>
+      </div>
+      <div class="pay-card sk tilt-r">
+        <div class="pay-h">💳 PayPal</div>
+        <div class="pay-sub">Credit card — straight payment</div>
+        <div class="pay-note">+4% processing fee</div>
+      </div>
+      <div class="pay-card sk tilt">
+        <div class="pay-h">₿ Crypto</div>
+        <div class="pay-sub">Accepted coins</div>
+        <div class="pay-chips">
+          <span>BTC</span><span>ETH</span><span>USDT</span><span>SOL</span><span>USDC</span>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+function footer(){
+  return reviewsSection() + paymentsSection() + `<div class="pgfoot">
+    <span>Prices are in PHP (Philippine pesos).</span>
+    <span>Questions? Message us on Facebook.</span>
+  </div>`;
+}
+
+/* ---------- featured picks (home) ---------- */
+function featuredLaptops(){
+  return (FEATURED||[]).map(k=>{
+    const [b,m]=k.split('|');
+    return laptops.find(l=>l.brand===b && l.model===m);
+  }).filter(Boolean);
+}
+function featuredCardHTML(l){
+  return `<div class="card featcard sk">
+      <div class="feat-ribbon">★ Featured</div>
+      ${carousel(l)}
+      <div class="body">
+        <div class="top">
+          <div class="nm">${l.model}<small>${l.brand} · ${l.color}</small></div>
+          ${stockBadge(l.stock)}
+        </div>
+        <div class="chips">
+          <span class="chip"><b>CPU</b> ${l.cpu}</span>
+          <span class="chip"><b>RAM</b> ${l.ram}</span>
+          <span class="chip"><b>SSD</b> ${l.storage}</span>
+          <span class="chip"><b>GPU</b> ${l.gpu}</span>
+          <span class="chip"><b>Screen</b> ${l.display}</span>
+        </div>
+        <div class="pricerow">
+          <div>${l.srp?`<div class="srp">${peso(l.srp)}</div>`:''}<div class="peso">${peso(l.price)}</div></div>
+          ${l.stock!=='out'?orderBtn(false):'<span class="badge out">Not available</span>'}
+        </div>
+      </div>
+    </div>`;
+}
+function featuredBand(){
+  const fs=featuredLaptops();
+  if(!fs.length) return '';
+  return `<section class="sec sec-feat">
+    ${sectionHead('01','start here','Featured picks','')}
+    <div class="featband">${fs.map(featuredCardHTML).join('')}</div>
+  </section>`;
+}
+/* ---------- brand index (home) ---------- */
+function brandSlug(b){ return b.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+function brandLogo(brand){
+  const src='images/brands/'+brandSlug(brand)+'.png';
+  return `<div class="bt-photo bt-logo">
+    <img src="${src}" alt="${brand} logo" loading="lazy" onerror="this.closest('.bt-logo').classList.add('noimg')" />
+    <span class="bt-logo-text">${brand}</span>
+  </div>`;
+}
+function brandTile(c,cat){
+  // configurations in stock that match the active category
+  const configs = laptops.filter(l=>l.brand===c.brand && matchesCat(l,cat));
+  const matchSeries = c.series.filter(s=>seriesInCat(c.brand,s,cat));
+  if(c.soon || (!matchSeries.length && !configs.length)) {
+    if(!matchSeries.length) return '';   // brand has nothing in this category
+  }
+  if(!configs.length){
+    return `<div class="brandtile sk soon">
+      ${brandLogo(c.brand)}
+      <div class="bt-body"><div class="bt-meta">Coming soon</div></div>
+    </div>`;
+  }
+  const navail = matchSeries.filter(s=>configsForSeries(c.brand,s.name).some(l=>matchesCat(l,cat))).length;
+  const from = Math.min(...configs.map(x=>x.price).filter(Boolean));
+  return `<button class="brandtile sk tilt" data-brand="${c.brand}">
+    ${brandLogo(c.brand)}
+    <div class="bt-body">
+      <div class="bt-meta">${navail} model${navail!==1?'s':''} · from ${peso(from)}</div>
+    </div>
+  </button>`;
+}
+
+/* ---------- LEVEL 1 — category index (home) ---------- */
+function catTile(it){
+  const n = laptops.filter(l=>matchesCat(l,it.id) && l.stock!=='out').length;
+  return `<button class="cattile sk tilt" data-cat="${it.id}">
+    <div class="ct-name">${it.name}</div>
+    <div class="ct-desc">${it.desc}</div>
+    <div class="ct-meta">${n?`${n} available`:'Coming soon'}</div>
+  </button>`;
+}
+function categoryIndex(){
+  const groups = CATEGORIES.map(g=>`
+    <div class="catgroup">
+      <div class="catgroup-h">${g.group}</div>
+      <div class="catrow">${g.items.map(catTile).join('')}</div>
+    </div>`).join('');
+  return `${pageHead()}
+    ${featuredBand()}
+    <section class="sec sec-cat">
+      ${sectionHead('02','where to begin','Shop by category', orderBtn(true))}
+      <p class="subhead">Pick how you want to shop — then choose a brand.</p>
+      ${groups}
+    </section>
+    ${footer()}`;
+}
+
+/* ---------- LEVEL 2 — brands within a category ---------- */
+function brandIndex(cat){
+  const tiles = CATALOG.map(c=>brandTile(c,cat)).filter(Boolean).join('');
+  const body = tiles || `<div class="nores">More ${catLabel(cat)} laptops coming soon — message us for the latest stock.</div>`;
+  return `${pageHead()}
+    <button class="backbtn" data-back="cats">← All categories</button>
+    <div class="brandhead">
+      <h2>${catLabel(cat)}</h2>
+      <span class="muted">Shop by brand</span>
+    </div>
+    <p class="subhead">Tap a brand to browse its models — every configuration is grouped under its model.</p>
+    <div class="brandgrid">${body}</div>
+    ${footer()}`;
+}
+
+/* ---------- brand page: model series → configurations ---------- */
+function configRow(l){
+  return `<div class="cfg">
+    <div class="cfg-photo">${carousel(l)}</div>
+    <div class="cfg-main">
+      <div class="cfg-label">${configLabel(l)}</div>
+      <div class="chips">
+        <span class="chip"><b>CPU</b> ${l.cpu}</span>
+        <span class="chip"><b>GPU</b> ${l.gpu}</span>
+        <span class="chip"><b>RAM</b> ${l.ram}</span>
+        <span class="chip"><b>SSD</b> ${l.storage}</span>
+        <span class="chip"><b>Screen</b> ${l.display}</span>
+      </div>
+      <div class="muted tiny">${l.color}${l.promo?` · ${l.promo}`:''}</div>
+    </div>
+    <div class="cfg-buy">
+      ${stockBadge(l.stock)}
+      <div>${l.srp?`<div class="srp">${peso(l.srp)}</div>`:''}<div class="peso">${peso(l.price)}</div></div>
+      ${l.stock!=='out'?orderBtn(false):'<span class="badge out">Not available</span>'}
+      ${chatBtn(l)}
+    </div>
+  </div>`;
+}
+function seriesCard(brand,s,open,cat){
+  const note = s.note?` <small>(${s.note})</small>`:'';
+  const configs = configsForSeries(brand,s.name).filter(l=>matchesCat(l,cat)).slice().sort((a,b)=>(a.price||1e12)-(b.price||1e12));
+  if(!configs.length){
+    return `<div class="scard sk soon">
+      <div class="shead">
+        <div class="sinfo"><div class="sname">${s.name}${note}</div><div class="smeta">Pre Order Basis only</div></div>
+        <span class="badge low">Coming soon</span>
+      </div>
+    </div>`;
+  }
+  const rep = configs.find(x=>x.dir) || configs[0];
+  const from = Math.min(...configs.map(x=>x.price).filter(Boolean));
+  const inStock = configs.filter(x=>x.stock!=='out').length;
+  return `<div class="scard sk${open?' open':''}">
+    <div class="shead">
+      ${thumb(rep)}
+      <div class="sinfo">
+        <div class="sname">${s.name}${note}</div>
+        <div class="smeta">${configs.length} configuration${configs.length!==1?'s':''} · from ${peso(from)} · Pre Order Basis only</div>
+      </div>
+      <span class="caret">▾</span>
+    </div>
+    <div class="sconfigs">${configs.map(configRow).join('')}</div>
+  </div>`;
+}
+function brandPage(brand,cat){
+  const c = CATALOG.find(x=>x.brand===brand) || {brand,series:[]};
+  const series = c.series.filter(s=>seriesInCat(brand,s,cat));
+  const avail = series.filter(s=>configsForSeries(brand,s.name).some(l=>matchesCat(l,cat)));
+  const firstOpen = avail.length ? avail[0].name : null;
+  const cards = series.map(s=>seriesCard(brand,s,s.name===firstOpen,cat)).join('') ||
+    `<div class="nores">No ${catLabel(cat)} models from ${brand} yet.</div>`;
+  return `${pageHead()}
+    <button class="backbtn" data-back="brands">← ${catLabel(cat)} brands</button>
+    <div class="brandhead">
+      <h2>${brand}</h2>
+      <span class="muted">${catLabel(cat)} · ${avail.length} model${avail.length!==1?'s':''} · Pre Order Basis only</span>
+    </div>
+    <div class="serieslist">${cards}</div>
+    <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      ${orderBtn(true)}${warrantyBtn()}
+      <button class="backbtn" data-back="brands">← ${catLabel(cat)} brands</button>
+      <button class="backbtn" data-back="cats">← All categories</button>
+    </div>
+    <div class="pgfoot">
+      <span>Prices are in PHP · brand-new sealed units with warranty.</span>
+      <span>Questions? Message us on Facebook.</span>
+    </div>`;
+}
+
+/* ---------- navigation ---------- */
+function goCat(id){ location.hash='cat='+encodeURIComponent(id); }
+function goBrand(b){ location.hash='cat='+encodeURIComponent(state.cat)+'&brand='+encodeURIComponent(b); }
+function goBrands(){ location.hash='cat='+encodeURIComponent(state.cat); }
+function goHome(){ location.hash=''; }
+function readHash(){
+  const h=location.hash||'';
+  const cm=h.match(/cat=([^&]+)/), bm=h.match(/brand=([^&]+)/);
+  let cat=cm?decodeURIComponent(cm[1]):null;
+  if(cat && !['gaming','productivity','low','mid','high'].includes(cat)) cat=null;
+  let b=bm?decodeURIComponent(bm[1]):null;
+  if(b && !laptops.some(l=>l.brand===b)) b=null;
+  state.cat=cat; state.brand=cat?b:null;
+}
+
+/* ---------- render & wire ---------- */
+function render(){
+  const stage=document.getElementById('stage');
+  if(!state.cat)         stage.innerHTML=categoryIndex();
+  else if(!state.brand)  stage.innerHTML=brandIndex(state.cat);
+  else                   stage.innerHTML=brandPage(state.brand,state.cat);
+  initCarousels(stage);
+  // freebie drop-down toggle (present everywhere)
+  const fbBtn=document.getElementById('freebieBtn'), fbPanel=document.getElementById('freebiePanel');
+  if(fbBtn&&fbPanel) fbBtn.onclick=()=>{ const open=fbPanel.classList.toggle('open'); fbBtn.classList.toggle('cta',open); };
+  // category tiles
+  stage.querySelectorAll('.cattile[data-cat]').forEach(t=>{ t.onclick=()=>goCat(t.dataset.cat); });
+  // brand tiles
+  stage.querySelectorAll('.brandtile[data-brand]').forEach(t=>{ t.onclick=()=>goBrand(t.dataset.brand); });
+  // back buttons
+  stage.querySelectorAll('.backbtn[data-back="cats"]').forEach(b=>{ b.onclick=goHome; });
+  stage.querySelectorAll('.backbtn[data-back="brands"]').forEach(b=>{ b.onclick=goBrands; });
+  // series accordion
+  stage.querySelectorAll('.scard:not(.soon) .shead').forEach(h=>{ h.onclick=()=>h.parentElement.classList.toggle('open'); });
+  // scroll highlight — flag the card/row nearest the centre of the viewport
+  initScrollHighlight(stage);
+}
+
+let _hlObserver=null;
+function initScrollHighlight(stage){
+  if(_hlObserver){ _hlObserver.disconnect(); }
+  const targets=stage.querySelectorAll('.cattile,.brandtile:not(.soon),.scard:not(.soon),.cfg');
+  if(!targets.length) return;
+  _hlObserver=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ e.target.classList.toggle('inview', e.isIntersecting); });
+  },{ rootMargin:'-46% 0px -46% 0px', threshold:0 });
+  targets.forEach(t=>_hlObserver.observe(t));
+}
+
+function applyAccent(hex){
+  document.documentElement.style.setProperty('--acc',hex);
+  // soft version
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  document.documentElement.style.setProperty('--acc-soft',`rgba(${r},${g},${b},.22)`);
+}
+
+/* toolbar wiring */
+
+const swWrap=document.getElementById('swatches');
+ACCENTS.forEach(a=>{
+  const s=document.createElement('div');s.className='sw';s.style.background=a.hex;s.title=a.name;
+  if(a.hex===state.accent)s.classList.add('active');
+  s.onclick=()=>{state.accent=a.hex;localStorage.setItem('jls.acc',a.hex);applyAccent(a.hex);
+    swWrap.querySelectorAll('.sw').forEach(x=>x.classList.remove('active'));s.classList.add('active');};
+  swWrap.appendChild(s);
+});
+
+applyAccent(state.accent);
+/* floating Messenger CTA */
+(function(){
+  const fab=document.getElementById('chatFab');
+  if(!fab) return;
+  if(!LINKS.messenger){ fab.remove(); return; }
+  fab.href=LINKS.messenger;
+  fab.querySelector('.cf-ic').innerHTML=msgr;
+  if(localStorage.getItem('jls.fab')==='min') fab.classList.add('collapsed');
+  fab.querySelector('.cf-close').addEventListener('click',(e)=>{
+    e.preventDefault(); e.stopPropagation();
+    fab.classList.add('collapsed'); localStorage.setItem('jls.fab','min');
+  });
+})();
+/* warranty & terms modal */
+(function(){
+  const modal=document.getElementById('warrantyModal');
+  if(!modal) return;
+  const closeBtn=document.getElementById('warrantyClose');
+  const msgrBtn=document.getElementById('wmMsgr');
+  if(msgrBtn){
+    if(LINKS.messenger){ msgrBtn.href=LINKS.messenger; msgrBtn.innerHTML=msgr+'Questions? Message us'; }
+    else { msgrBtn.style.display='none'; }
+  }
+  function open(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; modal.querySelector('.wmodal-body').scrollTop=0; }
+  function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  // delegation — warranty buttons are re-rendered on navigation
+  document.addEventListener('click',(e)=>{ if(e.target.closest('[data-warranty]')){ e.preventDefault(); open(); } });
+  closeBtn.addEventListener('click',close);
+  modal.addEventListener('click',(e)=>{ if(e.target===modal) close(); });
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+})();
+window.addEventListener('hashchange',()=>{ readHash(); render(); window.scrollTo(0,0); });
+readHash();
+render();
+</script>
+<style id="__om-edit-overrides">
+#stage > .sec-rev .sec-eyebrow { line-height: 2 !important; }
+</style>
+</body>
+</html>
