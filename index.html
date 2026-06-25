@@ -509,9 +509,10 @@
     display:flex;align-items:center;justify-content:center;overflow:hidden;}
   .brandtile .bt-photo img{width:100%;height:100%;object-fit:contain;padding:14px;}
   .brandtile .bt-photo svg{width:46px;height:46px;opacity:.4;}
-  .brandtile .bt-logo{padding:0;}
+  .brandtile .bt-logo{padding:0;background:#fff;}   /* brand logos always sit on white (readable in dark mode) */
   .brandtile .bt-logo img{padding:22px;}
   .brandtile .bt-logo-text{display:none;font-family:'Gaegu';font-weight:700;font-size:30px;color:var(--ink);text-align:center;padding:0 12px;}
+  .brandtile .bt-logo.noimg{background:var(--card);}   /* text fallback follows the theme */
   .brandtile .bt-logo.noimg img{display:none;}
   .brandtile .bt-logo.noimg .bt-logo-text{display:block;}
   .brandtile .bt-body{padding:12px 15px 15px;display:flex;flex-direction:column;gap:2px;}
