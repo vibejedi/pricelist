@@ -664,8 +664,20 @@ window.JLS_DATA = {
       2
     ],
     "ASUS|ROG Strix 16 2025 5070ti 9955hx": [
-      "asus-strix-16-5070ti-9955hx",
-      2
+      "asus-rog-strix-g16",
+      4
+    ],
+    "ASUS|ROG Strix 16 2025 5070ti 8940hx": [
+      "asus-rog-strix-g16",
+      4
+    ],
+    "ASUS|ROG Strix 16 2025 5070ti Ultra 9": [
+      "asus-rog-strix-g16",
+      4
+    ],
+    "ASUS|ROG Strix 16 2025 5080": [
+      "asus-rog-strix-g16",
+      4
     ],
     "ASUS|TUF A16 5070": [
       "asus-tuf-a16-5070",

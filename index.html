@@ -941,7 +941,10 @@ const PHOTO_DIRS = {
   'Alienware|Area 51 2025 18 5080':['alienware-area51-18-5080',2],
   'Alienware|X16 Aurora 2025 5070':['alienware-x16-aurora-5070',2],
   'ASUS|ROG Scar 16 2025 5080':['asus-scar-16-5080',2],
-  'ASUS|ROG Strix 16 2025 5070ti 9955hx':['asus-strix-16-5070ti-9955hx',2],
+  'ASUS|ROG Strix 16 2025 5070ti 9955hx':['asus-rog-strix-g16',4],
+  'ASUS|ROG Strix 16 2025 5070ti 8940hx':['asus-rog-strix-g16',4],
+  'ASUS|ROG Strix 16 2025 5070ti Ultra 9':['asus-rog-strix-g16',4],
+  'ASUS|ROG Strix 16 2025 5080':['asus-rog-strix-g16',4],
   'ASUS|TUF A16 5070':['asus-tuf-a16-5070',2],
   'ASUS|ROG Zephyrus G16 5070 2025':['asus-zephyrus-g16-5070-2025',2],
   'Gigabyte|AORUS Master 16 2025 5080':['gigabyte-aorus-master-16-5080',2],
@@ -1166,9 +1169,12 @@ function stockBadge(s){
   return '<span class="badge out">Not available</span>';
 }
 const phSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 16l-5-5L5 20"/></svg>';
+/* a wired-up photo file that doesn't exist yet falls back to the placeholder
+   icon instead of a broken-image icon (so empty drop-folders look clean) */
+function phFail(img){ const ph=img.closest('.ph'); if(ph){ ph.classList.add('noimg'); ph.innerHTML=phSVG; } }
 function thumb(l){
   return l && l.dir
-    ? `<div class="ph"><img src="${l.dir}/1.png" alt="${l.brand} ${l.model}" loading="lazy" /></div>`
+    ? `<div class="ph"><img src="${l.dir}/1.png" alt="${l.brand} ${l.model}" loading="lazy" onerror="phFail(this)" /></div>`
     : `<div class="ph">${phSVG}</div>`;
 }
 function carousel(l, tag){
@@ -1177,7 +1183,7 @@ function carousel(l, tag){
   let frames='';
   for(let i=0;i<n;i++){
     const inner = hasImg
-      ? `<img src="${l.dir}/${i+1}.png" alt="${l.brand} ${l.model}" loading="lazy" />`
+      ? `<img src="${l.dir}/${i+1}.png" alt="${l.brand} ${l.model}" loading="lazy" onerror="phFail(this)" />`
       : `${phSVG}<span class="ph-tag">${tag||'Photo'} ${i+1}/${n}</span>`;
     frames += `<div class="ph" data-i="${i}" style="${i?'display:none':''}">${inner}</div>`;
   }
@@ -1655,6 +1661,8 @@ render();
 
   const norm  = s => String(s==null?'':s).toLowerCase().replace(/[^a-z0-9]/g,'');
   const num   = v => { const n=parseInt(String(v==null?'':v).replace(/[^0-9]/g,''),10); return isNaN(n)?0:n; };
+  // canonical folder slug for a model (matches the folders under images/laptops/)
+  const slugFolder = (brand,model) => (brand+' '+model).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
   function normStock(v){
     const t=String(v==null?'':v).toLowerCase();
     if(/out|sold|none/.test(t)) return 'out';
@@ -1793,7 +1801,7 @@ render();
         COLS.forEach(([h,f])=>{
           if(f==='stock')            o[h] = STOCK_LABEL[l.stock] || l.stock || 'In stock';
           else if(f==='srp')         o[h] = l.srp ? l.srp : '';
-          else if(f==='photoFolder') o[h] = pd ? pd[0] : '';
+          else if(f==='photoFolder') o[h] = pd ? pd[0] : slugFolder(l.brand,l.model);
           else if(f==='photoCount')  o[h] = pd ? pd[1] : '';
           else                       o[h] = (l[f]==null?'':l[f]);
         });
