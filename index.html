@@ -1080,7 +1080,10 @@ const SERIES_MAP = {
   'Razer|Blade 14 2025 5070':'Blade 14',
   'Razer|Blade 16 2025 5080':'Blade 16'
 };
-function applySeries(){ laptops.forEach(l=>{ l.series = SERIES_MAP[l.brand+'|'+l.model] || null; }); }
+/* Group key for a laptop: a curated series name when the exact Brand|Model is
+   known, otherwise the model name itself — so a model that isn't in the catalog
+   (e.g. after you rename it) still shows, as its own card, instead of vanishing. */
+function applySeries(){ laptops.forEach(l=>{ l.series = SERIES_MAP[l.brand+'|'+l.model] || l.model; }); }
 applySeries();
 
 /* ================================================================
@@ -1449,7 +1452,7 @@ function brandTile(c,cat){
       <div class="bt-body"><div class="bt-meta">Coming soon</div></div>
     </div>`;
   }
-  const navail = matchSeries.filter(s=>configsForSeries(c.brand,s.name).some(l=>matchesCat(l,cat))).length;
+  const navail = new Set(configs.map(l=>l.series)).size;
   const from = Math.min(...configs.map(x=>x.price).filter(Boolean));
   return `<button class="brandtile sk tilt" data-brand="${c.brand}">
     ${brandLogo(c.brand)}
@@ -1550,7 +1553,18 @@ function seriesCard(brand,s,open,cat){
 }
 function brandPage(brand,cat){
   const c = CATALOG.find(x=>x.brand===brand) || {brand,series:[]};
-  const series = c.series.filter(s=>seriesInCat(brand,s,cat));
+  const brandConfigs = laptops.filter(l=>l.brand===brand && matchesCat(l,cat));
+  const curatedNames = new Set(c.series.map(s=>s.name));
+  // model groups present in the data but not described by the catalog
+  const extraNames = [...new Set(brandConfigs.map(l=>l.series).filter(name=>!curatedNames.has(name)))];
+  const hasExtras = extraNames.length>0;
+  // curated series for this category — keep "coming soon" (empty) ones only when
+  // the data is fully catalog-named, so custom-named models don't show twice
+  const curated = c.series.filter(s=>seriesInCat(brand,s,cat))
+    .filter(s=>configsForSeries(brand,s.name).some(l=>matchesCat(l,cat)) || !hasExtras);
+  const seriesFrom = name => Math.min(...configsForSeries(brand,name).filter(l=>matchesCat(l,cat)).map(l=>l.price||1e12));
+  const extras = extraNames.map(name=>({name})).sort((a,b)=>seriesFrom(a.name)-seriesFrom(b.name));
+  const series = curated.concat(extras);
   const avail = series.filter(s=>configsForSeries(brand,s.name).some(l=>matchesCat(l,cat)));
   const firstOpen = avail.length ? avail[0].name : null;
   const cards = series.map(s=>seriesCard(brand,s,s.name===firstOpen,cat)).join('') ||
