@@ -35,8 +35,12 @@ never see it unless they type `#admin` themselves.
 
 - The only file you ever re-upload is **`data/laptops.js`**. `index.html` (the
   design) never changes.
-- **Photos:** put a model's images in `images/laptops/<folder>/1.png`, `2.png`,
-  … and set the **Photo Folder** + **Photo Count** columns to match.
+- **Photos are automatic:** just drop a model's images into its folder under
+  `images/laptops/<folder>/` named `1.png`, `2.png`, … and upload them — the site
+  shows whatever is there, no Excel or counts needed. See
+  `images/laptops/FOLDERS.md` for each model's folder. (The **Photo Folder**
+  column in the Excel is now only used if you want several models to share one
+  set of photos, like the ROG Strix G16 configs.)
 - **Brand-new model series:** a laptop only shows on the site if its brand +
   series already exists in the catalog inside `index.html`. Editing prices/specs
   of existing models always works; adding a never-before-seen *series* needs a

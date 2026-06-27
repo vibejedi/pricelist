@@ -1,8 +1,13 @@
 # Laptop photo folders
 
-Drop product photos for a model into its folder as `1.png`, `2.png`, … (PNG, in display order — `1.png` is the thumbnail). Then set that model's **Photo Folder** + **Photo Count** in the Excel Price Editor (`#admin`) and publish.
+**Photos are automatic.** Just drop image files into a model's folder named
+`1.png`, `2.png`, `3.png`, … (in display order — `1.png` is the thumbnail) and
+upload them to GitHub. The website detects them on its own — no Excel, no counts.
+`.png`, `.jpg`, `.jpeg`, and `.webp` all work; number them with no gaps.
 
 A folder can be shared by several models (they then show the same photos).
+
+The "Photos now" column below is just a snapshot from when this file was written.
 
 | Folder (`images/laptops/…`) | Photos now | Models using it |
 |---|---|---|

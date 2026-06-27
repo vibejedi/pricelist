@@ -976,11 +976,15 @@ if (window.JLS_DATA) {
   }
 }
 
-/* Derive each laptop's photo folder + count from PHOTO_DIRS. */
+/* Every model maps to a folder under images/laptops/. Use the curated folder
+   name from PHOTO_DIRS when present, otherwise a slug of brand+model. The number
+   of photos is auto-detected at render time (see probeFolder) — just drop files
+   into the folder, no count needed. */
+function photoSlug(brand,model){ return (brand+' '+model).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
 function applyPhotoDirs(){
   laptops.forEach(l=>{
     const m = PHOTO_DIRS[l.brand+'|'+l.model];
-    if(m){ l.dir='images/laptops/'+m[0]; l.photos=m[1]; } else { l.dir=null; }
+    l.dir = 'images/laptops/' + (m ? m[0] : photoSlug(l.brand,l.model));
   });
 }
 applyPhotoDirs();
@@ -1172,39 +1176,87 @@ const phSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 /* a wired-up photo file that doesn't exist yet falls back to the placeholder
    icon instead of a broken-image icon (so empty drop-folders look clean) */
 function phFail(img){ const ph=img.closest('.ph'); if(ph){ ph.classList.add('noimg'); ph.innerHTML=phSVG; } }
-function thumb(l){
-  return l && l.dir
-    ? `<div class="ph"><img src="${l.dir}/1.png" alt="${l.brand} ${l.model}" loading="lazy" onerror="phFail(this)" /></div>`
-    : `<div class="ph">${phSVG}</div>`;
+/* ---- AUTO PHOTOS ----------------------------------------------------------
+   Whatever image files you drop into a model's folder show up automatically —
+   no counts, no Excel. On render we probe images/laptops/<folder>/1, /2 … and
+   stop at the first gap, trying .png/.jpg/.jpeg/.webp for each. Each folder is
+   probed once per session and cached. */
+const PHOTO_EXTS = ['png','jpg','jpeg','webp'];
+const PHOTO_MAX  = 12;
+const _photoCache = {};
+function _probeIndex(base){            // base.<ext> → first existing src, else null
+  return new Promise(res=>{
+    let i=0;
+    (function next(){
+      if(i>=PHOTO_EXTS.length) return res(null);
+      const src=base+'.'+PHOTO_EXTS[i++];
+      const img=new Image();
+      img.onload=()=>res(src); img.onerror=next; img.src=src;
+    })();
+  });
+}
+function probeFolder(dir){
+  if(!dir) return Promise.resolve([]);
+  if(_photoCache[dir]) return _photoCache[dir];
+  return _photoCache[dir] = (async()=>{
+    const found=[];
+    for(let i=1;i<=PHOTO_MAX;i++){
+      const src=await _probeIndex(dir+'/'+i);
+      if(!src) break; found.push(src);
+    }
+    return found;
+  })();
+}
+async function probeFirst(dirs){       // first photo found across a list of folders
+  for(const d of dirs){ const list=await probeFolder(d); if(list.length) return list[0]; }
+  return null;
+}
+
+function carInner(list, tag, alt){     // inner HTML of a .car for a given photo list
+  const n=list.length||1; let frames='';
+  for(let i=0;i<n;i++){
+    const inner = list.length
+      ? `<img src="${list[i]}" alt="${alt||''}" loading="lazy" onerror="phFail(this)" />`
+      : `${phSVG}<span class="ph-tag">${tag||'Photo'}</span>`;
+    frames+=`<div class="ph" data-i="${i}" style="${i?'display:none':''}">${inner}</div>`;
+  }
+  let dots=''; for(let i=0;i<n;i++) dots+=`<i data-i="${i}" class="${i?'':'on'}"></i>`;
+  return `<div class="frame">${frames}</div>${n>1?`<button class="nav prev">‹</button><button class="nav next">›</button><div class="dots">${dots}</div>`:''}`;
+}
+function thumb(dirs){                   // dirs: array of folder paths (first with a photo wins)
+  const d = Array.isArray(dirs) ? dirs : (dirs && dirs.dir ? [dirs.dir] : (dirs ? [dirs] : []));
+  return `<div class="ph" data-thumb="${d.filter(Boolean).join('|')}">${phSVG}</div>`;
 }
 function carousel(l, tag){
-  const hasImg = l && l.dir;
-  const n = hasImg ? (l.photos||1) : 1;
-  let frames='';
-  for(let i=0;i<n;i++){
-    const inner = hasImg
-      ? `<img src="${l.dir}/${i+1}.png" alt="${l.brand} ${l.model}" loading="lazy" onerror="phFail(this)" />`
-      : `${phSVG}<span class="ph-tag">${tag||'Photo'} ${i+1}/${n}</span>`;
-    frames += `<div class="ph" data-i="${i}" style="${i?'display:none':''}">${inner}</div>`;
-  }
-  let dots='';
-  for(let i=0;i<n;i++) dots+=`<i data-i="${i}" class="${i?'':'on'}"></i>`;
-  return `<div class="car" data-n="${n}">
-    <div class="frame">${frames}</div>
-    ${n>1?`<button class="nav prev">‹</button><button class="nav next">›</button><div class="dots">${dots}</div>`:''}
-  </div>`;
+  const dir = l && l.dir ? l.dir : '';
+  const alt = l ? `${l.brand} ${l.model}` : '';
+  return `<div class="car" data-folder="${dir}" data-tag="${tag||''}" data-alt="${alt}" data-n="1">${carInner([],tag,alt)}</div>`;
 }
-function initCarousels(root){
-  root.querySelectorAll('.car').forEach(car=>{
-    let cur=0; const n=+car.dataset.n;
-    const frames=car.querySelectorAll('.frame .ph');
-    const dots=car.querySelectorAll('.dots i');
-    function go(i){ cur=(i+n)%n; frames.forEach((f,k)=>f.style.display=k===cur?'flex':'none');
-      dots.forEach((d,k)=>d.classList.toggle('on',k===cur)); }
-    const p=car.querySelector('.prev'), nx=car.querySelector('.next');
-    if(p) p.onclick=e=>{e.stopPropagation();go(cur-1);};
-    if(nx) nx.onclick=e=>{e.stopPropagation();go(cur+1);};
-    dots.forEach(d=>d.onclick=e=>{e.stopPropagation();go(+d.dataset.i);});
+function wireCar(car){
+  const frames=car.querySelectorAll('.frame .ph');
+  const n=frames.length; car.dataset.n=n;
+  const dots=car.querySelectorAll('.dots i');
+  let cur=0;
+  function go(i){ cur=(i+n)%n; frames.forEach((f,k)=>f.style.display=k===cur?'flex':'none');
+    dots.forEach((d,k)=>d.classList.toggle('on',k===cur)); }
+  const p=car.querySelector('.prev'), nx=car.querySelector('.next');
+  if(p) p.onclick=e=>{e.stopPropagation();go(cur-1);};
+  if(nx) nx.onclick=e=>{e.stopPropagation();go(cur+1);};
+  dots.forEach(d=>d.onclick=e=>{e.stopPropagation();go(+d.dataset.i);});
+}
+function initCarousels(root){ root.querySelectorAll('.car').forEach(wireCar); }
+/* probe folders after render and swap placeholders for the real photos */
+function hydratePhotos(root){
+  root.querySelectorAll('.car[data-folder]').forEach(async car=>{
+    const list = await probeFolder(car.dataset.folder);
+    if(!list.length) return;                 // no files yet → keep clean placeholder
+    car.innerHTML = carInner(list, car.dataset.tag, car.dataset.alt);
+    wireCar(car);
+  });
+  root.querySelectorAll('.ph[data-thumb]').forEach(async ph=>{
+    const dirs=(ph.dataset.thumb||'').split('|').filter(Boolean);
+    const src=await probeFirst(dirs);
+    if(src) ph.innerHTML=`<img src="${src}" alt="" loading="lazy" onerror="phFail(this)" />`;
   });
 }
 
@@ -1481,12 +1533,12 @@ function seriesCard(brand,s,open,cat){
       </div>
     </div>`;
   }
-  const rep = configs.find(x=>x.dir) || configs[0];
+  const repDirs = [...new Set(configs.map(x=>x.dir).filter(Boolean))];
   const from = Math.min(...configs.map(x=>x.price).filter(Boolean));
   const inStock = configs.filter(x=>x.stock!=='out').length;
   return `<div class="scard sk${open?' open':''}">
     <div class="shead">
-      ${thumb(rep)}
+      ${thumb(repDirs)}
       <div class="sinfo">
         <div class="sname">${s.name}${note}</div>
         <div class="smeta">${configs.length} configuration${configs.length!==1?'s':''} · from ${peso(from)} · Pre Order Basis only</div>
@@ -1543,6 +1595,7 @@ function render(){
   else if(!state.brand)  stage.innerHTML=brandIndex(state.cat);
   else                   stage.innerHTML=brandPage(state.brand,state.cat);
   initCarousels(stage);
+  hydratePhotos(stage);   // auto-detect & swap in whatever photos are in each folder
   // freebie drop-down toggle (present everywhere)
   const fbBtn=document.getElementById('freebieBtn'), fbPanel=document.getElementById('freebiePanel');
   if(fbBtn&&fbPanel) fbBtn.onclick=()=>{ const open=fbPanel.classList.toggle('open'); fbBtn.classList.toggle('cta',open); };
