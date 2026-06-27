@@ -1080,10 +1080,15 @@ const SERIES_MAP = {
   'Razer|Blade 14 2025 5070':'Blade 14',
   'Razer|Blade 16 2025 5080':'Blade 16'
 };
-/* Group key for a laptop: a curated series name when the exact Brand|Model is
-   known, otherwise the model name itself — so a model that isn't in the catalog
-   (e.g. after you rename it) still shows, as its own card, instead of vanishing. */
-function applySeries(){ laptops.forEach(l=>{ l.series = SERIES_MAP[l.brand+'|'+l.model] || l.model; }); }
+/* Group key (heading) for a laptop. Priority:
+   1. an explicit "Series" from the data/Excel (you control the grouping),
+   2. a curated series name for a known Brand|Model,
+   3. the model name itself — so nothing ever disappears.
+   Laptops sharing a series value are bundled under one heading. */
+function applySeries(){ laptops.forEach(l=>{
+  if(l.seriesRaw===undefined) l.seriesRaw = (typeof l.series==='string') ? l.series : '';
+  l.series = l.seriesRaw.trim() || SERIES_MAP[l.brand+'|'+l.model] || l.model;
+}); }
 applySeries();
 
 /* ================================================================
@@ -1704,16 +1709,16 @@ render();
   const GITHUB_UPLOAD = 'https://github.com/vibejedi/pricelist/upload/main/data';
   // Excel column header  ->  internal field
   const COLS = [
-    ['Brand','brand'], ['Model','model'], ['Year','year'],
+    ['Brand','brand'], ['Model','model'], ['Series','series'], ['Year','year'],
     ['CPU','cpu'], ['GPU','gpu'], ['RAM','ram'], ['Storage','storage'],
     ['Display','display'], ['Color','color'],
     ['Price (PHP)','price'], ['SRP (PHP)','srp'], ['Promo','promo'],
     ['Stock','stock'], ['Photo Folder','photoFolder'], ['Photo Count','photoCount']
   ];
-  const WIDTHS = [12,30,7,22,30,28,26,34,18,12,12,20,13,22,12];
+  const WIDTHS = [12,30,22,7,22,30,28,26,34,18,12,12,20,13,22,12];
   // accept loose header spellings on import
   const FIELD_KEYS = {
-    brand:['brand'], model:['model','name'], year:['year'],
+    brand:['brand'], model:['model','name'], series:['series','group','line','modelgroup'], year:['year'],
     cpu:['cpu','processor'], gpu:['gpu','graphics','videocard'],
     ram:['ram','memory'], storage:['storage','ssd','disk','drive'],
     display:['display','screen'], color:['color','colour'],
@@ -1868,6 +1873,7 @@ render();
         COLS.forEach(([h,f])=>{
           if(f==='stock')            o[h] = STOCK_LABEL[l.stock] || l.stock || 'In stock';
           else if(f==='srp')         o[h] = l.srp ? l.srp : '';
+          else if(f==='series')      o[h] = (l.seriesRaw!=null ? l.seriesRaw : '');
           else if(f==='photoFolder') o[h] = pd ? pd[0] : slugFolder(l.brand,l.model);
           else if(f==='photoCount')  o[h] = pd ? pd[1] : '';
           else                       o[h] = (l[f]==null?'':l[f]);
@@ -1938,6 +1944,7 @@ render();
         if(!brand || !model){ warnings.push('Row '+(idx+2)+' skipped (missing brand or model).'); return; }
         const l = {
           brand, model,
+          series:  String(get('series')).trim(),   // optional grouping; blank = group by model name
           year:    String(get('year')).trim(),
           cpu:     String(get('cpu')).trim(),
           gpu:     String(get('gpu')).trim(),

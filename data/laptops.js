@@ -8,6 +8,7 @@ window.JLS_DATA = {
     {
       "brand": "Acer",
       "model": "Nitro V15",
+      "series": "Nitro V15",
       "year": "2025",
       "cpu": "i5-13420H",
       "gpu": "NVIDIA GeForce RTX 5050 8GB 100W TGP",
@@ -19,14 +20,12 @@ window.JLS_DATA = {
       "srp": 67000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/acer-nitro-v15-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Acer",
       "model": "Nitro V16",
+      "series": "Nitro V16",
       "year": "2025",
       "cpu": "Intel Core Ultra 7 240H",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 100W TGP",
@@ -38,14 +37,12 @@ window.JLS_DATA = {
       "srp": 109000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/acer-nitro-v16-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Acer",
       "model": "Predator Helios Neo 16S",
+      "series": "Predator Helios Neo 16S",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 115W TGP",
@@ -57,14 +54,12 @@ window.JLS_DATA = {
       "srp": 103499,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/acer-helios-neo-16s-5070ti",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Acer",
       "model": "Predator Helios Neo 16S",
+      "series": "Predator Helios Neo 16S",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 140W TGP",
@@ -76,14 +71,12 @@ window.JLS_DATA = {
       "srp": 154000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/acer-helios-neo-16s-5070ti",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Alienware",
       "model": "16 Aurora 5050",
+      "series": "16 Aurora",
       "year": "2025",
       "cpu": "Intel Core 7 240H 10 Cores",
       "gpu": "NVIDIA GeForce RTX 5050 8GB 100W TGP",
@@ -95,14 +88,12 @@ window.JLS_DATA = {
       "srp": 99500,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/alienware-16-aurora-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Alienware",
       "model": "16 Aurora 5060",
+      "series": "16 Aurora",
       "year": "2025",
       "cpu": "Intel Core 7 240H 10 Cores",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 100W TGP",
@@ -114,14 +105,12 @@ window.JLS_DATA = {
       "srp": 109500,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/alienware-16-aurora-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Alienware",
       "model": "Area 51 16",
+      "series": "Area 51 16",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -133,14 +122,12 @@ window.JLS_DATA = {
       "srp": 230000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/alienware-area51-16-5070ti",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Alienware",
       "model": "Area 51 16",
+      "series": "Area 51 16",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -152,14 +139,12 @@ window.JLS_DATA = {
       "srp": 230000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/alienware-area51-16-5070ti",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Alienware",
       "model": "Area 51 18",
+      "series": "Area 51 18",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -171,14 +156,12 @@ window.JLS_DATA = {
       "srp": 245000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/alienware-area51-18-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Alienware",
       "model": "X16 Aurora",
+      "series": "X16 Aurora",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 100W TGP",
@@ -190,14 +173,12 @@ window.JLS_DATA = {
       "srp": 164000,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/alienware-16-aurora-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Strix Scar 18",
+      "series": "ROG Strix Scar 18",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -209,14 +190,12 @@ window.JLS_DATA = {
       "srp": 264000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-scar-18-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Strix G16",
+      "series": "ROG Strix G16",
       "year": "2025",
       "cpu": "AMD Ryzen 9955HX",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 140W TGP",
@@ -228,14 +207,12 @@ window.JLS_DATA = {
       "srp": 204000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-strix-16-5070ti-9955hx",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Strix G16",
+      "series": "ROG Strix G16",
       "year": "2025",
       "cpu": "AMD Ryzen 8940HX",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 140W TGP",
@@ -247,14 +224,12 @@ window.JLS_DATA = {
       "srp": 204000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-strix-16-5070ti-9955hx",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Strix G16",
+      "series": "ROG Strix G16",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 140W TGP",
@@ -266,14 +241,12 @@ window.JLS_DATA = {
       "srp": 204000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-strix-16-5070ti-9955hx",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Strix G16",
+      "series": "ROG Strix G16",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 140W TGP",
@@ -285,14 +258,12 @@ window.JLS_DATA = {
       "srp": 235000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-strix-16-5070ti-9955hx",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Strix G18",
+      "series": "ROG Strix G18",
       "year": "2025",
       "cpu": "Ryzen 9 8940HX",
       "gpu": "NVIDIA GeForce RTX 5070 8GB GDDR6",
@@ -304,14 +275,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-rog-strix-g18",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "TUF A16",
+      "series": "TUF A16",
       "year": "2025",
       "cpu": "AMD Ryzen AI 9 270 8 Cores",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 115W TGP",
@@ -323,14 +292,12 @@ window.JLS_DATA = {
       "srp": 129000,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/asus-tuf-a16-5070",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "ROG Zephyrus G16",
+      "series": "ROG Zephyrus G16",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 285H 16 Cores 22 Threads",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 100W TGP",
@@ -342,14 +309,12 @@ window.JLS_DATA = {
       "srp": 159000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-zephyrus-g16-5070-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Gigabyte",
       "model": "AORUS Master 16",
+      "series": "AORUS Master 16",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -361,14 +326,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/gigabyte-aorus-master-16-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "HP",
       "model": "Omen Max 16",
+      "series": "Omen Max 16",
       "year": "2025",
       "cpu": "Ryzen 7 350",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 150W TGP",
@@ -380,14 +343,12 @@ window.JLS_DATA = {
       "srp": 156000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/hp-omen-max-16-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "HP",
       "model": "Omen Max 16",
+      "series": "Omen Max 16",
       "year": "2025",
       "cpu": "Intel Core Ultra 7 255HX",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 150W TGP",
@@ -399,14 +360,12 @@ window.JLS_DATA = {
       "srp": 215000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/hp-omen-max-16-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "HP",
       "model": "Omen Transcend 14",
+      "series": "Omen Transcend 14",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 285H",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 100W TGP",
@@ -418,14 +377,12 @@ window.JLS_DATA = {
       "srp": 215000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/hp-omen-transcend-14-5070",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "HP",
       "model": "Victus 15.6 2025",
+      "series": "Victus 15",
       "year": "2025",
       "cpu": "Intel Core i7-13620H 10 Cores",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 100W TGP",
@@ -437,14 +394,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/hp-victus-156-5060",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5i Pro Gen 10",
+      "series": "Legion 5i Pro",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 140W TGP",
@@ -456,14 +411,12 @@ window.JLS_DATA = {
       "srp": 149000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-pro-g10-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 7i (Slim) Gen 10 White",
+      "series": "Legion 7i Slim",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 115W TGP",
@@ -475,14 +428,12 @@ window.JLS_DATA = {
       "srp": 153500,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/legion-7i-2025-white-5070",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5i Pro Gen 10",
+      "series": "Legion 5i Pro",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 140W TGP",
@@ -494,14 +445,12 @@ window.JLS_DATA = {
       "srp": 165000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-pro-g10-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5 (Non Pro) Gen 10",
+      "series": "Legion 5",
       "year": "2025",
       "cpu": "AMD Ryzen 7 260",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 115W TGP",
@@ -513,14 +462,12 @@ window.JLS_DATA = {
       "srp": 101000,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-gen10-5060",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5i Gen 10 5070",
+      "series": "Legion 5i",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX",
       "gpu": "NVIDIA GeForce RTX 5070 8GB 115W TGP",
@@ -532,14 +479,12 @@ window.JLS_DATA = {
       "srp": 148000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-gen10-5060",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5i Gen 10 5060",
+      "series": "Legion 5i",
       "year": "2025",
       "cpu": "Intel Core i7-14700HX",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 115W TGP",
@@ -551,14 +496,12 @@ window.JLS_DATA = {
       "srp": 104500,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-gen10-5060",
-      "series": "Legion 5i",
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5i Pro Gen 10",
+      "series": "Legion 5i Pro",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275HX",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 150W TGP",
@@ -570,14 +513,12 @@ window.JLS_DATA = {
       "srp": 158000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-pro-g10-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 7i Pro Gen 10",
+      "series": "Legion 7i Pro",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 150W TGP",
@@ -589,14 +530,12 @@ window.JLS_DATA = {
       "srp": 169000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-7i-pro-g10-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 7i Pro Gen 10",
+      "series": "Legion 7i Pro",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -608,14 +547,12 @@ window.JLS_DATA = {
       "srp": 215000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-7i-pro-g10-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "LOQ 5060 15.6",
+      "series": "LOQ 15.6",
       "year": "2025",
       "cpu": "AMD Ryzen 7 250",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 100W TGP",
@@ -627,14 +564,12 @@ window.JLS_DATA = {
       "srp": 99000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/loq-2025-5060-15",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "LOQ 5060 17",
+      "series": "LOQ 17",
       "year": "2025",
       "cpu": "Intel Core i7-13650HX 14 Cores",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 100W TGP",
@@ -646,14 +581,12 @@ window.JLS_DATA = {
       "srp": 119000,
       "promo": "OLD OFFER",
       "stock": "in",
-      "photos": 1,
-      "dir": "images/laptops/loq-2025-5060-17",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "MSI",
       "model": "Vector 16 HX 5070ti",
+      "series": "Vector 16 HX",
       "year": "2025",
       "cpu": "Intel Core Ultra 255X 20 Cores",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 150W TGP",
@@ -665,14 +598,12 @@ window.JLS_DATA = {
       "srp": 154500,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/msi-vector-16-hx-5070ti",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "MSI",
       "model": "Vector 16 HX 5080",
+      "series": "Vector 16 HX",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -684,14 +615,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/msi-vector-16hx-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "MSI",
       "model": "Vector 16 HX 5080",
+      "series": "Vector 16 HX",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -703,14 +632,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/msi-vector-16hx-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Razer",
       "model": "Blade 14 5070",
+      "series": "Blade 14",
       "year": "2025",
       "cpu": "AMD Ryzen AI 9 365 10 Core",
       "gpu": "NVIDIA GeForce RTX 5070 8GB TGP 115W",
@@ -722,14 +649,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/razer-blade-14-5070",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Razer",
       "model": "Blade 16 5080",
+      "series": "Blade 16",
       "year": "2025",
       "cpu": "AMD Ryzen AI 9 365 10 Core",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 150W TGP",
@@ -741,14 +666,12 @@ window.JLS_DATA = {
       "srp": 0,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/razer-blade-16-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 5 Pro Gen 10 5060",
+      "series": "Legion 5 Pro",
       "year": "2025",
       "cpu": "AMD Ryzen 9 8945HX",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 140W TGP",
@@ -760,14 +683,12 @@ window.JLS_DATA = {
       "srp": 119900,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-5i-pro-g10-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "ASUS",
       "model": "TUF A18 FA808",
+      "series": "TUF A18",
       "year": "2025",
       "cpu": "AMD Ryzen 7 260",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 130W TGP",
@@ -779,14 +700,12 @@ window.JLS_DATA = {
       "srp": 114500,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/asus-tuf-a18-5060",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Gigabyte",
       "model": "Aero X16",
+      "series": "Aero X16",
       "year": "2025",
       "cpu": "AMD Ryzen AI 7 350",
       "gpu": "NVIDIA GeForce RTX 5060 8GB 100W TGP",
@@ -798,14 +717,12 @@ window.JLS_DATA = {
       "srp": 109500,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/gigabyte-aero-x16-2025",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Lenovo",
       "model": "Legion 7i Pro Gen 10",
+      "series": "Legion 7i Pro",
       "year": "2025",
       "cpu": "Intel Core Ultra 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5090 24GB 175W TGP",
@@ -817,14 +734,12 @@ window.JLS_DATA = {
       "srp": 279000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/legion-7i-pro-g10-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "Acer",
       "model": "Predator Helios Neo 16S",
+      "series": "Predator Helios Neo 16S",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275X 24 Cores",
       "gpu": "NVIDIA GeForce RTX 5080 16GB 175W TGP",
@@ -836,14 +751,12 @@ window.JLS_DATA = {
       "srp": 249900,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/acer-helios-neo-16s-5070ti",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     },
     {
       "brand": "HP",
       "model": "Omen Max 16",
+      "series": "Omen Max 16",
       "year": "2025",
       "cpu": "Intel Core Ultra 7 255HX",
       "gpu": "NVIDIA GeForce RTX 5070ti 12GB 150W TGP",
@@ -855,10 +768,7 @@ window.JLS_DATA = {
       "srp": 138000,
       "promo": "OLD OFFER",
       "stock": "ask",
-      "photos": 1,
-      "dir": "images/laptops/hp-omen-max-16-5080",
-      "series": null,
-      "use": "gaming"
+      "photos": 1
     }
   ],
   "PHOTO_DIRS": {

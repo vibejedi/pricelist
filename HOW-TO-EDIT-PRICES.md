@@ -24,6 +24,11 @@ never see it unless they type `#admin` themselves.
    - **SRP (PHP)** — original/strike-through price; leave blank for none.
    - **Stock** — `In stock`, `Pre-order`, or `Out of stock`.
    - **Promo** — small tag on the card (e.g. `2026 UPDATED PRICE`).
+   - **Series** — the heading a laptop is grouped under on its brand page.
+     Give two or more rows the **same Series** to bundle them under one heading
+     (e.g. several `Vector 16 HX` configs). Leave it blank to let the laptop
+     stand on its own (it groups by its Model name). This is independent of the
+     Model text, so you can rename models freely without breaking the grouping.
    - Add a row for a new laptop, or delete a row to remove one.
    - **Keep the header row exactly as it is.**
 3. **⬆ Import edited Excel** — loads your changes into a live preview and
