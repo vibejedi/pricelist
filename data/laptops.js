@@ -751,12 +751,12 @@ window.JLS_DATA = {
       2
     ],
     "Alienware|16 Aurora 5050": [
-      "alienware-16-aurora-2025",
-      1
+      "alienware-16-aurora-2025-5050",
+      2
     ],
     "Alienware|16 Aurora 5060": [
-      "alienware-16-aurora-2025",
-      1
+      "alienware-16-aurora-2025-5050",
+      2
     ],
     "Alienware|Area 51 16": [
       "alienware-area51-16-5070ti",
@@ -767,7 +767,7 @@ window.JLS_DATA = {
       2
     ],
     "Alienware|X16 Aurora": [
-      "alienware-16-aurora-2025",
+      "alienware-x16-aurora-5070",
       2
     ],
     "ASUS|ROG Strix Scar 18": [
@@ -827,8 +827,8 @@ window.JLS_DATA = {
       1
     ],
     "Lenovo|LOQ 5060 15.6": [
-      "loq-2025-5060-15",
-      1
+      "lenovo-loq-15.6-5060",
+      2
     ],
     "Lenovo|LOQ 5060 17": [
       "loq-2025-5060-17",
@@ -852,11 +852,19 @@ window.JLS_DATA = {
     ],
     "ASUS|TUF A18 FA808": [
       "asus-tuf-a18-5060",
-      1
+      2
+    ],
+    "ASUS|ROG Strix G18": [
+      "asus-rog-strix-g18-2025-5070",
+      3
+    ],
+    "MSI|Vector 16 HX 5070ti": [
+      "msi-vector-16-hx-2025-5070ti",
+      3
     ],
     "Gigabyte|Aero X16": [
-      "gigabyte-aero-x16-2025",
-      1
+      "gigabyte-aero-x16-5060",
+      2
     ]
   }
 };
