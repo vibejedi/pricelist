@@ -619,6 +619,23 @@ window.JLS_DATA = {
     },
     {
       "brand": "Dell",
+      "model": "Pro Max 16",
+      "series": "Pro Max 16",
+      "year": "2025",
+      "cpu": "AMD Ryzen AI 9 HX PRO 370",
+      "gpu": "NVIDIA RTX PRO 500 Laptop GPU",
+      "ram": "32GB RAM",
+      "storage": "512GB SSD",
+      "display": "16.0\" Display",
+      "color": "Black",
+      "price": 99900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "Dell",
       "model": "Inspiron 14",
       "series": "Inspiron 14",
       "year": "2025",
@@ -823,6 +840,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Dell|Pro Max 16": [
+      "dell-pro-max-16",
+      2
+    ],
     "Microsoft|Surface Laptop 7 13.8": [
       "microsoft-surface-laptop-7",
       2

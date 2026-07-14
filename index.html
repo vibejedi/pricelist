@@ -1056,7 +1056,7 @@ const CATALOG = [
     {name:'Surface Laptop'}
   ]},
   { brand:'Dell',      series:[
-    {name:'Inspiron 14'}
+    {name:'Inspiron 14'}, {name:'Pro Max 16'}
   ]},
   { brand:'NAGA Philippines', series:[], soon:true }
 ];
@@ -1125,7 +1125,7 @@ function budgetTier(l){
   return 'high';
 }
 /* Productivity = ultrabooks / creator lines; everything else = gaming. */
-const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern|inspiron|latitude|xps|surface)/i;
+const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern|inspiron|latitude|xps|surface|pro max)/i;
 function seriesUse(name){ return PRODUCTIVITY_RE.test(name||'') ? 'productivity' : 'gaming'; }
 function applyUse(){ laptops.forEach(l=>{ l.use = seriesUse(l.series || l.model); }); }
 applyUse();
@@ -1171,7 +1171,9 @@ const state = {
 /* ---------- spec helpers (also used to label configurations) ---------- */
 function gpuTier(l){
   const g=l.gpu||'';
+  const pro=g.match(/RTX\s*PRO\s*(\d+)/i); if(pro) return 'RTX PRO '+pro[1];
   if(/5070\s*ti/i.test(g)) return 'RTX 5070 Ti';
+  if(/5090/i.test(g))      return 'RTX 5090';
   if(/5080/i.test(g))      return 'RTX 5080';
   if(/5070/i.test(g))      return 'RTX 5070';
   if(/5060/i.test(g))      return 'RTX 5060';
