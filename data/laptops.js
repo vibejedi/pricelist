@@ -567,6 +567,23 @@ window.JLS_DATA = {
       "photos": 1
     },
     {
+      "brand": "Dell",
+      "model": "Inspiron 14",
+      "series": "Inspiron 14",
+      "year": "2025",
+      "cpu": "Intel Core Ultra 7 256V 8 Cores up to 4.8GHz (47 TOPS NPU)",
+      "gpu": "Intel Arc Graphics (Integrated)",
+      "ram": "16GB LPDDR5X 8533MT/s (onboard)",
+      "storage": "1TB M.2 NVMe PCIe SSD",
+      "display": "14\" 2.5K 2560x1600p IPS WVA Anti-Glare 300nits Display",
+      "color": "Ice Blue",
+      "price": 69900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 3
+    },
+    {
       "brand": "Lenovo",
       "model": "ThinkPad L13 Gen 4",
       "series": "ThinkPad Series",
@@ -755,6 +772,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Dell|Inspiron 14": [
+      "dell-inspiron-14",
+      3
+    ],
     "Lenovo|ThinkPad L13 Gen 4": [
       "lenovo-thinkpad-l13-gen4",
       2

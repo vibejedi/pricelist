@@ -1053,7 +1053,9 @@ const CATALOG = [
     {name:'AORUS Master 16'}
   ]},
   { brand:'Microsoft', series:[], soon:true },
-  { brand:'Dell',      series:[], soon:true },
+  { brand:'Dell',      series:[
+    {name:'Inspiron 14'}
+  ]},
   { brand:'NAGA Philippines', series:[], soon:true }
 ];
 
@@ -1121,7 +1123,7 @@ function budgetTier(l){
   return 'high';
 }
 /* Productivity = ultrabooks / creator lines; everything else = gaming. */
-const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern)/i;
+const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern|inspiron|latitude|xps)/i;
 function seriesUse(name){ return PRODUCTIVITY_RE.test(name||'') ? 'productivity' : 'gaming'; }
 function applyUse(){ laptops.forEach(l=>{ l.use = seriesUse(l.series || l.model); }); }
 applyUse();
@@ -1172,6 +1174,8 @@ function gpuTier(l){
   if(/5070/i.test(g))      return 'RTX 5070';
   if(/5060/i.test(g))      return 'RTX 5060';
   if(/5050/i.test(g))      return 'RTX 5050';
+  if(/\barc\b/i.test(g))   return 'Intel Arc';
+  if(/iris xe/i.test(g))   return 'Iris Xe';
   return 'GPU';
 }
 function ramTier(l){ const m=(l.ram||'').match(/(\d+)\s*GB/i); return m?m[1]+'GB':'—'; }
