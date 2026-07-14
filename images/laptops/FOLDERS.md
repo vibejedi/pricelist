@@ -11,6 +11,7 @@ The "Photos now" column below is just a snapshot from when this file was written
 
 | Folder (`images/laptops/…`) | Photos now | Models using it |
 |---|---|---|
+| `acer-aspire-14-ai` | 0 | Acer Aspire 14 AI (photos pending) |
 | `acer-helios-neo-16s-5070ti` | 2 | Acer Predator Helios Neo 16s 2025 5070ti |
 | `acer-nitro-v15-2025` | 2 | Acer Nitro V15 2025 |
 | `acer-nitro-v16-2025` | 2 | Acer Nitro V16 2025 |

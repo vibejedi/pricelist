@@ -567,6 +567,23 @@ window.JLS_DATA = {
       "photos": 1
     },
     {
+      "brand": "Acer",
+      "model": "Aspire 14 AI",
+      "series": "Aspire",
+      "year": "2025",
+      "cpu": "Intel Core Ultra 5 226V (NPU up to 40 TOPS)",
+      "gpu": "Intel Arc 130V Graphics (GPU up to 53 TOPS)",
+      "ram": "16GB LPDDR5X (onboard)",
+      "storage": "512GB SSD",
+      "display": "14\" WUXGA 1920x1200p IPS Display",
+      "color": "Steel Gray",
+      "price": 48000,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
       "brand": "HP",
       "model": "OmniBook 3 14",
       "series": "OmniBook",
@@ -789,6 +806,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Acer|Aspire 14 AI": [
+      "acer-aspire-14-ai",
+      2
+    ],
     "HP|OmniBook 3 14": [
       "hp-omnibook-3-14",
       2
