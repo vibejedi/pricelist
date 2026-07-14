@@ -45,6 +45,7 @@ The "Photos now" column below is just a snapshot from when this file was written
 | `lenovo-legion-7i-pro-gen-10-5070ti` | 0 | Lenovo Legion 7i Pro Gen 10 5070ti |
 | `lenovo-loq-2025-5060-15-6` | 0 | Lenovo LOQ 2025 5060 15.6 |
 | `lenovo-thinkpad-l13-gen4` | 2 | Lenovo ThinkPad L13 Gen 4 |
+| `microsoft-surface-laptop-7` | 0 | Microsoft Surface Laptop 7 13.8 (photos pending) |
 | `loq-2025-5060-17` | 2 | Lenovo LOQ 2025 5060 17 |
 | `msi-vector-16-hx-2025-5070ti` | 0 | MSI Vector 16 HX 2025 5070ti |
 | `msi-vector-16hx-5080` | 2 | MSI Vector 16 HX 2025 5080<br>MSI Vector 16 HX 2025 5080 |

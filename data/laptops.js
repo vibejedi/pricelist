@@ -567,6 +567,23 @@ window.JLS_DATA = {
       "photos": 1
     },
     {
+      "brand": "Microsoft",
+      "model": "Surface Laptop 7 13.8",
+      "series": "Surface Laptop",
+      "year": "2024",
+      "cpu": "Qualcomm Snapdragon X Plus",
+      "gpu": "Qualcomm Adreno GPU (Integrated)",
+      "ram": "16GB DDR5 (onboard)",
+      "storage": "256GB SSD",
+      "display": "13.8\" 2304x1536p PixelSense Touch Display",
+      "color": "Platinum",
+      "price": 69900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
       "brand": "Acer",
       "model": "Aspire 14 AI",
       "series": "Aspire",
@@ -806,6 +823,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Microsoft|Surface Laptop 7 13.8": [
+      "microsoft-surface-laptop-7",
+      2
+    ],
     "Acer|Aspire 14 AI": [
       "acer-aspire-14-ai",
       2
