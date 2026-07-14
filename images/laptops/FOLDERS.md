@@ -28,6 +28,7 @@ The "Photos now" column below is just a snapshot from when this file was written
 | `asus-zephyrus-g16-5070-2025` | 2 | ASUS ROG Zephyrus G16 5070 2025 |
 | `dell-inspiron-14` | 0 | Dell Inspiron 14 (photos pending) |
 | `gigabyte-aorus-master-16-5080` | 2 | Gigabyte AORUS Master 16 2025 5080 |
+| `hp-omnibook-3-14` | 0 | HP OmniBook 3 14 (photos pending) |
 | `hp-omen-max-16-5070ti` | 0 | HP Omen Max 16 5070ti |
 | `hp-omen-max-16-5080` | 2 | HP Omen Max 16 5080 |
 | `hp-omen-transcend-14-5070` | 2 | HP Omen Transcend 14 5070 |

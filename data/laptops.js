@@ -567,6 +567,23 @@ window.JLS_DATA = {
       "photos": 1
     },
     {
+      "brand": "HP",
+      "model": "OmniBook 3 14",
+      "series": "OmniBook",
+      "year": "2025",
+      "cpu": "Qualcomm Snapdragon X X1-26-100 8 Cores",
+      "gpu": "Qualcomm Adreno GPU (Integrated)",
+      "ram": "16GB LPDDR5 (onboard)",
+      "storage": "512GB SSD",
+      "display": "14\" 2K 1920x1200p IPS Touchscreen 300nits Display",
+      "color": "Natural Silver",
+      "price": 49900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
       "brand": "Dell",
       "model": "Inspiron 14",
       "series": "Inspiron 14",
@@ -772,6 +789,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "HP|OmniBook 3 14": [
+      "hp-omnibook-3-14",
+      2
+    ],
     "Dell|Inspiron 14": [
       "dell-inspiron-14",
       3
