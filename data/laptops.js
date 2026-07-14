@@ -567,6 +567,23 @@ window.JLS_DATA = {
       "photos": 1
     },
     {
+      "brand": "Lenovo",
+      "model": "ThinkPad L13 Gen 4",
+      "series": "ThinkPad Series",
+      "year": "2025",
+      "cpu": "Intel Core i5-1335U up to 4.6GHz",
+      "gpu": "Intel Iris Xe Graphics (Integrated)",
+      "ram": "16GB RAM",
+      "storage": "256GB SSD",
+      "display": "13.3\" WUXGA 1920x1200p Matte 60hz Display",
+      "color": "Silver",
+      "price": 44500,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
       "brand": "MSI",
       "model": "Vector 16 HX 5070ti",
       "series": "Vector 16 HX",
@@ -738,6 +755,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Lenovo|ThinkPad L13 Gen 4": [
+      "lenovo-thinkpad-l13-gen4",
+      2
+    ],
     "Acer|Nitro V15": [
       "acer-nitro-v15-2025",
       2
