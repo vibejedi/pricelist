@@ -81,12 +81,12 @@ window.JLS_DATA = {
       "cpu": "Intel Core 7 240H 10 Cores",
       "gpu": "NVIDIA GeForce RTX 5050 8GB 100W TGP",
       "ram": "16GB (2x8GB) 5600Mhz Dual Channel DDR5",
-      "storage": "512GB M.2 NVMe PCIe Gen 4 SSD",
+      "storage": "1TB M.2 NVMe PCIe Gen 4 SSD",
       "display": "16.0\" QHD 2560x1440p IPS 120hz Display",
       "color": "Gray",
-      "price": 87500,
+      "price": 79900,
       "srp": 99500,
-      "promo": "OLD OFFER",
+      "promo": "NEW OFFER",
       "stock": "ask",
       "photos": 1
     },
@@ -567,6 +567,108 @@ window.JLS_DATA = {
       "photos": 1
     },
     {
+      "brand": "Microsoft",
+      "model": "Surface Laptop 7 13.8",
+      "series": "Surface Laptop",
+      "year": "2024",
+      "cpu": "Qualcomm Snapdragon X Plus",
+      "gpu": "Qualcomm Adreno GPU (Integrated)",
+      "ram": "16GB DDR5 (onboard)",
+      "storage": "256GB SSD",
+      "display": "13.8\" 2304x1536p PixelSense Touch Display",
+      "color": "Platinum",
+      "price": 69900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "Acer",
+      "model": "Aspire 14 AI",
+      "series": "Aspire",
+      "year": "2025",
+      "cpu": "Intel Core Ultra 5 226V (NPU up to 40 TOPS)",
+      "gpu": "Intel Arc 130V Graphics (GPU up to 53 TOPS)",
+      "ram": "16GB LPDDR5X (onboard)",
+      "storage": "512GB SSD",
+      "display": "14\" WUXGA 1920x1200p IPS Display",
+      "color": "Steel Gray",
+      "price": 48000,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "HP",
+      "model": "OmniBook 3 14",
+      "series": "OmniBook",
+      "year": "2025",
+      "cpu": "Qualcomm Snapdragon X X1-26-100 8 Cores",
+      "gpu": "Qualcomm Adreno GPU (Integrated)",
+      "ram": "16GB LPDDR5 (onboard)",
+      "storage": "512GB SSD",
+      "display": "14\" 2K 1920x1200p IPS Touchscreen 300nits Display",
+      "color": "Natural Silver",
+      "price": 49900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "Dell",
+      "model": "Pro Max 16",
+      "series": "Pro Max 16",
+      "year": "2025",
+      "cpu": "AMD Ryzen AI 9 HX PRO 370",
+      "gpu": "NVIDIA RTX PRO 500 Laptop GPU",
+      "ram": "32GB RAM",
+      "storage": "512GB SSD",
+      "display": "16.0\" Display",
+      "color": "Black",
+      "price": 99900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "Dell",
+      "model": "Inspiron 14",
+      "series": "Inspiron 14",
+      "year": "2025",
+      "cpu": "Intel Core Ultra 7 256V 8 Cores up to 4.8GHz (47 TOPS NPU)",
+      "gpu": "Intel Arc Graphics (Integrated)",
+      "ram": "16GB LPDDR5X 8533MT/s (onboard)",
+      "storage": "1TB M.2 NVMe PCIe SSD",
+      "display": "14\" 2.5K 2560x1600p IPS WVA Anti-Glare 300nits Display",
+      "color": "Ice Blue",
+      "price": 69900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 3
+    },
+    {
+      "brand": "Lenovo",
+      "model": "ThinkPad L13 Gen 4",
+      "series": "ThinkPad Series",
+      "year": "2025",
+      "cpu": "Intel Core i5-1335U up to 4.6GHz",
+      "gpu": "Intel Iris Xe Graphics (Integrated)",
+      "ram": "16GB RAM",
+      "storage": "256GB SSD",
+      "display": "13.3\" WUXGA 1920x1200p Matte 60hz Display",
+      "color": "Silver",
+      "price": 44500,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
       "brand": "MSI",
       "model": "Vector 16 HX 5070ti",
       "series": "Vector 16 HX",
@@ -738,6 +840,30 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Dell|Pro Max 16": [
+      "dell-pro-max-16",
+      2
+    ],
+    "Microsoft|Surface Laptop 7 13.8": [
+      "microsoft-surface-laptop-7",
+      2
+    ],
+    "Acer|Aspire 14 AI": [
+      "acer-aspire-14-ai",
+      2
+    ],
+    "HP|OmniBook 3 14": [
+      "hp-omnibook-3-14",
+      2
+    ],
+    "Dell|Inspiron 14": [
+      "dell-inspiron-14",
+      3
+    ],
+    "Lenovo|ThinkPad L13 Gen 4": [
+      "lenovo-thinkpad-l13-gen4",
+      2
+    ],
     "Acer|Nitro V15": [
       "acer-nitro-v15-2025",
       2

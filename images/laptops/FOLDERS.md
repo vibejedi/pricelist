@@ -11,6 +11,7 @@ The "Photos now" column below is just a snapshot from when this file was written
 
 | Folder (`images/laptops/…`) | Photos now | Models using it |
 |---|---|---|
+| `acer-aspire-14-ai` | 0 | Acer Aspire 14 AI (photos pending) |
 | `acer-helios-neo-16s-5070ti` | 2 | Acer Predator Helios Neo 16s 2025 5070ti |
 | `acer-nitro-v15-2025` | 2 | Acer Nitro V15 2025 |
 | `acer-nitro-v16-2025` | 2 | Acer Nitro V16 2025 |
@@ -26,7 +27,10 @@ The "Photos now" column below is just a snapshot from when this file was written
 | `asus-scar-16-5080` | 2 | ASUS ROG Scar 16 2025 5080 |
 | `asus-tuf-a16-5070` | 2 | ASUS TUF A16 5070 |
 | `asus-zephyrus-g16-5070-2025` | 2 | ASUS ROG Zephyrus G16 5070 2025 |
+| `dell-inspiron-14` | 0 | Dell Inspiron 14 (photos pending) |
+| `dell-pro-max-16` | 0 | Dell Pro Max 16 (photos pending) |
 | `gigabyte-aorus-master-16-5080` | 2 | Gigabyte AORUS Master 16 2025 5080 |
+| `hp-omnibook-3-14` | 0 | HP OmniBook 3 14 (photos pending) |
 | `hp-omen-max-16-5070ti` | 0 | HP Omen Max 16 5070ti |
 | `hp-omen-max-16-5080` | 2 | HP Omen Max 16 5080 |
 | `hp-omen-transcend-14-5070` | 2 | HP Omen Transcend 14 5070 |
@@ -41,6 +45,8 @@ The "Photos now" column below is just a snapshot from when this file was written
 | `lenovo-legion-5i-pro-gen-10-5070ti` | 0 | Lenovo Legion 5i Pro Gen 10 5070ti |
 | `lenovo-legion-7i-pro-gen-10-5070ti` | 0 | Lenovo Legion 7i Pro Gen 10 5070ti |
 | `lenovo-loq-2025-5060-15-6` | 0 | Lenovo LOQ 2025 5060 15.6 |
+| `lenovo-thinkpad-l13-gen4` | 2 | Lenovo ThinkPad L13 Gen 4 |
+| `microsoft-surface-laptop-7` | 0 | Microsoft Surface Laptop 7 13.8 (photos pending) |
 | `loq-2025-5060-17` | 2 | Lenovo LOQ 2025 5060 17 |
 | `msi-vector-16-hx-2025-5070ti` | 0 | MSI Vector 16 HX 2025 5070ti |
 | `msi-vector-16hx-5080` | 2 | MSI Vector 16 HX 2025 5080<br>MSI Vector 16 HX 2025 5080 |

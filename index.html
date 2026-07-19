@@ -886,8 +886,8 @@ const FREEBIES = {
    Match each by "Brand|Model" exactly as written in the laptops list below.
    The featured band always shows these 2, regardless of the active filters. */
 const FEATURED = [
-  "ASUS|ROG Scar 16 2025 5080",
-  "Razer|Blade 16 2025 5080"
+  "Alienware|16 Aurora 5050",
+  "Lenovo|ThinkPad L13 Gen 4"
 ];
 
 /* Customer reviews — paste your best quotes from facebook.com/jlstop/reviews.
@@ -1026,7 +1026,7 @@ const CATALOG = [
     {name:'Legion 5'}, {name:'Legion 5i'}, {name:'Legion 5 Pro'}, {name:'Legion 5i Pro'},
     {name:'Legion 7i'}, {name:'Legion 7i Pro'}, {name:'Legion 9'},
     {name:'LOQ'}, {name:'X Series'},
-    {name:'ThinkPad Series', note:'E14, E15, 16'}, {name:'ThinkBook Series', note:'14, 16'},
+    {name:'ThinkPad Series', note:'L13, E14, E15, 16'}, {name:'ThinkBook Series', note:'14, 16'},
     {name:'Yoga 7 Series', note:'14, 16'}, {name:'Yoga 9 Series', note:'14, 16'},
     {name:'IdeaPad Series', note:'3 / 3i, 5, Pro'}
   ]},
@@ -1052,8 +1052,12 @@ const CATALOG = [
   { brand:'Gigabyte', series:[
     {name:'AORUS Master 16'}
   ]},
-  { brand:'Microsoft', series:[], soon:true },
-  { brand:'Dell',      series:[], soon:true },
+  { brand:'Microsoft', series:[
+    {name:'Surface Laptop'}
+  ]},
+  { brand:'Dell',      series:[
+    {name:'Inspiron 14'}, {name:'Pro Max 16'}
+  ]},
   { brand:'NAGA Philippines', series:[], soon:true }
 ];
 
@@ -1121,7 +1125,7 @@ function budgetTier(l){
   return 'high';
 }
 /* Productivity = ultrabooks / creator lines; everything else = gaming. */
-const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern)/i;
+const PRODUCTIVITY_RE = /(zenbook|vivobook|thinkpad|thinkbook|yoga|ideapad|swift|aspire|omnibook|summit|x series|prestige|expertbook|modern|inspiron|latitude|xps|surface|pro max)/i;
 function seriesUse(name){ return PRODUCTIVITY_RE.test(name||'') ? 'productivity' : 'gaming'; }
 function applyUse(){ laptops.forEach(l=>{ l.use = seriesUse(l.series || l.model); }); }
 applyUse();
@@ -1167,11 +1171,16 @@ const state = {
 /* ---------- spec helpers (also used to label configurations) ---------- */
 function gpuTier(l){
   const g=l.gpu||'';
+  const pro=g.match(/RTX\s*PRO\s*(\d+)/i); if(pro) return 'RTX PRO '+pro[1];
   if(/5070\s*ti/i.test(g)) return 'RTX 5070 Ti';
+  if(/5090/i.test(g))      return 'RTX 5090';
   if(/5080/i.test(g))      return 'RTX 5080';
   if(/5070/i.test(g))      return 'RTX 5070';
   if(/5060/i.test(g))      return 'RTX 5060';
   if(/5050/i.test(g))      return 'RTX 5050';
+  if(/\barc\b/i.test(g))   return 'Intel Arc';
+  if(/iris xe/i.test(g))   return 'Iris Xe';
+  if(/adreno/i.test(g))    return 'Adreno';
   return 'GPU';
 }
 function ramTier(l){ const m=(l.ram||'').match(/(\d+)\s*GB/i); return m?m[1]+'GB':'—'; }
