@@ -585,6 +585,23 @@ window.JLS_DATA = {
     },
     {
       "brand": "Acer",
+      "model": "Predator Helios Neo 14 AI",
+      "series": "Predator Neo 14",
+      "year": "2025",
+      "cpu": "Intel Core Ultra 7 255H",
+      "gpu": "NVIDIA GeForce RTX 5060 8GB (572 AI TOPS)",
+      "ram": "16GB RAM",
+      "storage": "1TB SSD",
+      "display": "14.5\" WQXGA 2560x1600p 165hz G-SYNC Matte Display",
+      "color": "Black",
+      "price": 99900,
+      "srp": 0,
+      "promo": "INCOMING STOCK",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "Acer",
       "model": "Aspire 14 AI",
       "series": "Aspire",
       "year": "2025",
@@ -840,6 +857,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Acer|Predator Helios Neo 14 AI": [
+      "acer-predator-helios-neo-14-ai",
+      2
+    ],
     "Dell|Pro Max 16": [
       "dell-pro-max-16",
       2
