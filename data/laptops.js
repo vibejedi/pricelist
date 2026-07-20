@@ -635,6 +635,23 @@ window.JLS_DATA = {
       "photos": 2
     },
     {
+      "brand": "ASUS",
+      "model": "Zenbook 14 OLED",
+      "series": "Zenbook 14",
+      "year": "2025",
+      "cpu": "AMD Ryzen AI 7 445",
+      "gpu": "AMD Radeon Graphics (Integrated)",
+      "ram": "16GB RAM",
+      "storage": "1TB SSD",
+      "display": "14\" OLED Touch Display",
+      "color": "Jade Black",
+      "price": 79000,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 4
+    },
+    {
       "brand": "Dell",
       "model": "Pro Max 16",
       "series": "Pro Max 16",
@@ -857,6 +874,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "ASUS|Zenbook 14 OLED": [
+      "asus-zenbook-14-oled",
+      4
+    ],
     "Acer|Predator Helios Neo 14 AI": [
       "acer-predator-helios-neo-14-ai",
       2
