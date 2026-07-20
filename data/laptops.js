@@ -636,6 +636,23 @@ window.JLS_DATA = {
     },
     {
       "brand": "ASUS",
+      "model": "Zenbook A14",
+      "series": "Zenbook A14",
+      "year": "2025",
+      "cpu": "Qualcomm Snapdragon X Plus",
+      "gpu": "Qualcomm Adreno GPU (Integrated)",
+      "ram": "16GB RAM",
+      "storage": "512GB SSD",
+      "display": "14\" FHD+ 1920x1200p OLED Display",
+      "color": "Zabriskie Beige",
+      "price": 63500,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 3
+    },
+    {
+      "brand": "ASUS",
       "model": "Zenbook 14 OLED",
       "series": "Zenbook 14",
       "year": "2025",
@@ -874,6 +891,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "ASUS|Zenbook A14": [
+      "asus-zenbook-a14",
+      3
+    ],
     "ASUS|Zenbook 14 OLED": [
       "asus-zenbook-14-oled",
       4
