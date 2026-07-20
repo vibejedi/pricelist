@@ -1181,6 +1181,7 @@ function gpuTier(l){
   if(/\barc\b/i.test(g))   return 'Intel Arc';
   if(/iris xe/i.test(g))   return 'Iris Xe';
   if(/adreno/i.test(g))    return 'Adreno';
+  if(/radeon/i.test(g))    return 'Radeon';
   return 'GPU';
 }
 function ramTier(l){ const m=(l.ram||'').match(/(\d+)\s*GB/i); return m?m[1]+'GB':'—'; }
