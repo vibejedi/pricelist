@@ -29,6 +29,7 @@ The "Photos now" column below is just a snapshot from when this file was written
 | `asus-tuf-a16-5070` | 2 | ASUS TUF A16 5070 |
 | `asus-zenbook-14-oled` | 0 | ASUS Zenbook 14 OLED (photos pending) |
 | `asus-zenbook-a14` | 0 | ASUS Zenbook A14 (photos pending) |
+| `asus-zephyrus-g14-5070ti` | 0 | ASUS ROG Zephyrus G14 2025 5070ti (photos pending) |
 | `asus-zephyrus-g16-5070-2025` | 2 | ASUS ROG Zephyrus G16 5070 2025 |
 | `dell-inspiron-14` | 0 | Dell Inspiron 14 (photos pending) |
 | `dell-pro-max-16` | 0 | Dell Pro Max 16 (photos pending) |

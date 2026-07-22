@@ -636,6 +636,23 @@ window.JLS_DATA = {
     },
     {
       "brand": "ASUS",
+      "model": "ROG Zephyrus G14 2025 5070ti",
+      "series": "ROG Zephyrus G14",
+      "year": "2025",
+      "cpu": "AMD Ryzen AI 9 HX 370",
+      "gpu": "NVIDIA GeForce RTX 5070ti 12GB",
+      "ram": "32GB RAM",
+      "storage": "1TB SSD",
+      "display": "14\" 3K 2880x1800p OLED 120hz Display",
+      "color": "Platinum White",
+      "price": 154500,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "ASUS",
       "model": "Zenbook A14",
       "series": "Zenbook A14",
       "year": "2025",
@@ -891,6 +908,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "ASUS|ROG Zephyrus G14 2025 5070ti": [
+      "asus-zephyrus-g14-5070ti",
+      2
+    ],
     "ASUS|Zenbook A14": [
       "asus-zenbook-a14",
       3
