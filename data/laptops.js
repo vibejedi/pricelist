@@ -747,9 +747,9 @@ window.JLS_DATA = {
       "storage": "512GB M.2 NVMe PCIe Gen 4 SSD",
       "display": "16.0\" FHD+ 1920x1200p IPS 240hz Display",
       "color": "Gray",
-      "price": 124500,
+      "price": 129900,
       "srp": 154500,
-      "promo": "OLD OFFER",
+      "promo": "NEW OFFER",
       "stock": "ask",
       "photos": 1
     },
@@ -764,9 +764,9 @@ window.JLS_DATA = {
       "storage": "1TB M.2 NVMe PCIe Gen 4 SSD",
       "display": "16.0\" WQXGA 2560x1600p IPS 240hz Display",
       "color": "Gray",
-      "price": 139000,
+      "price": 159900,
       "srp": 0,
-      "promo": "OLD OFFER",
+      "promo": "NEW OFFER",
       "stock": "ask",
       "photos": 1
     },
