@@ -1010,7 +1010,7 @@ window.JLS_DATA = {
       2
     ],
     "ASUS|TUF A16 5060": [
-      "asus-tuf-a16-5060",
+      "asus-tuf-a16-5070",
       2
     ],
     "ASUS|ROG Zephyrus G16": [

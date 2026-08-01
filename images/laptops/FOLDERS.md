@@ -26,8 +26,7 @@ The "Photos now" column below is just a snapshot from when this file was written
 | `asus-rog-strix-g16` | 0 | ASUS ROG Strix 16 2025 5070ti 9955hx<br>ASUS ROG Strix 16 2025 5070ti 8940hx<br>ASUS ROG Strix 16 2025 5070ti Ultra 9<br>ASUS ROG Strix 16 2025 5080 |
 | `asus-rog-strix-g18-2025-5070` | 0 | ASUS ROG Strix G18 2025 5070 |
 | `asus-scar-16-5080` | 2 | ASUS ROG Scar 16 2025 5080 |
-| `asus-tuf-a16-5060` | 0 | ASUS TUF A16 5060 (photos pending) |
-| `asus-tuf-a16-5070` | 2 | ASUS TUF A16 5070 |
+| `asus-tuf-a16-5070` | 2 | ASUS TUF A16 5070<br>ASUS TUF A16 5060 (shares this folder) |
 | `asus-zenbook-14-oled` | 0 | ASUS Zenbook 14 OLED (photos pending) |
 | `asus-zenbook-a14` | 0 | ASUS Zenbook A14 (photos pending) |
 | `asus-zephyrus-g14-5070ti` | 0 | ASUS ROG Zephyrus G14 2025 5070ti (photos pending) |
