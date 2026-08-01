@@ -296,6 +296,23 @@ window.JLS_DATA = {
     },
     {
       "brand": "ASUS",
+      "model": "TUF A16 5060",
+      "series": "TUF A16",
+      "year": "2025",
+      "cpu": "AMD Ryzen 7 260 8 Cores",
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU 8GB",
+      "ram": "16GB DDR5",
+      "storage": "512GB SSD",
+      "display": "16.0\" FHD+ 1920x1200p 165hz Display",
+      "color": "Gray",
+      "price": 89900,
+      "srp": 0,
+      "promo": "NEW OFFER",
+      "stock": "in",
+      "photos": 2
+    },
+    {
+      "brand": "ASUS",
       "model": "ROG Zephyrus G16",
       "series": "ROG Zephyrus G16",
       "year": "2025",
@@ -990,6 +1007,10 @@ window.JLS_DATA = {
     ],
     "ASUS|TUF A16": [
       "asus-tuf-a16-5070",
+      2
+    ],
+    "ASUS|TUF A16 5060": [
+      "asus-tuf-a16-5060",
       2
     ],
     "ASUS|ROG Zephyrus G16": [
