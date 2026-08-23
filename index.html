@@ -25,6 +25,8 @@
     --cat-tint:#edf4ff;     /* soft sky    — Shop by category (the standout) */
     --rev-tint:#ecfaf1;     /* soft mint   — Reviews */
     --pay-tint:#f6f0ff;     /* soft lilac  — Payments */
+    --warn-tint:#fff4d6;    /* warm amber  — site notice */
+    --warn-line:#b3801a;
     --r:14px;
   }
 
@@ -41,6 +43,8 @@
     --cat-tint:#172333;
     --rev-tint:#162a20;
     --pay-tint:#211b33;
+    --warn-tint:#3a2d10;
+    --warn-line:#e0a92c;
   }
   :root[data-theme="dark"] body::before{
     background-image:
@@ -212,6 +216,30 @@
   .banner img{display:block;width:100%;height:auto;}
   .headbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
   .headbar .spacer{flex:1;}
+  /* site-wide notice (text lives in NOTICE near the top of the script) */
+  .notice{
+    display:flex;align-items:flex-start;gap:14px;
+    border:2.5px solid var(--warn-line);border-radius:var(--r);
+    background:var(--warn-tint);
+    box-shadow:3px 3px 0 rgba(43,43,43,.12);
+    padding:16px 18px;margin:12px 0 18px;
+  }
+  .notice .n-ic{
+    flex:none;width:40px;height:40px;border-radius:50%;
+    border:2.5px solid var(--warn-line);
+    display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;
+  }
+  .notice .n-tt{
+    font-family:'Gaegu';font-weight:700;font-size:22px;line-height:1.15;
+    color:var(--warn-line);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;
+  }
+  .notice .n-tx{font-size:16px;line-height:1.45;font-weight:600;color:var(--ink);}
+  @media(max-width:560px){
+    .notice{padding:14px;gap:11px;}
+    .notice .n-ic{width:34px;height:34px;font-size:19px;}
+    .notice .n-tt{font-size:19px;}
+    .notice .n-tx{font-size:15px;}
+  }
   .pghead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:8px;}
   .logo{
     display:flex;align-items:center;gap:12px;flex:none;
@@ -882,6 +910,14 @@ const FREEBIES = {
   }
 };
 
+/* SITE NOTICE — the banner shown at the top of every page.
+   Edit the text here, or set `show:false` to hide the banner entirely. */
+const NOTICE = {
+  show: true,
+  title: 'Please read before ordering',
+  text: 'Due to the AI chip shortage, many laptop offers and availabilities may vary. Please message us before confirming an order to check availability and price.'
+};
+
 /* FEATURED — the 2 laptops spotlighted at the top of "Browse laptops".
    Match each by "Brand|Model" exactly as written in the laptops list below.
    The featured band always shows these 2, regardless of the active filters. */
@@ -1356,12 +1392,23 @@ function rateBar(){
     <span class="muted tiny">— prices are in ₱; the ≈ $ figure is today's USD equivalent</span>
   </div>`;
 }
+/* site-wide notice banner — shown at the top of every page (see NOTICE above) */
+function noticeBar(){
+  if(!NOTICE || !NOTICE.show || !NOTICE.text) return '';
+  return `<div class="notice sk" role="note">
+    <div class="n-ic" aria-hidden="true">⚠️</div>
+    <div>
+      ${NOTICE.title?`<div class="n-tt">${NOTICE.title}</div>`:''}
+      <div class="n-tx">${NOTICE.text}</div>
+    </div>
+  </div>`;
+}
 function pageHead(){
   return `<div class="headbar">
     ${socialBlock()}
     <div class="spacer"></div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">${warrantyBtn()}${freebieBtn()}<a class="linkbtn" href="${LINKS.reviewsPage}" target="_blank">${star}Reviews</a></div>
-  </div>${freebiePanel()}`;
+  </div>${freebiePanel()}${noticeBar()}`;
 }
 function reviewStars(n){
   let s=''; for(let i=0;i<5;i++) s+=`<span class="st${i<n?' on':''}">${star}</span>`; return `<div class="stars">${s}</div>`;
