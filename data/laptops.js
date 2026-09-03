@@ -109,7 +109,7 @@ window.JLS_DATA = {
     },
     {
       "brand": "Acer",
-      "model": "Predator Helios Neo 16S",
+      "model": "Predator Helios Neo 16S 5070ti",
       "series": "Predator Helios Neo 16S",
       "year": "2025",
       "cpu": "Intel Core Ultra 9 275X 24 Cores",
@@ -118,9 +118,9 @@ window.JLS_DATA = {
       "storage": "1TB M.2 NVMe PCIe Gen 4 SSD",
       "display": "16.0\" WQXGA 2560x1600p OLED 120hz Display",
       "color": "Gray",
-      "price": 143500,
+      "price": 139900,
       "srp": 154000,
-      "promo": "OLD OFFER",
+      "promo": "PROMO DEAL",
       "stock": "ask",
       "photos": 1
     },
@@ -976,6 +976,10 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "Acer|Predator Helios Neo 16S 5070ti": [
+      "acer-helios-neo-16s-5070ti",
+      2
+    ],
     "ASUS|TUF F16": [
       "asus-tuf-f16",
       2
