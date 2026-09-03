@@ -6,6 +6,57 @@
 window.JLS_DATA = {
   "laptops": [
     {
+      "brand": "ASUS",
+      "model": "TUF F16",
+      "series": "TUF F16",
+      "year": "2025",
+      "cpu": "Intel Core i7-14650HX",
+      "gpu": "NVIDIA GeForce RTX 5060 8GB",
+      "ram": "16GB DDR5 4800Mhz",
+      "storage": "512GB M.2 NVMe PCIe Gen 4 SSD",
+      "display": "16.0\" FHD IPS 1920x1080p 165hz Display",
+      "color": "Gray",
+      "price": 89000,
+      "srp": 0,
+      "promo": "ON HAND",
+      "stock": "onhand",
+      "photos": 2
+    },
+    {
+      "brand": "Gigabyte",
+      "model": "Aero X16 5070",
+      "series": "Aero X16",
+      "year": "2025",
+      "cpu": "AMD Ryzen AI 7 350",
+      "gpu": "NVIDIA GeForce RTX 5070 8GB",
+      "ram": "32GB DDR5 5600Mhz",
+      "storage": "1TB M.2 NVMe PCIe Gen 4 SSD",
+      "display": "16.0\" WQXGA 2560x1440p 165hz Display",
+      "color": "Gray",
+      "price": 105000,
+      "srp": 0,
+      "promo": "ON HAND",
+      "stock": "onhand",
+      "photos": 2
+    },
+    {
+      "brand": "ASUS",
+      "model": "ROG Strix G16",
+      "series": "ROG Strix G16",
+      "year": "2025",
+      "cpu": "AMD Ryzen 9 9955HX",
+      "gpu": "NVIDIA GeForce RTX 5070 8GB",
+      "ram": "32GB DDR5 5600Mhz",
+      "storage": "1TB M.2 NVMe PCIe Gen 4 SSD",
+      "display": "16.0\" WQXGA 2560x1440p 240hz Display",
+      "color": "Gray",
+      "price": 139900,
+      "srp": 0,
+      "promo": "ON HAND",
+      "stock": "onhand",
+      "photos": 2
+    },
+    {
       "brand": "Acer",
       "model": "Nitro V15",
       "series": "Nitro V15",
@@ -925,6 +976,14 @@ window.JLS_DATA = {
     }
   ],
   "PHOTO_DIRS": {
+    "ASUS|TUF F16": [
+      "asus-tuf-f16",
+      2
+    ],
+    "Gigabyte|Aero X16 5070": [
+      "gigabyte-aero-x16-5060",
+      2
+    ],
     "ASUS|ROG Zephyrus G14 2025 5070ti": [
       "asus-zephyrus-g14-5070ti",
       2
