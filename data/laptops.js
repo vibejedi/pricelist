@@ -52,8 +52,8 @@ window.JLS_DATA = {
       "color": "Gray",
       "price": 139900,
       "srp": 0,
-      "promo": "ON HAND",
-      "stock": "onhand",
+      "promo": "",
+      "stock": "ask",
       "photos": 2
     },
     {
