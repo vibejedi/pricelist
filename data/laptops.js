@@ -934,8 +934,8 @@ window.JLS_DATA = {
       "storage": "2TB M.2 NVMe PCIe Gen 4 SSD",
       "display": "16.0\" WQXGA 2560x1600p OLED 240hz Display",
       "color": "Gray",
-      "price": 239900,
-      "srp": 279000,
+      "price": 311870,
+      "srp": 362700,
       "promo": "OLD OFFER",
       "stock": "ask",
       "photos": 1
