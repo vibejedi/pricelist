@@ -7,6 +7,23 @@ window.JLS_DATA = {
   "laptops": [
     {
       "brand": "ASUS",
+      "model": "ROG Zephyrus G15 5070ti",
+      "series": "ROG Zephyrus G15",
+      "year": "",
+      "cpu": "",
+      "gpu": "NVIDIA GeForce RTX 5070ti",
+      "ram": "",
+      "storage": "",
+      "display": "",
+      "color": "",
+      "price": 145000,
+      "srp": 0,
+      "promo": "LIGHTLY USED 10/10 CONDITION",
+      "stock": "ask",
+      "photos": 0
+    },
+    {
+      "brand": "ASUS",
       "model": "TUF F16",
       "series": "TUF F16",
       "year": "2025",
