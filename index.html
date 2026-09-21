@@ -1064,7 +1064,7 @@ applyPhotoDirs();
 const CATALOG = [
   { brand:'ASUS', series:[
     {name:'ROG Strix G16 Series'}, {name:'ROG Strix G18 Series'},
-    {name:'ROG Zephyrus G14'}, {name:'ROG Zephyrus G16'},
+    {name:'ROG Zephyrus G14'}, {name:'ROG Zephyrus G15'}, {name:'ROG Zephyrus G16'},
     {name:'ROG Scar 16'}, {name:'ROG Scar 18'},
     {name:'Zenbook 14'}, {name:'Zenbook A14'}, {name:'Vivobook S14'}, {name:'Vivobook S16'},
     {name:'TUF A14'}, {name:'TUF A16'}, {name:'TUF F16'},
@@ -1232,7 +1232,7 @@ function gpuTier(l){
   if(/radeon/i.test(g))    return 'Radeon';
   return 'GPU';
 }
-function ramTier(l){ const m=(l.ram||'').match(/(\d+)\s*GB/i); return m?m[1]+'GB':'—'; }
+function ramTier(l){ const m=(l.ram||'').match(/(\d+)\s*GB/i); return m?m[1]+'GB':''; }
 function shortCpu(s){
   s=(s||'').split('(')[0];
   s=s.replace(/\b\d+\s*Cores?\b.*$/i,'');
@@ -1640,13 +1640,13 @@ function configRow(l){
     <div class="cfg-main">
       <div class="cfg-label">${configLabel(l)}</div>
       <div class="chips">
-        <span class="chip"><b>CPU</b> ${l.cpu}</span>
-        <span class="chip"><b>GPU</b> ${l.gpu}</span>
-        <span class="chip"><b>RAM</b> ${l.ram}</span>
-        <span class="chip"><b>SSD</b> ${l.storage}</span>
-        <span class="chip"><b>Screen</b> ${l.display}</span>
+        ${l.cpu?`<span class="chip"><b>CPU</b> ${l.cpu}</span>`:''}
+        ${l.gpu?`<span class="chip"><b>GPU</b> ${l.gpu}</span>`:''}
+        ${l.ram?`<span class="chip"><b>RAM</b> ${l.ram}</span>`:''}
+        ${l.storage?`<span class="chip"><b>SSD</b> ${l.storage}</span>`:''}
+        ${l.display?`<span class="chip"><b>Screen</b> ${l.display}</span>`:''}
       </div>
-      <div class="muted tiny">${l.color}${l.promo?` · ${l.promo}`:''}</div>
+      <div class="muted tiny">${[l.color,l.promo].filter(Boolean).join(' · ')}</div>
     </div>
     <div class="cfg-buy">
       ${stockBadge(l.stock)}
