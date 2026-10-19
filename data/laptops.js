@@ -35,8 +35,8 @@ window.JLS_DATA = {
       "color": "Gray",
       "price": 89000,
       "srp": 0,
-      "promo": "ON HAND",
-      "stock": "onhand",
+      "promo": "",
+      "stock": "ask",
       "photos": 2
     },
     {
@@ -52,8 +52,8 @@ window.JLS_DATA = {
       "color": "Gray",
       "price": 105000,
       "srp": 0,
-      "promo": "ON HAND",
-      "stock": "onhand",
+      "promo": "",
+      "stock": "ask",
       "photos": 2
     },
     {
