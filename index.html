@@ -1426,7 +1426,12 @@ function pageHead(){
 function reviewStars(n){
   let s=''; for(let i=0;i<5;i++) s+=`<span class="st${i<n?' on':''}">${star}</span>`; return `<div class="stars">${s}</div>`;
 }
-/* reusable numbered section header */
+/* reusable numbered section header.
+   Numbers are assigned at render time in the order sections appear, so a
+   section that renders nothing (an empty ON HAND band, no featured picks)
+   leaves no gap in the sequence. SEC_N is reset once per page in render(). */
+let SEC_N = 0;
+function secNo(){ return String(++SEC_N).padStart(2,'0'); }
 function sectionHead(no,eyebrow,title,action){
   return `<div class="section-head">
     <div class="sec-no">${no}</div>
@@ -1448,13 +1453,13 @@ function reviewsSection(){
     </div>`;
   });
   return `<section class="sec sec-rev">
-    ${sectionHead('04','real talk','What customers say',`<a class="linkbtn cta" href="${LINKS.reviewsPage}" target="_blank">${fb}Read all reviews on Facebook</a>`)}
+    ${sectionHead(secNo(),'real talk','What customers say',`<a class="linkbtn cta" href="${LINKS.reviewsPage}" target="_blank">${fb}Read all reviews on Facebook</a>`)}
     <div class="reviews-grid">${cards}</div>
   </section>`;
 }
 function paymentsSection(){
   return `<section class="sec sec-pay">
-    ${sectionHead('05','easy &amp; flexible','Payment options','')}
+    ${sectionHead(secNo(),'easy &amp; flexible','Payment options','')}
     <div class="pay-grid">
       <div class="pay-card sk tilt">
         <div class="pay-h">🏦 Bank &amp; e-wallet</div>
@@ -1516,7 +1521,7 @@ function onHandBand(){
   const os=onHandLaptops();
   if(!os.length) return '';
   return `<section class="sec sec-onhand">
-    ${sectionHead('01','ready now','On hand units','')}
+    ${sectionHead(secNo(),'ready now','On hand units','')}
     <p class="subhead">In stock and ready to go — no waiting. Everything else on the list is pre-order.</p>
     <div class="onhandband">${os.map(onHandCardHTML).join('')}</div>
   </section>`;
@@ -1556,7 +1561,7 @@ function featuredBand(){
   const fs=featuredLaptops();
   if(!fs.length) return '';
   return `<section class="sec sec-feat">
-    ${sectionHead('02','start here','Featured picks','')}
+    ${sectionHead(secNo(),'start here','Featured picks','')}
     <div class="featband">${fs.map(featuredCardHTML).join('')}</div>
   </section>`;
 }
@@ -1611,7 +1616,7 @@ function categoryIndex(){
     ${onHandBand()}
     ${featuredBand()}
     <section class="sec sec-cat">
-      ${sectionHead('03','where to begin','Shop by category', orderBtn(true))}
+      ${sectionHead(secNo(),'where to begin','Shop by category', orderBtn(true))}
       <p class="subhead">Pick how you want to shop — then choose a brand.</p>
       ${groups}
     </section>
@@ -1736,6 +1741,7 @@ function readHash(){
 /* ---------- render & wire ---------- */
 function render(){
   const stage=document.getElementById('stage');
+  SEC_N = 0;                // section numbering restarts on every page
   if(!state.cat)         stage.innerHTML=categoryIndex();
   else if(!state.brand)  stage.innerHTML=brandIndex(state.cat);
   else                   stage.innerHTML=brandPage(state.brand,state.cat);
