@@ -235,11 +235,14 @@
     color:var(--warn-line);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;
   }
   .notice .n-tx{font-size:16px;line-height:1.45;font-weight:600;color:var(--ink);}
+  .notice .n-pts{margin:7px 0 0;padding-left:20px;font-size:15px;line-height:1.5;font-weight:600;color:var(--ink);}
+  .notice .n-pts li{margin-top:3px;}
   @media(max-width:560px){
     .notice{padding:14px;gap:11px;}
     .notice .n-ic{width:34px;height:34px;font-size:19px;}
     .notice .n-tt{font-size:19px;}
     .notice .n-tx{font-size:15px;}
+    .notice .n-pts{font-size:14px;padding-left:18px;}
   }
   .pghead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:8px;}
   .logo{
@@ -320,6 +323,19 @@
   .usd{font-size:13px;color:var(--ink-soft);}
   .srp{font-family:'Nunito';font-size:13px;color:var(--ink-soft);text-decoration:line-through;line-height:1;}
   .save{font-family:'Gaegu';font-weight:700;font-size:12px;color:var(--acc);}
+
+  /* price ranges — every laptop shows a band, never a fixed figure */
+  .prange{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;
+    font-family:'Gaegu';font-weight:700;line-height:1.15;}
+  .prange .pr-lo,.prange .pr-hi{font-size:21px;color:var(--ink);white-space:nowrap;}
+  .prange .pr-sep{font-size:17px;color:var(--ink-soft);}
+  .prange .pr-ask{font-size:17px;color:var(--acc);}
+  .prange .pr-note{flex-basis:100%;font-family:'Nunito';font-weight:600;
+    font-size:11.5px;color:var(--ink-soft);line-height:1.35;margin-top:1px;}
+  .card .prange .pr-lo,.card .prange .pr-hi{font-size:25px;}
+  .card .prange .pr-note{font-size:12px;}
+  .cfg .cfg-buy .prange{justify-content:flex-end;}
+  @media(max-width:680px){ .cfg .cfg-buy .prange{justify-content:flex-start;} }
 
   /* stock badges */
   .badge{font-family:'Gaegu';font-weight:700;font-size:13px;border:2px solid var(--line);
@@ -923,11 +939,16 @@ const FREEBIES = {
 };
 
 /* SITE NOTICE — the banner shown at the top of every page.
-   Edit the text here, or set `show:false` to hide the banner entirely. */
+   Edit the text here, or set `show:false` to hide the banner entirely.
+   `points` are the bullet lines under the main paragraph. */
 const NOTICE = {
   show: true,
   title: 'Please read before ordering',
-  text: 'Due to the AI chip shortage, many laptop offers and availabilities may vary. Please message us before confirming an order to check availability and price.'
+  text: 'Due to the AI chip shortage, prices and availability move constantly. Every laptop is listed as a price range rather than a fixed price — please message us to confirm the exact price and stock before you order.',
+  points: [
+    'The lower figure is the best case; the upper figure is the ceiling for that model.',
+    'LIGHTLY USED, OPEN BOX and BROWN BOX units are priced closer to the bottom of the range.'
+  ]
 };
 
 /* FEATURED — the 2 laptops spotlighted at the top of "Browse laptops".
@@ -1251,6 +1272,23 @@ const pesoFmt = new Intl.NumberFormat('en-PH',{maximumFractionDigits:0});
 const usdFmt  = new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
 function peso(n){ return '₱'+pesoFmt.format(Math.round(n)); }
 function usdRef(n){ return '≈ $'+usdFmt.format(Math.round(n/RATE)); }
+
+/* ---------- PRICE RANGES ----------
+   No laptop shows a single fixed price. The `price` in the data is the
+   BOTTOM of the range; the top adds RANGE_UPLIFT and is rounded to the
+   nearest ₱100. Clients message us for the figure on the day.
+   LIGHTLY USED / OPEN BOX / BROWN BOX units sit nearer the bottom. */
+const RANGE_UPLIFT = 0.30;
+function priceLow(l){ return l.price; }
+function priceHigh(l){ return Math.round(l.price*(1+RANGE_UPLIFT)/100)*100; }
+/* the price block used on every card and row */
+function priceBlock(l){
+  if(!l.price) return `<div class="prange"><span class="pr-ask">Message us for price</span></div>`;
+  return `<div class="prange">
+    <span class="pr-lo">${peso(priceLow(l))}</span><span class="pr-sep">–</span><span class="pr-hi">${peso(priceHigh(l))}</span>
+    <span class="pr-note">Message us for today's price</span>
+  </div>`;
+}
 function stockBadge(s){
   if(s==='onhand') return '<span class="badge onhand">✓ ON HAND</span>';
   if(s==='in')  return '<span class="badge in">Pre Order Basis only</span>';
@@ -1413,6 +1451,7 @@ function noticeBar(){
     <div>
       ${NOTICE.title?`<div class="n-tt">${NOTICE.title}</div>`:''}
       <div class="n-tx">${NOTICE.text}</div>
+      ${(NOTICE.points||[]).length?`<ul class="n-pts">${NOTICE.points.map(t=>`<li>${t}</li>`).join('')}</ul>`:''}
     </div>
   </div>`;
 }
@@ -1511,7 +1550,7 @@ function onHandCardHTML(l){
           <span class="chip"><b>Screen</b> ${l.display}</span>
         </div>
         <div class="pricerow">
-          <div>${l.srp?`<div class="srp">${peso(l.srp)}</div>`:''}<div class="peso">${peso(l.price)}</div></div>
+          ${priceBlock(l)}
           ${orderBtn(false)}
         </div>
       </div>
@@ -1551,7 +1590,7 @@ function featuredCardHTML(l){
           <span class="chip"><b>Screen</b> ${l.display}</span>
         </div>
         <div class="pricerow">
-          <div>${l.srp?`<div class="srp">${peso(l.srp)}</div>`:''}<div class="peso">${peso(l.price)}</div></div>
+          ${priceBlock(l)}
           ${l.stock!=='out'?orderBtn(false):'<span class="badge out">Not available</span>'}
         </div>
       </div>
@@ -1655,7 +1694,7 @@ function configRow(l){
     </div>
     <div class="cfg-buy">
       ${stockBadge(l.stock)}
-      <div>${l.srp?`<div class="srp">${peso(l.srp)}</div>`:''}<div class="peso">${peso(l.price)}</div></div>
+      ${priceBlock(l)}
       ${l.stock!=='out'?orderBtn(false):'<span class="badge out">Not available</span>'}
       ${chatBtn(l)}
     </div>
@@ -2019,8 +2058,9 @@ render();
         ['JLS Price List — how to use this file'],
         [''],
         ['1. Edit the values on the "Laptops" tab. The most common edits:'],
-        ['     • Price (PHP)  — the selling price, numbers only (e.g. 89900)'],
-        ['     • SRP (PHP)    — original/strike-through price; leave blank for none'],
+        ['     • Price (PHP)  — the BOTTOM of the range, numbers only (e.g. 89900).'],
+        ['                     The site shows this plus 30% as the top figure.'],
+        ['     • SRP (PHP)    — no longer shown on the site (prices are ranges now)'],
         ['     • Stock        — In stock  /  Pre-order  /  Out of stock'],
         ['     • Promo        — small tag shown on the card (e.g. 2026 UPDATED PRICE)'],
         [''],
