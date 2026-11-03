@@ -20,8 +20,12 @@ never see it unless they type `#admin` themselves.
 1. **⬇ Download Excel** — gives you `JLS-price-list.xlsx` with every laptop:
    brand, model, specs, **Price (PHP)**, **SRP (PHP)**, **Promo**, **Stock**.
 2. **Edit in Excel or Google Sheets:**
-   - **Price (PHP)** — selling price, numbers only (e.g. `89900`).
-   - **SRP (PHP)** — original/strike-through price; leave blank for none.
+   - **Price (PHP)** — the **bottom** of the price range, numbers only
+     (e.g. `89900`). The site shows a range: this figure, and this figure
+     plus 30% as the top. No fixed prices are published — customers message
+     the page for the figure on the day.
+   - **SRP (PHP)** — no longer displayed; the range replaced the
+     strike-through price. Values you leave here are simply ignored.
    - **Stock** — `In stock`, `Pre-order`, or `Out of stock`.
    - **Promo** — small tag on the card (e.g. `2026 UPDATED PRICE`).
    - **Series** — the heading a laptop is grouped under on its brand page.
