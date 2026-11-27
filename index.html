@@ -1119,7 +1119,7 @@ const CATALOG = [
     {name:'Cyborg 15'}, {name:'Katana 15'}, {name:'Summit Series'}
   ]},
   { brand:'Gigabyte', series:[
-    {name:'AORUS Master 16'}, {name:'Aero X16'}
+    {name:'AORUS Master 16'}, {name:'Aero X16'}, {name:'A16'}
   ]},
   { brand:'Microsoft', series:[
     {name:'Surface Laptop'}
@@ -1240,6 +1240,7 @@ const state = {
 /* ---------- spec helpers (also used to label configurations) ---------- */
 function gpuTier(l){
   const g=l.gpu||'';
+  if(!g) return '';                       // no GPU on file — say nothing rather than 'GPU'
   const pro=g.match(/RTX\s*PRO\s*(\d+)/i); if(pro) return 'RTX PRO '+pro[1];
   if(/5070\s*ti/i.test(g)) return 'RTX 5070 Ti';
   if(/5090/i.test(g))      return 'RTX 5090';
@@ -1263,7 +1264,8 @@ function shortCpu(s){
 }
 function configLabel(l){
   const cpu=shortCpu(l.cpu);
-  return [gpuTier(l), cpu, ramTier(l)].filter(Boolean).join(' · ');
+  // with no specs on file at all, head the row with the model name
+  return [gpuTier(l), cpu, ramTier(l)].filter(Boolean).join(' · ') || l.model;
 }
 function configsForSeries(brand,name){ return laptops.filter(l=>l.brand===brand && l.series===name); }
 
@@ -1281,9 +1283,15 @@ function usdRef(n){ return '≈ $'+usdFmt.format(Math.round(n/RATE)); }
 const RANGE_UPLIFT = 0.30;
 function priceLow(l){ return l.price; }
 function priceHigh(l){ return Math.round(l.price*(1+RANGE_UPLIFT)/100)*100; }
-/* the price block used on every card and row */
+/* the price block used on every card and row.
+   A laptop with `fixed:true` shows one price instead of a range —
+   for units whose price is settled (Excel: Fixed Price = Yes). */
 function priceBlock(l){
   if(!l.price) return `<div class="prange"><span class="pr-ask">Message us for price</span></div>`;
+  if(l.fixed) return `<div class="prange">
+    <span class="pr-lo">${peso(l.price)}</span>
+    <span class="pr-note">Fixed price — message us to confirm stock</span>
+  </div>`;
   return `<div class="prange">
     <span class="pr-lo">${peso(priceLow(l))}</span><span class="pr-sep">–</span><span class="pr-hi">${peso(priceHigh(l))}</span>
     <span class="pr-note">Message us for today's price</span>
@@ -1884,9 +1892,9 @@ render();
     ['CPU','cpu'], ['GPU','gpu'], ['RAM','ram'], ['Storage','storage'],
     ['Display','display'], ['Color','color'],
     ['Price (PHP)','price'], ['SRP (PHP)','srp'], ['Promo','promo'],
-    ['Stock','stock'], ['Photo Folder','photoFolder'], ['Photo Count','photoCount']
+    ['Stock','stock'], ['Fixed Price','fixed'], ['Photo Folder','photoFolder'], ['Photo Count','photoCount']
   ];
-  const WIDTHS = [12,30,22,7,22,30,28,26,34,18,12,12,20,13,22,12];
+  const WIDTHS = [12,30,22,7,22,30,28,26,34,18,12,12,20,13,12,22,12];
   // accept loose header spellings on import
   const FIELD_KEYS = {
     brand:['brand'], model:['model','name'], series:['series','group','line','modelgroup'], year:['year'],
@@ -1897,6 +1905,7 @@ render();
     srp:['srpphp','srp','originalprice','listprice','was'],
     promo:['promo','promotag','tag','badge','label'],
     stock:['stock','availability','available','status'],
+    fixed:['fixedprice','fixed','norange','nopricerange','exactprice'],
     photoFolder:['photofolder','folder','photodir','imagefolder','images'],
     photoCount:['photocount','photos','numphotos','imagecount','npics']
   };
@@ -2046,6 +2055,7 @@ render();
           if(f==='stock')            o[h] = STOCK_LABEL[l.stock] || l.stock || 'In stock';
           else if(f==='srp')         o[h] = l.srp ? l.srp : '';
           else if(f==='series')      o[h] = (l.seriesRaw!=null ? l.seriesRaw : '');
+          else if(f==='fixed')       o[h] = l.fixed ? 'Yes' : '';
           else if(f==='photoFolder') o[h] = pd ? pd[0] : slugFolder(l.brand,l.model);
           else if(f==='photoCount')  o[h] = pd ? pd[1] : '';
           else                       o[h] = (l[f]==null?'':l[f]);
@@ -2060,6 +2070,8 @@ render();
         ['1. Edit the values on the "Laptops" tab. The most common edits:'],
         ['     • Price (PHP)  — the BOTTOM of the range, numbers only (e.g. 89900).'],
         ['                     The site shows this plus 30% as the top figure.'],
+        ['     • Fixed Price  — "Yes" shows one exact price instead of a range.'],
+        ['                     Leave blank for the usual range.'],
         ['     • SRP (PHP)    — no longer shown on the site (prices are ranges now)'],
         ['     • Stock        — In stock  /  Pre-order  /  Out of stock'],
         ['     • Promo        — small tag shown on the card (e.g. 2026 UPDATED PRICE)'],
@@ -2129,6 +2141,7 @@ render();
           srp:     num(get('srp')),
           promo:   String(get('promo')).trim(),
           stock:   normStock(get('stock')),
+          fixed:   /^(y|t|1|fixed|no range)/i.test(String(get('fixed')).trim()),
           photos:  1
         };
         if(!l.price) warnings.push(l.brand+' '+l.model+': price is 0 / blank.');
