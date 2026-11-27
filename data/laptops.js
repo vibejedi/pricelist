@@ -6,6 +6,24 @@
 window.JLS_DATA = {
   "laptops": [
     {
+      "brand": "Acer",
+      "model": "Predator Helios 18",
+      "series": "Predator 18",
+      "year": "",
+      "cpu": "",
+      "gpu": "",
+      "ram": "",
+      "storage": "",
+      "display": "",
+      "color": "",
+      "price": 159900,
+      "srp": 0,
+      "promo": "",
+      "stock": "ask",
+      "fixed": true,
+      "photos": 0
+    },
+    {
       "brand": "Lenovo",
       "model": "Legion 5i White",
       "series": "Legion 5i",
